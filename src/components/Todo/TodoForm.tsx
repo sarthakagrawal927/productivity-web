@@ -1,6 +1,5 @@
 import { Task } from "@/types";
 import { callApi } from "@/utils/api";
-import { TASK_STATUS, TASK_STATUS_TO_LABEL } from "@/utils/constants";
 import React, { useState } from "react";
 import SelectStatusDropdown from "../common/SelectStatusDropdown";
 
@@ -27,15 +26,15 @@ const TodoForm: React.FC<TodoFormProps> = ({ addNewTask }) => {
     setTask({ ...task, desc: e.target.value });
   }
 
-  const handleStatusChange = (newStatus: number) => {
+  const handleStatusChange = async (newStatus: number) => {
     setTask({ ...task, status: newStatus });
+    return { err: null, data: null }
   }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    callApi("/api/todo", task).then((res) => {
-      console.log(res.data)
-      addNewTask(res.data);
+    callApi("/api/todo", task).then(({ data }) => {
+      addNewTask(data.data);
     })
     setTask(defaultTaskInput);
   }

@@ -3,7 +3,7 @@ import { TASK_STATUS, TASK_STATUS_TO_LABEL } from '@/utils/constants';
 import cn from 'classnames';
 
 type SelectStatusDropdownProps = {
-  handleStatusChange: (status: number) => void;
+  handleStatusChange: ((status: number) => Promise<{ data: any, err: any }>);
   mode?: 'create' | 'edit' | 'view';
   value?: number;
 }
@@ -11,9 +11,12 @@ type SelectStatusDropdownProps = {
 const SelectStatusDropdown: FC<SelectStatusDropdownProps> = ({ handleStatusChange, mode = 'create', value }) => {
   const [filterStatus, setFilterStatus] = React.useState<number>(value || 0);
 
-  const handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setFilterStatus(Number(e.target.value));
-    handleStatusChange(Number(e.target.value));
+  const handleFilterChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const status = Number(e.target.value);
+    const { err } = await handleStatusChange(status);
+    if (!err) {
+      setFilterStatus(status);
+    }
   }
 
   return (
@@ -23,7 +26,7 @@ const SelectStatusDropdown: FC<SelectStatusDropdownProps> = ({ handleStatusChang
       value={filterStatus}
       onChange={handleFilterChange}
     >
-      <option value="" disabled={mode === "create"}>
+      <option value="" disabled={mode !== "view"}>
         Select status
       </option>
       {Object.values(TASK_STATUS).map((status) => (

@@ -24,8 +24,8 @@ export const callApi = async (url: string, body: any, method = HTTP_METHOD.POST)
   try {
     const { data }: AxiosResponse = await axios(`${baseUrl}${url}`,
       { headers: { "Content-Type": "multipart/form-data" }, method, data: convertToFormData(body) });
-    return data;
-  } catch(e) {
-    console.log({response: (e as AxiosError).response})
+    return {data, err: null};
+  } catch(err) {
+    return {data: null, err: (err as AxiosError).response}
   }
 };

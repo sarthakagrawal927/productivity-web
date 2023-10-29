@@ -15,7 +15,7 @@ const TodoListClient = ({ tasks }: { tasks: Task[] }) => {
   return (
     <>
       <CreateNew addNewTask={addNewTask} />
-      <TaskListComponent taskList={taskList} />
+      <TaskListComponent taskList={taskList} setTaskList={setTaskList} />
     </>
   );
 };
