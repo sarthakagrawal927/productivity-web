@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { TASK_STATUS, TASK_STATUS_TO_LABEL } from '@/utils/constants';
 import cn from 'classnames';
+import useOptimisticResult from '@/hooks/useOptimisticResult';
 
 type SelectStatusDropdownProps = {
   handleStatusChange: ((status: number) => Promise<{ data: any, err: any }>);
@@ -9,14 +10,10 @@ type SelectStatusDropdownProps = {
 }
 
 const SelectStatusDropdown: FC<SelectStatusDropdownProps> = ({ handleStatusChange, mode = 'create', value }) => {
-  const [filterStatus, setFilterStatus] = React.useState<number>(value || 0);
+  const [filterStatus, setFilterStatus] = useOptimisticResult(value || 0, handleStatusChange);
 
   const handleFilterChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const status = Number(e.target.value);
-    const { err } = await handleStatusChange(status);
-    if (!err) {
-      setFilterStatus(status);
-    }
+    setFilterStatus(parseInt(e.target.value));
   }
 
   return (
@@ -26,7 +23,7 @@ const SelectStatusDropdown: FC<SelectStatusDropdownProps> = ({ handleStatusChang
       value={filterStatus}
       onChange={handleFilterChange}
     >
-      <option value="" disabled={mode !== "view"}>
+      <option value={0} disabled={mode !== "view"}>
         Select status
       </option>
       {Object.values(TASK_STATUS).map((status) => (
