@@ -5,6 +5,7 @@ export type Task = {
   status: number;
   due_date: string;
   priority: number;
+  complexity: number;
   CreatedAt: string;
   UpdatedAt: string;
   DeletedAt: string;

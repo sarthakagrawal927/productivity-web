@@ -2,6 +2,7 @@ import { Task } from "@/types";
 import { callApi } from "@/utils/api";
 import React, { useState } from "react";
 import SelectStatusDropdown from "../common/SelectStatusDropdown";
+import { DROP_DOWN_MODE } from "@/utils/constants";
 
 type TaskInput = {
   title: string,
@@ -26,8 +27,8 @@ const TodoForm: React.FC<TodoFormProps> = ({ addNewTask }) => {
     setTask({ ...task, desc: e.target.value });
   }
 
-  const handleStatusChange = async (newStatus: number) => {
-    setTask({ ...task, status: newStatus });
+  const handleStatusChange = async (newValue: number, mode: keyof typeof DROP_DOWN_MODE) => {
+    setTask({ ...task, [mode.toLocaleLowerCase()]: newValue });
     return { err: null, data: null }
   }
 
@@ -72,7 +73,9 @@ const TodoForm: React.FC<TodoFormProps> = ({ addNewTask }) => {
           <label htmlFor="status" className="block text-sm font-medium">
             Status
           </label>
-          <SelectStatusDropdown handleStatusChange={handleStatusChange} />
+          {Object.keys(DROP_DOWN_MODE).map((mode) =>
+            <SelectStatusDropdown key={mode} handleStatusChange={handleStatusChange} dropdownMode={mode as keyof typeof DROP_DOWN_MODE} />
+          )}
         </div>
         <button
           type="submit"
