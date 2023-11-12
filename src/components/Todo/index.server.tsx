@@ -7,8 +7,8 @@ async function getTodo() {
     // This will activate the closest `error.js` Error Boundary
     throw new Error('Failed to fetch data')
   }
-
-  return res.json()
+  const response = await res.json()
+  return response.data
 }
 
 export default async function TodoList() {

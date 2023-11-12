@@ -2,7 +2,6 @@
 import { Task } from '@/types';
 import React from 'react'
 import CreateNew from "./TodoForm";
-import TaskList from './TaskListComponent';
 import TaskListComponent from './TaskListComponent';
 
 const TodoListClient = ({ tasks }: { tasks: Task[] }) => {
