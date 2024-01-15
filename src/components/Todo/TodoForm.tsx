@@ -1,8 +1,8 @@
 import { Task } from "@/types";
 import { callApi } from "@/utils/api";
 import React, { useState } from "react";
-import SelectStatusDropdown from "../common/SelectStatusDropdown";
-import { DROP_DOWN_MODE } from "@/utils/constants";
+import SelectDropdown from "../common/SelectDropdown";
+import { DROPDOWN_MODE_VALUES, DROP_DOWN_MODE } from "@/utils/constants";
 
 type TaskInput = {
   title: string,
@@ -27,9 +27,8 @@ const TodoForm: React.FC<TodoFormProps> = ({ addNewTask }) => {
     setTask({ ...task, desc: e.target.value });
   }
 
-  const handleStatusChange = async (newValue: number, mode: keyof typeof DROP_DOWN_MODE) => {
+  const handleTaskFieldChange = (newValue: number, mode: DROP_DOWN_MODE) => {
     setTask({ ...task, [mode.toLocaleLowerCase()]: newValue });
-    return { err: null, data: null }
   }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -73,8 +72,13 @@ const TodoForm: React.FC<TodoFormProps> = ({ addNewTask }) => {
           <label htmlFor="status" className="block text-sm font-medium">
             Status
           </label>
-          {Object.keys(DROP_DOWN_MODE).map((mode) =>
-            <SelectStatusDropdown key={mode} handleStatusChange={handleStatusChange} dropdownMode={mode as keyof typeof DROP_DOWN_MODE} />
+          {Object.values(DROP_DOWN_MODE).map((mode) =>
+            <SelectDropdown
+              key={mode}
+              containerClassName="w-full"
+              handleValueChange={(newVal: number) => handleTaskFieldChange(newVal, mode)}
+              {...DROPDOWN_MODE_VALUES[mode]}
+            />
           )}
         </div>
         <button

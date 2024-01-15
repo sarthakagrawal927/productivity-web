@@ -1,24 +1,36 @@
 import { Task } from '@/types';
 import React from 'react';
-import SelectStatusDropdown from '../common/SelectStatusDropdown';
-import { DROP_DOWN_MODE } from '@/utils/constants';
+import SelectDropdown from '../common/SelectDropdown';
+import { DROPDOWN_MODE_VALUES, DROP_DOWN_MODE } from '@/utils/constants';
 
 type SingleTaskComponentProps = {
   task: Task;
-  handleStatusChange: (status: number, taskId: number, mode: keyof typeof DROP_DOWN_MODE) => Promise<any>;
+  handleSelectValueChange: (status: number, taskId: number, mode: DROP_DOWN_MODE) => Promise<any>;
   handleDeleteClick: (taskId: number) => Promise<any>;
 }
 
-const SingleTaskComponent: React.FC<SingleTaskComponentProps> = ({ task, handleDeleteClick, handleStatusChange }) => {
+const SingleTaskComponent: React.FC<SingleTaskComponentProps> = ({ task, handleDeleteClick, handleSelectValueChange }) => {
+  const { status, priority, complexity } = task;
+  const INITIAL_VALUE_MAP: { [key in DROP_DOWN_MODE]: number } = {
+    STATUS: status,
+    PRIORITY: priority,
+    COMPLEXITY: complexity,
+  }
+
   return (
     <>
       <div className='flex flex-row justify-between w-full px-4 py-2'>
         <h3 className='text-xl'>{task.title} {task.desc.length > 0 ? `~  ${task.desc}` : ""}</h3>
         <div>
-          {Object.keys(DROP_DOWN_MODE).map((mode) =>
-            <SelectStatusDropdown key={mode} handleStatusChange={async (status: number, mode: keyof typeof DROP_DOWN_MODE) => {
-              return await handleStatusChange(status, task.ID, mode);
-            }} dropdownViewMode="edit" value={task[mode.toLocaleLowerCase()]} dropdownMode={mode as keyof typeof DROP_DOWN_MODE} />
+          {Object.values(DROP_DOWN_MODE).map((mode) =>
+            <SelectDropdown
+              key={mode}
+              handleValueChange={async (status: number) =>
+                await handleSelectValueChange(status, task.ID, mode)
+              }
+              initialValue={INITIAL_VALUE_MAP[mode]}
+              {...DROPDOWN_MODE_VALUES[mode]}
+            />
           )}
           <button className='px-4' onClick={() => handleDeleteClick(task.ID)}>Delete</button>
         </div>

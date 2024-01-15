@@ -1,9 +1,9 @@
 import { Task } from '@/types';
 import React, { Dispatch, SetStateAction, useEffect } from 'react';
-import SelectStatusDropdown from '../common/SelectStatusDropdown';
+import SelectDropdown from '../common/SelectDropdown';
 import SingleTaskComponent from './SingleTaskComponent';
 import { HTTP_METHOD, callApi } from '@/utils/api';
-import { DROP_DOWN_MODE } from '@/utils/constants';
+import { DROPDOWN_MODE_VALUES, DROP_DOWN_MODE } from '@/utils/constants';
 
 type TaskListComponentProps = {
   taskList: Task[];
@@ -22,10 +22,9 @@ const TaskListComponent: React.FC<TaskListComponentProps> = ({ taskList, setTask
     setFilteredValueList()
   }, [taskList]);
 
-  const handleStatusValueChange = async (value: number, mode: keyof typeof DROP_DOWN_MODE) => {
+  const handleFilterSelectChange = (value: number, mode: DROP_DOWN_MODE) => {
     filterStatusRef.current[mode] = value;
     setFilteredValueList();
-    return { err: null, data: null }
   }
 
   const setFilteredValueList = () => {
@@ -36,7 +35,7 @@ const TaskListComponent: React.FC<TaskListComponentProps> = ({ taskList, setTask
     ));
   }
 
-  const handleStatusChange = async (value: number, taskId: number, mode: keyof typeof DROP_DOWN_MODE) => {
+  const handleSelectValueChange = async (value: number, taskId: number, mode: DROP_DOWN_MODE) => {
     const { err } = await callApi(`/api/todo`, { [mode.toLocaleLowerCase()]: value, id: taskId }, HTTP_METHOD.PATCH);
     if (!err) {
       setTaskList(taskList => taskList.map((task) => {
@@ -60,12 +59,13 @@ const TaskListComponent: React.FC<TaskListComponentProps> = ({ taskList, setTask
     <>
       <h1 className='text-3xl'>All Tasks</h1>
       <div className='flex'>
-        {Object.keys(DROP_DOWN_MODE).map((mode) =>
-          <SelectStatusDropdown
+        {Object.values(DROP_DOWN_MODE).map((mode) =>
+          <SelectDropdown
             key={mode}
-            handleStatusChange={handleStatusValueChange}
-            dropdownViewMode="view"
-            dropdownMode={mode as keyof typeof DROP_DOWN_MODE}
+            clearable
+            handleValueChange={(status: number) => handleFilterSelectChange(status, mode)}
+            enableDefault
+            {...DROPDOWN_MODE_VALUES[mode]}
           />
         )}
       </div>
@@ -73,7 +73,7 @@ const TaskListComponent: React.FC<TaskListComponentProps> = ({ taskList, setTask
         <SingleTaskComponent
           task={task}
           key={`${task.ID}_${task.title}_${idx}`}
-          handleStatusChange={handleStatusChange}
+          handleSelectValueChange={handleSelectValueChange}
           handleDeleteClick={handleDeleteClick} />
       ))}
     </>
