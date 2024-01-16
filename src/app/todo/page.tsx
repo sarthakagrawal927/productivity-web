@@ -11,8 +11,6 @@ async function getTodo() {
 export default async function Home() {
   const tasks: Task[] = await getTodo()
   return (
-    <main className="flex min-h-screen flex-col items-center py-24">
-      <TodoListClient tasks={tasks} />
-    </main>
+    <TodoListClient tasks={tasks} />
   )
 }
