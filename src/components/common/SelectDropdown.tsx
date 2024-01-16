@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import useOptimisticResult from '@/hooks/useOptimisticResult';
 import cn from 'classnames';
+import { DropdownOption } from '@/types';
 
 type SelectDropdownProps = {
   handleValueChange: ((value: number) => Promise<{ err: any }> | void);
@@ -8,9 +9,8 @@ type SelectDropdownProps = {
   clearable?: boolean;
   initialValue?: number;
   enableDefault?: boolean;
-  valueMap: { [key: string]: number };
-  labelMap: { [key: string]: string };
-  defaultLabel: string;
+  optionList: DropdownOption[];
+  defaultOption: DropdownOption;
 }
 
 const SelectDropdown: FC<SelectDropdownProps> = ({
@@ -19,9 +19,8 @@ const SelectDropdown: FC<SelectDropdownProps> = ({
   clearable = false,
   containerClassName = '',
   enableDefault = false,
-  valueMap,
-  labelMap,
-  defaultLabel = 'Select',
+  optionList,
+  defaultOption = { label: 'Select', value: 0 },
 }) => {
 
   const [dropdownValue, setDropdownValue] = useOptimisticResult(initialValue || 0, handleValueChange);
@@ -38,14 +37,15 @@ const SelectDropdown: FC<SelectDropdownProps> = ({
         value={dropdownValue}
         onChange={handleFilterChange}
       >
-        <option value={0} disabled={!enableDefault}>
-          {defaultLabel}
+        <option value={defaultOption.label} disabled={!enableDefault}>
+          {defaultOption.label}
         </option>
-        {Object.values(valueMap).map((status) => (
-          <option key={status} value={status}>
-            {labelMap[status]}
-          </option>
-        ))
+        {
+          optionList.map(({ value, label }) => (
+            <option key={value} value={value}>
+              {label}
+            </option>
+          ))
         }
       </select>
       {clearable && <div onClick={() => { setDropdownValue(0) }}>Clear</div>}

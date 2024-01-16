@@ -1,3 +1,5 @@
+import { DropdownOption } from "@/types"
+
 export const TASK_STATUS = {
   TODO: 1,
   IN_PROGRESS: 2,
@@ -44,24 +46,42 @@ export const COMPLEXITY_TO_LABEL: { [complexity: number]: string } = {
 
 export const DROPDOWN_MODE_VALUES: {
   [mode: string]: {
-    labelMap: { [key: number]: string };
-    valueMap: { [key: string]: number };
-    defaultLabel: string;
+    defaultOption: DropdownOption;
+    optionList: DropdownOption[];
   }
 } = {
   [DROP_DOWN_MODE.STATUS]: {
-    labelMap: TASK_STATUS_TO_LABEL,
-    valueMap: TASK_STATUS,
-    defaultLabel: "Select status",
+    defaultOption: {
+      value: 0,
+      label: "Select status"
+    },
+    optionList: [
+      { value: TASK_STATUS.TODO, label: TASK_STATUS_TO_LABEL[TASK_STATUS.TODO] },
+      { value: TASK_STATUS.IN_PROGRESS, label: TASK_STATUS_TO_LABEL[TASK_STATUS.IN_PROGRESS] },
+      { value: TASK_STATUS.DONE, label: TASK_STATUS_TO_LABEL[TASK_STATUS.DONE] },
+      { value: TASK_STATUS.BACKLOG, label: TASK_STATUS_TO_LABEL[TASK_STATUS.BACKLOG] },
+    ],
   },
   [DROP_DOWN_MODE.PRIORITY]: {
-    labelMap: PRIORITY_TO_LABEL,
-    valueMap: PRIORITY,
-    defaultLabel: "Select priority",
+    defaultOption: {
+      value: 0,
+      label: "Select priority"
+    },
+    optionList: [
+      { value: PRIORITY.LOW, label: PRIORITY_TO_LABEL[PRIORITY.LOW] },
+      { value: PRIORITY.MEDIUM, label: PRIORITY_TO_LABEL[PRIORITY.MEDIUM] },
+      { value: PRIORITY.HIGH, label: PRIORITY_TO_LABEL[PRIORITY.HIGH] },
+    ]
   },
   [DROP_DOWN_MODE.COMPLEXITY]: {
-    labelMap: COMPLEXITY_TO_LABEL,
-    valueMap: COMPLEXITY,
-    defaultLabel: "Select complexity",
+    defaultOption: {
+      value: 0,
+      label: "Select complexity"
+    },
+    optionList: [
+      { value: COMPLEXITY.LOW, label: COMPLEXITY_TO_LABEL[COMPLEXITY.LOW] },
+      { value: COMPLEXITY.MEDIUM, label: COMPLEXITY_TO_LABEL[COMPLEXITY.MEDIUM] },
+      { value: COMPLEXITY.HIGH, label: COMPLEXITY_TO_LABEL[COMPLEXITY.HIGH] },
+    ]
   }
 };

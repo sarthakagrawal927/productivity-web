@@ -9,11 +9,6 @@ export const HTTP_METHOD = {
   DELETE: "DELETE",
 }
 
-export const get = async (url: string) => {
-  const response = await axios.get(`${baseUrl}${url}`);
-  return response.data;
-};
-
 export const convertToFormData = (body: any) => {
   const formData = new FormData();
   Object.keys(body).filter(key => !!body[key]).forEach((key) => formData.append(key, body[key]));
@@ -29,3 +24,5 @@ export const callApi = async (url: string, body: any, method = HTTP_METHOD.POST)
     return {data: null, err: (err as AxiosError).response}
   }
 };
+
+// add caching call, when you think of use-case

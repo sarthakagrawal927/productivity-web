@@ -10,3 +10,8 @@ export type Task = {
   UpdatedAt: string;
   DeletedAt: string;
 }
+
+export type DropdownOption = {
+  value: number;
+  label: string;
+}
