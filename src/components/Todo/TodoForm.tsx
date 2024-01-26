@@ -3,6 +3,7 @@ import { callApi } from "@/utils/api";
 import React, { useState } from "react";
 import SelectDropdown from "../common/SelectDropdown";
 import { DROPDOWN_MODE_VALUES, DROP_DOWN_MODE } from "@/utils/constants";
+import TitleDescriptionInput, { SetEntityDispatch } from "../common/TitleDescriptionInput";
 
 type TaskInput = {
   title: string,
@@ -19,16 +20,8 @@ const defaultTaskInput = {
 const TodoForm: React.FC<TodoFormProps> = ({ addNewTask }) => {
   const [task, setTask] = useState<TaskInput>(defaultTaskInput);
 
-  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTask({ ...task, title: e.target.value });
-  };
-
-  const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setTask({ ...task, desc: e.target.value });
-  }
-
-  const handleTaskFieldChange = (newValue: number, mode: DROP_DOWN_MODE) => {
-    setTask({ ...task, [mode.toLocaleLowerCase()]: newValue });
+  const handleTaskFieldChange = (key: string, newValue: any) => {
+    setTask({ ...task, [key]: newValue });
   }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -43,31 +36,11 @@ const TodoForm: React.FC<TodoFormProps> = ({ addNewTask }) => {
     <div className="w-full max-w-md mx-auto p-6 bg-gray-900 text-white rounded-lg shadow-lg">
       <h2 className="text-2xl font-semibold mb-4">Add a To-Do</h2>
       <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label htmlFor="title" className="block text-sm font-medium">
-            Title
-          </label>
-          <input
-            type="text"
-            id="task"
-            className="w-full p-2 bg-gray-800 text-white border rounded focus:outline-none focus:ring focus:border-blue-300"
-            value={task.title}
-            onChange={handleTitleChange}
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="description" className="block text-sm font-medium">
-            Description
-          </label>
-          <textarea
-            id="description"
-            className="w-full p-2 bg-gray-800 text-white border rounded focus:outline-none focus:ring focus:border-blue-300"
-            value={task.desc}
-            onChange={handleDescriptionChange}
-            required
-          />
-        </div>
+        <TitleDescriptionInput
+          title={task.title}
+          desc={task.desc}
+          setEntity={setTask as SetEntityDispatch}
+        />
         <div className="mb-4">
           <label htmlFor="status" className="block text-sm font-medium">
             Status
@@ -76,7 +49,7 @@ const TodoForm: React.FC<TodoFormProps> = ({ addNewTask }) => {
             <SelectDropdown
               key={mode}
               containerClassName="w-full"
-              handleValueChange={(newVal: number) => handleTaskFieldChange(newVal, mode)}
+              handleValueChange={(newVal: number) => handleTaskFieldChange(mode.toLocaleLowerCase(), newVal)}
               {...DROPDOWN_MODE_VALUES[mode]}
             />
           )}
