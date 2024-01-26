@@ -1,20 +1,21 @@
 import { Task } from "@/types";
 import { callApi } from "@/utils/api";
+import { DROPDOWN_MODE_VALUES, TODO_DROWN_DONE_MODE } from "@/utils/constants";
 import React, { useState } from "react";
 import SelectDropdown from "../common/SelectDropdown";
-import { DROPDOWN_MODE_VALUES, DROP_DOWN_MODE } from "@/utils/constants";
 import TitleDescriptionInput, { SetEntityDispatch } from "../common/TitleDescriptionInput";
 
 type TaskInput = {
   title: string,
   desc: string,
-  status: number | undefined,
+  status?: number,
+  complexity?: number,
+  priority?: number,
 }
 
 const defaultTaskInput = {
   title: "",
   desc: "",
-  status: undefined,
 }
 
 const TodoForm: React.FC<TodoFormProps> = ({ addNewTask }) => {
@@ -29,7 +30,7 @@ const TodoForm: React.FC<TodoFormProps> = ({ addNewTask }) => {
     callApi("/api/todo", task).then(({ data }) => {
       addNewTask(data.data);
     })
-    setTask(defaultTaskInput);
+    setTask({ ...task, ...defaultTaskInput });
   }
 
   return (
@@ -45,7 +46,7 @@ const TodoForm: React.FC<TodoFormProps> = ({ addNewTask }) => {
           <label htmlFor="status" className="block text-sm font-medium">
             Status
           </label>
-          {Object.values(DROP_DOWN_MODE).map((mode) =>
+          {Object.values(TODO_DROWN_DONE_MODE).map((mode) =>
             <SelectDropdown
               key={mode}
               containerClassName="w-full"

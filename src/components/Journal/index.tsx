@@ -1,11 +1,19 @@
+"use client"
 import { Journal } from '@/types';
-import React from 'react';
+import React, { useState } from 'react';
+import JournalForm from './JournalForm';
 
-const HabitClient = (props: { journalEntries: Journal[] }) => {
+const HabitClient = ({ journalEntries }: { journalEntries: Journal[] }) => {
+  const [journalEntriesList, setJournalEntriesList] = useState<Journal[]>(journalEntries);
+
+  const addNewJournalEntry = (newJournalEntry: Journal) => {
+    setJournalEntriesList([...journalEntriesList, newJournalEntry]);
+  }
+
   return (
     <>
-      hi
-      {props.journalEntries.map((entry: Journal) => {
+      <JournalForm addNewEntry={addNewJournalEntry} />
+      {journalEntriesList.map((entry: Journal) => {
         return <p key={entry.ID}>Entry: {entry.title}</p>
       })}
     </>

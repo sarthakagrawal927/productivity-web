@@ -3,7 +3,7 @@ import React, { Dispatch, SetStateAction, useEffect } from 'react';
 import SelectDropdown from '../common/SelectDropdown';
 import SingleTaskComponent from './SingleTaskComponent';
 import { HTTP_METHOD, callApi } from '@/utils/api';
-import { DROPDOWN_MODE_VALUES, DROP_DOWN_MODE } from '@/utils/constants';
+import { DROPDOWN_MODE_VALUES, TODO_DROWN_DONE_MODE } from '@/utils/constants';
 
 type TaskListComponentProps = {
   taskList: Task[];
@@ -22,7 +22,7 @@ const TaskListComponent: React.FC<TaskListComponentProps> = ({ taskList, setTask
     setFilteredValueList()
   }, [taskList]);
 
-  const handleFilterSelectChange = (value: number, mode: DROP_DOWN_MODE) => {
+  const handleFilterSelectChange = (value: number, mode: TODO_DROWN_DONE_MODE) => {
     filterStatusRef.current[mode] = value;
     setFilteredValueList();
   }
@@ -35,7 +35,7 @@ const TaskListComponent: React.FC<TaskListComponentProps> = ({ taskList, setTask
     ));
   }
 
-  const handleSelectValueChange = async (value: number, taskId: number, mode: DROP_DOWN_MODE) => {
+  const handleSelectValueChange = async (value: number, taskId: number, mode: TODO_DROWN_DONE_MODE) => {
     const { err } = await callApi(`/api/todo`, { [mode.toLocaleLowerCase()]: value, id: taskId }, HTTP_METHOD.PATCH);
     if (!err) {
       setTaskList(taskList => taskList.map((task) => {
@@ -59,7 +59,7 @@ const TaskListComponent: React.FC<TaskListComponentProps> = ({ taskList, setTask
     <>
       <h1 className='text-3xl'>All Tasks</h1>
       <div className='flex'>
-        {Object.values(DROP_DOWN_MODE).map((mode) =>
+        {Object.values(TODO_DROWN_DONE_MODE).map((mode) =>
           <SelectDropdown
             key={mode}
             clearable

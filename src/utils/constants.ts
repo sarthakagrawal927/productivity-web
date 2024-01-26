@@ -19,10 +19,23 @@ export const COMPLEXITY = {
   HIGH: 3
 }
 
-export enum DROP_DOWN_MODE {
+export const JOURNAL_TYPE = {
+  IDEA: 1,
+  GRATITUDE: 2,
+  MIND_CLEAR: 3,
+  DAY_PLANNING: 4,
+  DAY_WRAP: 5,
+  EVENT: 6
+}
+
+export enum TODO_DROWN_DONE_MODE {
   PRIORITY = 'PRIORITY',
   COMPLEXITY = 'COMPLEXITY',
-  STATUS = 'STATUS'
+  STATUS = 'STATUS',
+}
+
+export enum JOURNAL_DROP_DOWN_MODE_ENUM {
+  JOURNAL_TYPE = 'JOURNAL_TYPE'
 }
 
 export const TASK_STATUS_TO_LABEL : {[status: number]: string} = {
@@ -50,7 +63,7 @@ export const DROPDOWN_MODE_VALUES: {
     optionList: DropdownOption[];
   }
 } = {
-  [DROP_DOWN_MODE.STATUS]: {
+  [TODO_DROWN_DONE_MODE.STATUS]: {
     defaultOption: {
       value: 0,
       label: "Select status"
@@ -62,7 +75,7 @@ export const DROPDOWN_MODE_VALUES: {
       { value: TASK_STATUS.BACKLOG, label: TASK_STATUS_TO_LABEL[TASK_STATUS.BACKLOG] },
     ],
   },
-  [DROP_DOWN_MODE.PRIORITY]: {
+  [TODO_DROWN_DONE_MODE.PRIORITY]: {
     defaultOption: {
       value: 0,
       label: "Select priority"
@@ -73,7 +86,7 @@ export const DROPDOWN_MODE_VALUES: {
       { value: PRIORITY.HIGH, label: PRIORITY_TO_LABEL[PRIORITY.HIGH] },
     ]
   },
-  [DROP_DOWN_MODE.COMPLEXITY]: {
+  [TODO_DROWN_DONE_MODE.COMPLEXITY]: {
     defaultOption: {
       value: 0,
       label: "Select complexity"
@@ -82,6 +95,20 @@ export const DROPDOWN_MODE_VALUES: {
       { value: COMPLEXITY.LOW, label: COMPLEXITY_TO_LABEL[COMPLEXITY.LOW] },
       { value: COMPLEXITY.MEDIUM, label: COMPLEXITY_TO_LABEL[COMPLEXITY.MEDIUM] },
       { value: COMPLEXITY.HIGH, label: COMPLEXITY_TO_LABEL[COMPLEXITY.HIGH] },
+    ]
+  },
+  [JOURNAL_DROP_DOWN_MODE_ENUM.JOURNAL_TYPE]: {
+    defaultOption: {
+      value: 0,
+      label: "Select journal type"
+    },
+    optionList: [
+      { value: JOURNAL_TYPE.IDEA, label: 'Idea' },
+      { value: JOURNAL_TYPE.GRATITUDE, label: 'Gratitude' },
+      { value: JOURNAL_TYPE.MIND_CLEAR, label: 'Mind Clear' },
+      { value: JOURNAL_TYPE.DAY_PLANNING, label: 'Day Planning' },
+      { value: JOURNAL_TYPE.DAY_WRAP, label: 'Day Wrap' },
+      { value: JOURNAL_TYPE.EVENT, label: 'Event' },
     ]
   }
 };
