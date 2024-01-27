@@ -11,7 +11,7 @@ export const HTTP_METHOD = {
 
 export const convertToFormData = (body: any) => {
   const formData = new FormData();
-  Object.keys(body).filter(key => !!body[key]).forEach((key) => formData.append(key, body[key]));
+  Object.keys(body).filter(key => body[key] !== null).forEach((key) => formData.append(key, body[key]));
   return formData;
 }
 
@@ -24,5 +24,14 @@ export const callApi = async (url: string, body: any, method = HTTP_METHOD.POST)
     return {data: null, err: (err as AxiosError).response}
   }
 };
+
+export const baseServerSideFetch = async (endpoint: string, queryParams?: {[key : string]: any}) => {
+  if (endpoint.length === 0) {
+    throw new Error("Endpoint is required");
+  }
+  const { data, err } = await callApi(endpoint, {}, HTTP_METHOD.GET)
+  if (err) throw new Error(err.statusText);
+  return data.data;
+}
 
 // add caching call, when you think of use-case

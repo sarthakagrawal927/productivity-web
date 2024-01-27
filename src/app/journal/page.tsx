@@ -1,15 +1,9 @@
 import JournalComponent from '@/components/Journal/index';
 import { Journal } from '@/types';
-import { HTTP_METHOD, callApi } from '@/utils/api';
+import { baseServerSideFetch } from '@/utils/api';
 
-async function getJournals() {
-  const { data, err } = await callApi('/api/journal', {}, HTTP_METHOD.GET)
-  if (err) throw new Error(err.statusText);
-  return data.data
-}
-
-export default async function Home() {
-  const journalEntries: Journal[] = await getJournals();
+export default async function Journal() {
+  const journalEntries: Journal[] = await baseServerSideFetch('/api/journal');
   return (
     <JournalComponent journalEntries={journalEntries} />
   )

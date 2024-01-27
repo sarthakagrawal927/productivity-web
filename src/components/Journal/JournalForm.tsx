@@ -2,7 +2,7 @@ import { callApi } from '@/utils/api';
 import React, { useState } from 'react';
 import TitleDescriptionInput, { SetEntityDispatch } from '../common/TitleDescriptionInput';
 import SelectDropdown from '../common/SelectDropdown';
-import { DROPDOWN_MODE_VALUES, JOURNAL_DROP_DOWN_MODE_ENUM, JOURNAL_TYPE } from '@/utils/constants';
+import { DROPDOWN_MODE_VALUES, JOURNAL_DROPDOWN_MODE, JOURNAL_TYPE } from '@/utils/constants';
 import { Journal } from '@/types';
 
 type JournalInput = {
@@ -41,7 +41,7 @@ const JournalForm: React.FC<JournalFormProps> = ({ addNewEntry }) => {
       <SelectDropdown
         key={"journal"}
         handleValueChange={(newVal: number) => handleJournalFieldChange("type", newVal)}
-        {...DROPDOWN_MODE_VALUES[JOURNAL_DROP_DOWN_MODE_ENUM.JOURNAL_TYPE]}
+        {...DROPDOWN_MODE_VALUES[JOURNAL_DROPDOWN_MODE.TYPE]}
       />
       <button
         type="submit"

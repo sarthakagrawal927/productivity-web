@@ -1,6 +1,6 @@
 import { Task } from "@/types";
 import { callApi } from "@/utils/api";
-import { DROPDOWN_MODE_VALUES, TODO_DROWN_DONE_MODE } from "@/utils/constants";
+import { DROPDOWN_MODE_VALUES, TODO_DROPDOWN_MODE } from "@/utils/constants";
 import React, { useState } from "react";
 import SelectDropdown from "../common/SelectDropdown";
 import TitleDescriptionInput, { SetEntityDispatch } from "../common/TitleDescriptionInput";
@@ -46,7 +46,7 @@ const TodoForm: React.FC<TodoFormProps> = ({ addNewTask }) => {
           <label htmlFor="status" className="block text-sm font-medium">
             Status
           </label>
-          {Object.values(TODO_DROWN_DONE_MODE).map((mode) =>
+          {Object.values(TODO_DROPDOWN_MODE).map((mode) =>
             <SelectDropdown
               key={mode}
               containerClassName="w-full"

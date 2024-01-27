@@ -1,15 +1,9 @@
 import TodoListClient from '@/components/Todo/index';
 import { Task } from '@/types';
-import { HTTP_METHOD, callApi } from "@/utils/api";
+import { baseServerSideFetch } from "@/utils/api";
 
-async function getTodo() {
-  const { data, err } = await callApi('/api/todo', {}, HTTP_METHOD.GET)
-  if (err) throw new Error(err.statusText);
-  return data.data;
-}
-
-export default async function Home() {
-  const tasks: Task[] = await getTodo()
+export default async function Todo() {
+  const tasks: Task[] = await baseServerSideFetch('/api/todo')
   return (
     <TodoListClient tasks={tasks} />
   )
