@@ -29,6 +29,9 @@ export const baseServerSideFetch = async (endpoint: string, queryParams?: {[key 
   if (endpoint.length === 0) {
     throw new Error("Endpoint is required");
   }
+  if (Object.keys(queryParams || {}).length > 0) { 
+    // TODO: add query params
+  }
   const { data, err } = await callApi(endpoint, {}, HTTP_METHOD.GET)
   if (err) throw new Error(err.statusText);
   return data.data;
