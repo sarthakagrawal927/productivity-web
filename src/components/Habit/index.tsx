@@ -13,6 +13,11 @@ const HabitList = ({ habits }: { habits: Habit[] }) => {
   return (
     <>
       <HabitForm addNewHabit={addNewHabit} />
+      <ul>
+        {habitList.map((habit) => (
+          <li key={habit.ID}>{habit.title}</li>
+        ))}
+      </ul>
     </>
   );
 };

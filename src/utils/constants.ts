@@ -154,7 +154,7 @@ export const HABIT_DROPDOWN_MODE_VALUES = {
       label: "Select mode"
     },
     optionList: [
-      { value: HABIT_MODE.TIME, label: 'Time' },
+      { value: HABIT_MODE.TIME, label: 'Time (Minutes)' },
       { value: HABIT_MODE.COUNT, label: 'Count' },
     ]
   }
