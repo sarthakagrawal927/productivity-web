@@ -4,7 +4,7 @@ import cn from 'classnames';
 import { DropdownOption } from '@/types';
 
 type SelectDropdownProps = {
-  handleValueChange: ((value: number) => Promise<{ err: any }> | void);
+  handleValueChange: ((value: number) => Promise<{ err: Error }> | void);
   containerClassName?: string;
   clearable?: boolean;
   initialValue?: number;

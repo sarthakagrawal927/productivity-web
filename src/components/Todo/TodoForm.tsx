@@ -1,4 +1,4 @@
-import { Task } from "@/types";
+import { NumORStr, Task } from "@/types";
 import { callApi } from "@/utils/api";
 import { DROPDOWN_MODE_VALUES, TODO_DROPDOWN_MODE } from "@/utils/constants";
 import React, { useState } from "react";
@@ -21,7 +21,7 @@ const defaultTaskInput = {
 const TodoForm: React.FC<TodoFormProps> = ({ addNewTask }) => {
   const [task, setTask] = useState<TaskInput>(defaultTaskInput);
 
-  const handleTaskFieldChange = (key: string, newValue: any) => {
+  const handleTaskFieldChange = (key: string, newValue: NumORStr) => {
     setTask({ ...task, [key]: newValue });
   }
 

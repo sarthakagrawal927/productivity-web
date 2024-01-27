@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import TitleDescriptionInput, { SetEntityDispatch } from '../common/TitleDescriptionInput';
 import SelectDropdown from '../common/SelectDropdown';
 import { DROPDOWN_MODE_VALUES, JOURNAL_DROPDOWN_MODE, JOURNAL_TYPE } from '@/utils/constants';
-import { Journal } from '@/types';
+import { Journal, NumORStr } from '@/types';
 
 type JournalInput = {
   title: string;
@@ -19,7 +19,7 @@ const defaultJournalInput: JournalInput = {
 const JournalForm: React.FC<JournalFormProps> = ({ addNewEntry }) => {
   const [journalInput, setJournalInput] = useState(defaultJournalInput);
 
-  const handleJournalFieldChange = (key: string, newValue: any) => {
+  const handleJournalFieldChange = (key: string, newValue: NumORStr) => {
     setJournalInput({ ...journalInput, [key]: newValue });
   }
 

@@ -1,9 +1,10 @@
+import { NumORStr } from '@/types';
 import React, { Dispatch } from 'react';
 
 export type SetEntityDispatch = Dispatch<React.SetStateAction<{
   title: string;
   desc: string;
-} & { [key: string]: any }>>
+} & { [key: string]: NumORStr | boolean }>>
 
 const TitleDescriptionInput = ({ title, desc, setEntity }: {
   title: string;

@@ -5,8 +5,8 @@ import { DROPDOWN_MODE_VALUES, TODO_DROPDOWN_MODE } from '@/utils/constants';
 
 type SingleTaskComponentProps = {
   task: Task;
-  handleSelectValueChange: (status: number, taskId: number, mode: TODO_DROPDOWN_MODE) => Promise<any>;
-  handleDeleteClick: (taskId: number) => Promise<any>;
+  handleSelectValueChange: (status: number, taskId: number, mode: TODO_DROPDOWN_MODE) => Promise<{ err: Error }>;
+  handleDeleteClick: (taskId: number) => Promise<void>;
 }
 
 const SingleTaskComponent: React.FC<SingleTaskComponentProps> = ({ task, handleDeleteClick, handleSelectValueChange }) => {

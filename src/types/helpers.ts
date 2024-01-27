@@ -11,3 +11,5 @@ export type BaseType = {
   UpdatedAt: string;
   DeletedAt: string;
 }
+
+export type NumORStr = number | string;

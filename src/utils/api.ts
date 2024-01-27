@@ -25,7 +25,7 @@ export const callApi = async (url: string, body: any, method = HTTP_METHOD.POST)
   }
 };
 
-export const baseServerSideFetch = async (endpoint: string, queryParams?: {[key : string]: any}) => {
+export const baseServerSideFetch = async (endpoint: string, queryParams?: {[key : string]: string}) => {
   if (endpoint.length === 0) {
     throw new Error("Endpoint is required");
   }

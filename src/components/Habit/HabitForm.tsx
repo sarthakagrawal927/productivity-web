@@ -1,4 +1,4 @@
-import { Habit } from '@/types';
+import { Habit, NumORStr } from '@/types';
 import { callApi } from '@/utils/api';
 import React from 'react';
 import TitleDescriptionInput, { SetEntityDispatch } from '../common/TitleDescriptionInput';
@@ -24,7 +24,7 @@ const defaultHabitInput = {
 const HabitForm: React.FC<HabitFormProps> = ({ addNewHabit }) => {
   const [habit, setHabit] = React.useState<HabitInput>(defaultHabitInput);
 
-  const handleHabitFieldChange = (key: string, newValue: any) => {
+  const handleHabitFieldChange = (key: string, newValue: NumORStr) => {
     setHabit({ ...habit, [key]: newValue });
   }
 
