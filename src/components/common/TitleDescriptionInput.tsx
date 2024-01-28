@@ -33,11 +33,9 @@ const TitleDescriptionInput = ({ title, desc, setEntity }: {
   return (
     <>
       <div className="mb-4">
-        <label htmlFor="title" className="block text-sm font-medium">
-          Title
-        </label>
         <input
           type="text"
+          placeholder='Title'
           id="task"
           className="w-full p-2 bg-gray-800 text-white border rounded focus:outline-none focus:ring focus:border-blue-300"
           value={title}
@@ -46,11 +44,9 @@ const TitleDescriptionInput = ({ title, desc, setEntity }: {
         />
       </div>
       <div className="mb-4">
-        <label htmlFor="description" className="block text-sm font-medium">
-          Description
-        </label>
         <textarea
           id="description"
+          placeholder='Description'
           className="w-full p-2 bg-gray-800 text-white border rounded focus:outline-none focus:ring focus:border-blue-300"
           value={desc}
           onChange={handleDescChange}

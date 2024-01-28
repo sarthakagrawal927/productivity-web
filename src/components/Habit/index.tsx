@@ -2,6 +2,7 @@
 import { Habit } from '@/types';
 import React from 'react';
 import HabitForm from './HabitForm';
+import Consumables from './Consumables';
 
 const HabitList = ({ habits }: { habits: Habit[] }) => {
   const [habitList, setHabitList] = React.useState<Habit[]>(habits);
@@ -18,6 +19,7 @@ const HabitList = ({ habits }: { habits: Habit[] }) => {
           <li key={habit.ID}>{habit.title}</li>
         ))}
       </ul>
+      <Consumables />
     </>
   );
 };
