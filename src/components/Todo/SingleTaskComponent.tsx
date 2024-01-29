@@ -5,7 +5,7 @@ import { DROPDOWN_MODE_VALUES, TODO_DROPDOWN_MODE } from '@/utils/constants';
 
 type SingleTaskComponentProps = {
   task: Task;
-  handleSelectValueChange: (status: number, taskId: number, mode: TODO_DROPDOWN_MODE) => Promise<{ err: Error }>;
+  handleSelectValueChange: (status: number, taskId: number, mode: TODO_DROPDOWN_MODE) => Promise<{ err?: Error }>;
   handleDeleteClick: (taskId: number) => Promise<void>;
 }
 
@@ -20,17 +20,21 @@ const SingleTaskComponent: React.FC<SingleTaskComponentProps> = ({ task, handleD
   return (
     <>
       <div className='flex flex-row justify-between w-full px-4 py-2'>
-        <h3 className='text-xl'>{task.title} {task.desc.length > 0 ? `~  ${task.desc}` : ""}</h3>
+        <span>
+          <span className='text-xl'>{task.title}</span>
+          <span className='text-l text-slate-400 pl-2'>{task.desc.length > 0 ? ` ${task.desc}` : ""}</span>
+        </span>
         <div>
           {Object.values(TODO_DROPDOWN_MODE).map((mode) =>
-            <SelectDropdown
-              key={mode}
-              handleValueChange={async (status: number) =>
-                await handleSelectValueChange(status, task.ID, mode)
-              }
-              initialValue={INITIAL_VALUE_MAP[mode]}
-              {...DROPDOWN_MODE_VALUES[mode]}
-            />
+            <span key={mode} className='px-2'>
+              <SelectDropdown
+                handleValueChange={async (status: number) =>
+                  await handleSelectValueChange(status, task.ID, mode)
+                }
+                initialValue={INITIAL_VALUE_MAP[mode]}
+                {...DROPDOWN_MODE_VALUES[mode]}
+              />
+            </span>
           )}
           <button className='px-4' onClick={() => handleDeleteClick(task.ID)}>Delete</button>
         </div>

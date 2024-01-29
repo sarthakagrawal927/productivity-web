@@ -33,7 +33,7 @@ const JournalForm: React.FC<JournalFormProps> = ({ addNewEntry }) => {
   }, [journalInput, addNewEntry])
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className='w-full'>
       <TitleDescriptionInput
         title={journalInput.title}
         desc={journalInput.desc}
@@ -46,7 +46,7 @@ const JournalForm: React.FC<JournalFormProps> = ({ addNewEntry }) => {
       />
       <button
         type="submit"
-        className="btn btn-primary"
+        className="btn btn-primary ml-4"
       >
         Add Journal Entry
       </button>

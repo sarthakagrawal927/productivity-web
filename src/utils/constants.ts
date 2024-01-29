@@ -6,15 +6,17 @@ export const TASK_STATUS = {
 }
 
 export const PRIORITY = {
-  LOW: 1,
-  MEDIUM: 2,
-  HIGH: 3
+  NO: 1,
+  LOW: 2,
+  MEDIUM: 3,
+  HIGH: 4
 }
 
 export const COMPLEXITY = {
-  LOW: 1,
-  MEDIUM: 2,
-  HIGH: 3
+  NO: 1,
+  LOW: 2,
+  MEDIUM: 3,
+  HIGH: 4
 }
 
 export const JOURNAL_TYPE = {
@@ -23,7 +25,8 @@ export const JOURNAL_TYPE = {
   MIND_CLEAR: 3,
   DAY_PLANNING: 4,
   DAY_WRAP: 5,
-  EVENT: 6
+  EVENT: 6,
+  FOOD_LOG: 7,
 }
 
 export const HABIT_FREQUENCY_TYPE = {
@@ -64,17 +67,29 @@ export const TASK_STATUS_TO_LABEL : {[status: number]: string} = {
   [TASK_STATUS.BACKLOG]: 'Backlog'
 }
 
-export const PRIORITY_TO_LABEL : {[priority: number]: string} = {
+export const PRIORITY_TO_LABEL: { [priority: number]: string } = {
+  [PRIORITY.NO]: 'No Priority',
   [PRIORITY.LOW]: 'Low',
   [PRIORITY.MEDIUM]: 'Medium',
   [PRIORITY.HIGH]: 'High'
 }
 
 export const COMPLEXITY_TO_LABEL: { [complexity: number]: string } = {
+  [COMPLEXITY.NO]: 'Complexity not set',
   [COMPLEXITY.LOW]: 'Low',
   [COMPLEXITY.MEDIUM]: 'Medium',
   [COMPLEXITY.HIGH]: 'High'
 };
+
+export const JOURNAL_TYPE_TO_LABEL: { [type: number]: string } = {
+  [JOURNAL_TYPE.IDEA]: 'Idea',
+  [JOURNAL_TYPE.GRATITUDE]: 'Gratitude',
+  [JOURNAL_TYPE.MIND_CLEAR]: 'Mind Clear',
+  [JOURNAL_TYPE.DAY_PLANNING]: 'Day Planning',
+  [JOURNAL_TYPE.DAY_WRAP]: 'Day Wrap',
+  [JOURNAL_TYPE.EVENT]: 'Event',
+  [JOURNAL_TYPE.FOOD_LOG]: 'Food Log'
+}
 
 export const DROPDOWN_MODE_VALUES = {
   [TODO_DROPDOWN_MODE.STATUS]: {
@@ -95,6 +110,7 @@ export const DROPDOWN_MODE_VALUES = {
       label: "Select priority"
     },
     optionList: [
+      { value: PRIORITY.NO, label: PRIORITY_TO_LABEL[PRIORITY.NO] },
       { value: PRIORITY.LOW, label: PRIORITY_TO_LABEL[PRIORITY.LOW] },
       { value: PRIORITY.MEDIUM, label: PRIORITY_TO_LABEL[PRIORITY.MEDIUM] },
       { value: PRIORITY.HIGH, label: PRIORITY_TO_LABEL[PRIORITY.HIGH] },
@@ -109,6 +125,7 @@ export const DROPDOWN_MODE_VALUES = {
       { value: COMPLEXITY.LOW, label: COMPLEXITY_TO_LABEL[COMPLEXITY.LOW] },
       { value: COMPLEXITY.MEDIUM, label: COMPLEXITY_TO_LABEL[COMPLEXITY.MEDIUM] },
       { value: COMPLEXITY.HIGH, label: COMPLEXITY_TO_LABEL[COMPLEXITY.HIGH] },
+      { value: COMPLEXITY.NO, label: COMPLEXITY_TO_LABEL[COMPLEXITY.NO]}
     ]
   },
   [JOURNAL_DROPDOWN_MODE.TYPE]: {
@@ -117,12 +134,13 @@ export const DROPDOWN_MODE_VALUES = {
       label: "Select journal type"
     },
     optionList: [
-      { value: JOURNAL_TYPE.IDEA, label: 'Idea' },
-      { value: JOURNAL_TYPE.GRATITUDE, label: 'Gratitude' },
-      { value: JOURNAL_TYPE.MIND_CLEAR, label: 'Mind Clear' },
-      { value: JOURNAL_TYPE.DAY_PLANNING, label: 'Day Planning' },
-      { value: JOURNAL_TYPE.DAY_WRAP, label: 'Day Wrap' },
-      { value: JOURNAL_TYPE.EVENT, label: 'Event' },
+      { value: JOURNAL_TYPE.IDEA, label: JOURNAL_TYPE_TO_LABEL[JOURNAL_TYPE.IDEA] },
+      { value: JOURNAL_TYPE.GRATITUDE, label: JOURNAL_TYPE_TO_LABEL[JOURNAL_TYPE.GRATITUDE] },
+      { value: JOURNAL_TYPE.MIND_CLEAR, label: JOURNAL_TYPE_TO_LABEL[JOURNAL_TYPE.MIND_CLEAR] },
+      { value: JOURNAL_TYPE.DAY_PLANNING, label: JOURNAL_TYPE_TO_LABEL[JOURNAL_TYPE.DAY_PLANNING] },
+      { value: JOURNAL_TYPE.DAY_WRAP, label: JOURNAL_TYPE_TO_LABEL[JOURNAL_TYPE.DAY_WRAP] },
+      { value: JOURNAL_TYPE.EVENT, label: JOURNAL_TYPE_TO_LABEL[JOURNAL_TYPE.EVENT] },
+      { value: JOURNAL_TYPE.FOOD_LOG, label: JOURNAL_TYPE_TO_LABEL[JOURNAL_TYPE.FOOD_LOG] },
     ]
   },
 };

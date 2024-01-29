@@ -35,7 +35,6 @@ const TodoForm: React.FC<TodoFormProps> = ({ addNewTask }) => {
 
   return (
     <div className="w-full max-w-md mx-auto p-6 bg-gray-900 text-white rounded-lg shadow-lg">
-      <h2 className="text-2xl font-semibold mb-4">Add a To-Do</h2>
       <form onSubmit={handleSubmit}>
         <TitleDescriptionInput
           title={task.title}
@@ -43,21 +42,20 @@ const TodoForm: React.FC<TodoFormProps> = ({ addNewTask }) => {
           setEntity={setTask as SetEntityDispatch}
         />
         <div className="mb-4">
-          <label htmlFor="status" className="block text-sm font-medium">
-            Status
-          </label>
           {Object.values(TODO_DROPDOWN_MODE).map((mode) =>
-            <SelectDropdown
-              key={mode}
-              containerClassName="w-full"
-              handleValueChange={(newVal: number) => handleTaskFieldChange(mode.toLocaleLowerCase(), newVal)}
-              {...DROPDOWN_MODE_VALUES[mode]}
-            />
+            <div key={mode} className="my-4">
+              <SelectDropdown
+                enableDefault
+                containerClassName="w-full"
+                handleValueChange={(newVal: number) => handleTaskFieldChange(mode.toLocaleLowerCase(), newVal)}
+                {...DROPDOWN_MODE_VALUES[mode]}
+              />
+            </div>
           )}
         </div>
         <button
           type="submit"
-          className="btn btn-primary"
+          className="btn btn-primary flex-end"
         >
           Add To-Do
         </button>

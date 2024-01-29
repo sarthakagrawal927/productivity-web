@@ -37,7 +37,7 @@ const TitleDescriptionInput = ({ title, desc, setEntity }: {
           type="text"
           placeholder='Title'
           id="task"
-          className="w-full p-2 bg-gray-800 text-white border rounded focus:outline-none focus:ring focus:border-blue-300"
+          className="input input-bordered input-primary w-full"
           value={title}
           onChange={handleTitleChange}
           required
@@ -47,7 +47,7 @@ const TitleDescriptionInput = ({ title, desc, setEntity }: {
         <textarea
           id="description"
           placeholder='Description'
-          className="w-full p-2 bg-gray-800 text-white border rounded focus:outline-none focus:ring focus:border-blue-300"
+          className="textarea textarea-primary w-full"
           value={desc}
           onChange={handleDescChange}
           required

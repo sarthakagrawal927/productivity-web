@@ -4,9 +4,8 @@ import cn from 'classnames';
 import { DropdownOption } from '@/types';
 
 type SelectDropdownProps = {
-  handleValueChange: ((value: number) => Promise<{ err: Error }> | void);
+  handleValueChange: ((value: number) => Promise<{ err?: Error }> | void);
   containerClassName?: string;
-  clearable?: boolean;
   initialValue?: number;
   enableDefault?: boolean;
   optionList: DropdownOption[];
@@ -16,7 +15,6 @@ type SelectDropdownProps = {
 const SelectDropdown: FC<SelectDropdownProps> = ({
   handleValueChange,
   initialValue,
-  clearable = false,
   containerClassName = '',
   enableDefault = false,
   optionList,
@@ -33,11 +31,11 @@ const SelectDropdown: FC<SelectDropdownProps> = ({
     <>
       <select
         id="status_screen_view"
-        className={cn("select select-bordered max-w-xs", containerClassName)}
+        className={cn("select select-bordered", containerClassName)}
         value={dropdownValue}
         onChange={handleFilterChange}
       >
-        <option value={defaultOption.label} disabled={!enableDefault}>
+        <option value={defaultOption.value} disabled={!enableDefault}>
           {defaultOption.label}
         </option>
         {
@@ -48,7 +46,6 @@ const SelectDropdown: FC<SelectDropdownProps> = ({
           ))
         }
       </select>
-      {clearable && <div onClick={() => { setDropdownValue(0) }}>Clear</div>}
     </>
   );
 };

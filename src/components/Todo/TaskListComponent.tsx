@@ -45,7 +45,7 @@ const TaskListComponent: React.FC<TaskListComponentProps> = ({ taskList, setTask
         return task;
       }));
     }
-    return { err };
+    return { err: err ? new Error(err?.statusText) : undefined }
   }
 
   const handleDeleteClick = async (taskId: number) => {
@@ -57,16 +57,17 @@ const TaskListComponent: React.FC<TaskListComponentProps> = ({ taskList, setTask
 
   return (
     <>
-      <h1 className='text-3xl'>All Tasks</h1>
-      <div className='flex'>
+      <h1 className='text-3xl py-6'>Tasks</h1>
+      <div className='flex pb-6'>
         {Object.values(TODO_DROPDOWN_MODE).map((mode) =>
-          <SelectDropdown
-            key={mode}
-            clearable
-            handleValueChange={(status: number) => handleFilterSelectChange(status, mode)}
-            enableDefault
-            {...DROPDOWN_MODE_VALUES[mode]}
-          />
+          <div key={mode} className='px-3'>
+            <SelectDropdown
+              key={mode}
+              handleValueChange={(status: number) => handleFilterSelectChange(status, mode)}
+              enableDefault
+              {...DROPDOWN_MODE_VALUES[mode]}
+            />
+          </div>
         )}
       </div>
       {filteredTaskList.map((task, idx) => (

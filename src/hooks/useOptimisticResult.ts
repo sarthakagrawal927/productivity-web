@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 
 const useOptimisticResult = <T>(
   prevValue: T,
-  errorThrowingFunc: (status: T) => Promise<{ err: Error }> | void
+  errorThrowingFunc: (status: T) => Promise<{ err?: Error }> | void
 ): [T, (expectedNewValue: T) => void] => {
   const prevValueRef = useRef<T>(prevValue);
   const [value, setValue] = useState(prevValue);
