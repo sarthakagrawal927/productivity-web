@@ -1,6 +1,7 @@
 import React from 'react';
 import { DropdownOption, NumORStr } from '@/types';
 import SelectDropdown from '../common/SelectDropdown';
+import { callApi } from '@/utils/api';
 
 export enum FORM_FIELD {
   DROPDOWN = "DROPDOWN",
@@ -47,6 +48,7 @@ type FormStructureType<T> = {
   fields: FormField<FORM_FIELD>[],
   defaultInput: { [key: string]: NumORStr }
   submitLabel: string,
+  postApiPath: string,
 }
 
 // can probably replace any with all possible options of the form
@@ -58,6 +60,9 @@ const CustomForm: React.FC<{ formStructure: FormStructureType<any> }> = ({ formS
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    callApi(formStructure.postApiPath, entity).then(({ data }) => {
+      console.log(data);
+    });
     await formStructure.onSubmit(entity);
     setEntity((entity) => ({ ...entity, ...formStructure.defaultInput }));
   }
@@ -76,6 +81,7 @@ const CustomForm: React.FC<{ formStructure: FormStructureType<any> }> = ({ formS
               required={field.componentProps.required || false}
               onChange={(e) => handleEntityFieldChange(field.componentProps.key, e.target.value)}
               value={entity[field.componentProps.key]}
+              className="input input-bordered input-primary w-full my-4"
             />
           )
         } else if (field.kind === FORM_FIELD.DROPDOWN) {
@@ -84,6 +90,17 @@ const CustomForm: React.FC<{ formStructure: FormStructureType<any> }> = ({ formS
               key={field.componentProps.key}
               handleValueChange={(newVal) => handleEntityFieldChange(field.componentProps.key, newVal)}
               {...field.additionalProps as AdditionalPropsMap[FORM_FIELD.DROPDOWN]}
+            />
+          )
+        } else if (field.kind === FORM_FIELD.TEXTAREA) {
+          return (
+            <textarea
+              className="textarea textarea-primary w-full"
+              key={field.componentProps.key}
+              placeholder={field.componentProps.placeholder || "Enter"}
+              required={field.componentProps.required || false}
+              onChange={(e) => handleEntityFieldChange(field.componentProps.key, e.target.value)}
+              value={entity[field.componentProps.key]}
             />
           )
         }

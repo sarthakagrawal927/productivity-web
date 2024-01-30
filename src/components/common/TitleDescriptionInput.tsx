@@ -32,27 +32,23 @@ const TitleDescriptionInput = ({ title, desc, setEntity }: {
 
   return (
     <>
-      <div className="mb-4">
-        <input
-          type="text"
-          placeholder='Title'
-          id="task"
-          className="input input-bordered input-primary w-full"
-          value={title}
-          onChange={handleTitleChange}
-          required
-        />
-      </div>
-      <div className="mb-4">
-        <textarea
-          id="description"
-          placeholder='Description'
-          className="textarea textarea-primary w-full"
-          value={desc}
-          onChange={handleDescChange}
-          required
-        />
-      </div>
+      <input
+        type="text"
+        placeholder='Title'
+        id="task"
+        className="input input-bordered input-primary w-full mb-4"
+        value={title}
+        onChange={handleTitleChange}
+        required
+      />
+      <textarea
+        id="description"
+        placeholder='Description'
+        className="textarea textarea-primary w-full mb-4"
+        value={desc}
+        onChange={handleDescChange}
+        required
+      />
     </>
   );
 };
