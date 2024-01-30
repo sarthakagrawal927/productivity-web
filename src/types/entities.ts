@@ -19,3 +19,11 @@ export type Habit = BaseType & {
   mode: number;
   status: number;
 }
+
+export type Consumable = BaseType & {
+  habit_id: number;
+  smallest_unit_label: string;
+  time_per_unit: number;
+  num_total_unit: number;
+  num_remaining_unit: number;
+}

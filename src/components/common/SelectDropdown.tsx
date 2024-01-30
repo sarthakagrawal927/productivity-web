@@ -39,7 +39,7 @@ const SelectDropdown: FC<SelectDropdownProps> = ({
           {defaultOption.label}
         </option>
         {
-          optionList.map(({ value, label }) => (
+          optionList.filter(({ value, label }) => value !== defaultOption.value).map(({ value, label }) => (
             <option key={value} value={value}>
               {label}
             </option>

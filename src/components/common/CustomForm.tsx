@@ -44,7 +44,8 @@ type FormField<T extends FORM_FIELD> = {
 };
 
 type FormStructureType<T> = {
-  onSubmit: (entity: T) => Promise<void>,
+  heading: string,
+  onSubmit: (entity: T) => void,
   fields: FormField<FORM_FIELD>[],
   defaultInput: { [key: string]: NumORStr }
   submitLabel: string,
@@ -60,10 +61,9 @@ const CustomForm: React.FC<{ formStructure: FormStructureType<any> }> = ({ formS
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    callApi(formStructure.postApiPath, entity).then(({ data }) => {
-      console.log(data);
-    });
-    await formStructure.onSubmit(entity);
+    callApi(formStructure.postApiPath, entity).then(({ data }) =>
+      formStructure.onSubmit(data.data)
+    );
     setEntity((entity) => ({ ...entity, ...formStructure.defaultInput }));
   }
 
@@ -71,6 +71,7 @@ const CustomForm: React.FC<{ formStructure: FormStructureType<any> }> = ({ formS
 
   return (
     <form onSubmit={handleSubmit}>
+      <h2 className="text-2xl font-bold mb-4">{formStructure.heading}</h2>
       {formStructure.fields.map((field) => {
         if (field.kind === FORM_FIELD.INPUT) {
           return (
@@ -81,7 +82,7 @@ const CustomForm: React.FC<{ formStructure: FormStructureType<any> }> = ({ formS
               required={field.componentProps.required || false}
               onChange={(e) => handleEntityFieldChange(field.componentProps.key, e.target.value)}
               value={entity[field.componentProps.key]}
-              className="input input-bordered input-primary w-full my-4"
+              className="input input-bordered input-primary w-full mb-4"
             />
           )
         } else if (field.kind === FORM_FIELD.DROPDOWN) {
@@ -95,7 +96,7 @@ const CustomForm: React.FC<{ formStructure: FormStructureType<any> }> = ({ formS
         } else if (field.kind === FORM_FIELD.TEXTAREA) {
           return (
             <textarea
-              className="textarea textarea-primary w-full"
+              className="textarea textarea-primary w-full mb-3"
               key={field.componentProps.key}
               placeholder={field.componentProps.placeholder || "Enter"}
               required={field.componentProps.required || false}

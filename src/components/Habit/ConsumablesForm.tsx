@@ -1,12 +1,14 @@
 import React from 'react';
 import CustomForm, { FORM_FIELD } from '../common/CustomForm';
+import { Consumable } from '@/types';
 
-const ConsumableForm = () => {
+const ConsumableForm: React.FC<ConsumablesFormProps> = ({ addNewConsumable }) => {
   return (
     <CustomForm formStructure={{
+      heading: "Add New Consumable",
       postApiPath: "/api/consumable",
-      onSubmit: async (e) => {
-        console.log(e)
+      onSubmit: (e) => {
+        addNewConsumable(e);
       },
       fields: [
         {
@@ -77,7 +79,7 @@ const ConsumableForm = () => {
         title: "",
         desc: "",
         habit_id: "",
-        small_unit_label: "",
+        smallest_unit_label: "",
         time_per_unit: "",
         num_total_unit: "",
         num_remaining_unit: "",
@@ -87,5 +89,9 @@ const ConsumableForm = () => {
     />
   );
 };
+
+type ConsumablesFormProps = {
+  addNewConsumable: (consumable: Consumable) => void,
+}
 
 export default ConsumableForm;

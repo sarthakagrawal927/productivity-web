@@ -1,10 +1,12 @@
 import HabitComponent from '@/components/Habit/index';
-import { Habit } from '@/types';
+import { Consumable, Habit } from '@/types';
 import { baseServerSideFetch } from '@/utils/api';
 
 export default async function Habit() {
-  const habits: Habit[] = await baseServerSideFetch('/api/habit');
+  const [habits, consumables]: [Habit[], Consumable[]] = await Promise.all([
+    baseServerSideFetch('/api/habit'), baseServerSideFetch('/api/consumable')
+  ]);
   return (
-    <HabitComponent habits={habits} />
+    <HabitComponent habits={habits} consumables={consumables} />
   )
 }
