@@ -52,6 +52,25 @@ type FormStructureType<T> = {
   postApiPath: string,
 }
 
+export const TitleDescriptionFormStructure: FormField<FORM_FIELD>[] = [{
+  kind: FORM_FIELD.INPUT,
+  componentProps: {
+    placeholder: "Title",
+    type: "text",
+    required: true,
+    key: "title",
+  },
+},
+{
+  kind: FORM_FIELD.TEXTAREA,
+  componentProps: {
+    placeholder: "Description",
+    type: "text",
+    required: true,
+    key: "desc",
+  },
+},]
+
 // can probably replace any with all possible options of the form
 const CustomForm: React.FC<{ formStructure: FormStructureType<any> }> = ({ formStructure }) => {
 
@@ -73,39 +92,42 @@ const CustomForm: React.FC<{ formStructure: FormStructureType<any> }> = ({ formS
     <form onSubmit={handleSubmit}>
       <h2 className="text-2xl font-bold mb-4">{formStructure.heading}</h2>
       {formStructure.fields.map((field) => {
-        if (field.kind === FORM_FIELD.INPUT) {
-          return (
-            <input
-              key={field.componentProps.key}
-              placeholder={field.componentProps.placeholder || "Enter"}
-              type={field.componentProps.type || "text"}
-              required={field.componentProps.required || false}
-              onChange={(e) => handleEntityFieldChange(field.componentProps.key, e.target.value)}
-              value={entity[field.componentProps.key]}
-              className="input input-bordered input-primary w-full mb-4"
-            />
-          )
-        } else if (field.kind === FORM_FIELD.DROPDOWN) {
-          return (
-            <SelectDropdown
-              key={field.componentProps.key}
-              handleValueChange={(newVal) => handleEntityFieldChange(field.componentProps.key, newVal)}
-              {...field.additionalProps as AdditionalPropsMap[FORM_FIELD.DROPDOWN]}
-            />
-          )
-        } else if (field.kind === FORM_FIELD.TEXTAREA) {
-          return (
-            <textarea
-              className="textarea textarea-primary w-full mb-3"
-              key={field.componentProps.key}
-              placeholder={field.componentProps.placeholder || "Enter"}
-              required={field.componentProps.required || false}
-              onChange={(e) => handleEntityFieldChange(field.componentProps.key, e.target.value)}
-              value={entity[field.componentProps.key]}
-            />
-          )
+        switch (field.kind) {
+          case FORM_FIELD.INPUT:
+            return (
+              <input
+                key={field.componentProps.key}
+                placeholder={field.componentProps.placeholder || "Enter"}
+                type={field.componentProps.type || "text"}
+                required={field.componentProps.required || false}
+                onChange={(e) => handleEntityFieldChange(field.componentProps.key, e.target.value)}
+                value={entity[field.componentProps.key]}
+                className="input input-bordered input-primary w-full mb-4"
+              />
+            )
+          case FORM_FIELD.DROPDOWN:
+            return (
+              <SelectDropdown
+                key={field.componentProps.key}
+                containerClassName='w-full mb-4'
+                handleValueChange={(newVal) => handleEntityFieldChange(field.componentProps.key, newVal)}
+                {...field.additionalProps as AdditionalPropsMap[FORM_FIELD.DROPDOWN]}
+              />
+            )
+          case FORM_FIELD.TEXTAREA:
+            return (
+              <textarea
+                className="textarea textarea-primary w-full mb-3"
+                key={field.componentProps.key}
+                placeholder={field.componentProps.placeholder || "Enter"}
+                required={field.componentProps.required || false}
+                onChange={(e) => handleEntityFieldChange(field.componentProps.key, e.target.value)}
+                value={entity[field.componentProps.key]}
+              />
+            )
+          default:
+            return null;
         }
-        return null;
       })}
       <button
         type="submit"

@@ -149,8 +149,8 @@ export const HABIT_DROPDOWN_MODE_VALUES = {
   },
   [HABIT_DROPDOWN_MODE.STATUS]: {
     defaultOption: {
-      value: HABIT_STATUS.ACTIVE,
-      label: "Active"
+      value: 0,
+      label: "Select Status"
     },
     optionList: getOptionsListFromValueLabelMap(HABIT_STATUS_TO_LABEL)
   },

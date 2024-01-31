@@ -1,5 +1,5 @@
 import React from 'react';
-import CustomForm, { FORM_FIELD } from '../common/CustomForm';
+import CustomForm, { FORM_FIELD, TitleDescriptionFormStructure } from '../common/CustomForm';
 import { Consumable } from '@/types';
 
 const ConsumableForm: React.FC<ConsumablesFormProps> = ({ addNewConsumable }) => {
@@ -11,24 +11,7 @@ const ConsumableForm: React.FC<ConsumablesFormProps> = ({ addNewConsumable }) =>
         addNewConsumable(e);
       },
       fields: [
-        {
-          kind: FORM_FIELD.INPUT,
-          componentProps: {
-            placeholder: "Title",
-            type: "text",
-            required: true,
-            key: "title",
-          },
-        },
-        {
-          kind: FORM_FIELD.TEXTAREA,
-          componentProps: {
-            placeholder: "Description",
-            type: "text",
-            required: true,
-            key: "desc",
-          },
-        },
+        ...TitleDescriptionFormStructure,
         {
           kind: FORM_FIELD.INPUT,
           componentProps: {
