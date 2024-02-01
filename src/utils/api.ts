@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 
-const baseUrl = process.env.SERVER_URL;
+const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL;
 
 export const HTTP_METHOD = {
   GET: "GET",
