@@ -20,7 +20,7 @@ export const callApi = async (url: string, body: any, method = HTTP_METHOD.POST)
     const { data }: AxiosResponse = await axios(`${baseUrl}${url}`,
       { headers: { "Content-Type": "multipart/form-data" }, method, data: convertToFormData(body) });
     return {data, err: null};
-  } catch(err) {
+  } catch (err) {
     return {data: null, err: (err as AxiosError).response}
   }
 };
@@ -34,7 +34,7 @@ export const baseServerSideFetch = async (endpoint: string, queryParams?: {[key 
   }
   const { data, err } = await callApi(endpoint, {}, HTTP_METHOD.GET)
   if (err) throw new Error(err.statusText);
-  return data.data;
+  return data?.data || [];
 }
 
 // add caching call, when you think of use-case

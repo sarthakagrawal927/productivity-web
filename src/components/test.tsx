@@ -1,5 +1,5 @@
 async function getTestData() {
-  const res = await fetch("http://localhost:1323/api/test")
+  const res = await fetch(`${process.env.SERVER_URL}/api/test`)
   if (!res.ok) {
     // This will activate the closest `error.js` Error Boundary
     throw new Error('Failed to fetch data')
