@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 
-const baseUrl = "http://localhost:1323";
+const baseUrl = process.env.SERVER_URL;
 
 export const HTTP_METHOD = {
   GET: "GET",
