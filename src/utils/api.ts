@@ -32,9 +32,14 @@ export const baseServerSideFetch = async (endpoint: string, queryParams?: {[key 
   if (Object.keys(queryParams || {}).length > 0) { 
     // TODO: add query params
   }
-  const { data, err } = await callApi(endpoint, {}, HTTP_METHOD.GET)
-  if (err) throw new Error(err.statusText);
-  return data?.data || [];
+  try {
+    const data = await fetch(`${baseUrl}${endpoint}`, { cache: 'no-store' })
+    const json = await data.json()
+    return json.data
+  } catch (err) {
+    // console.log({err})
+   return []
+  }
 }
 
 // add caching call, when you think of use-case
