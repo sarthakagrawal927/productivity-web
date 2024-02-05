@@ -29,7 +29,7 @@ const SelectDropdown: FC<SelectDropdownProps> = ({
 
   useEffect(() => {
     setDropdownValue(initialValue || defaultOption.value);
-  }, [initialValue, defaultOption.value, setDropdownValue])
+  }, [initialValue, defaultOption.value])
 
   return (
     <>

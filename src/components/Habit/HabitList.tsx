@@ -1,6 +1,8 @@
 import { Habit } from '@/types';
 import { HABIT_FREQUENCY_TYPE_TO_LABEL, HABIT_MODE, HABIT_STATUS_TO_LABEL } from '@/utils/constants';
 import { formatDateString } from '@/utils/helpers';
+import LogModal from './LogModal';
+import { useState } from 'react';
 
 const HABIT_MODE_TYPE_TO_DESC = {
   [HABIT_MODE.COUNT]: 'times',
@@ -12,8 +14,10 @@ function getHabitFrequencyString(habit: Habit) {
 }
 
 const HabitList = ({ habits }: { habits: Habit[] }) => {
+  const [activeHabit, setActiveHabit] = useState<Habit | undefined>();
   return (
     <div className="overflow-x-auto">
+      <LogModal habit={activeHabit} />
       <table className="table table-zebra">
         <tbody>
           {habits.map((habit: Habit) => (
@@ -27,7 +31,10 @@ const HabitList = ({ habits }: { habits: Habit[] }) => {
               <td>{HABIT_STATUS_TO_LABEL[habit.status]}</td>
               <td>{formatDateString(habit.CreatedAt)}</td>
               <td>
-                <button className="btn btn-sm btn-accent">
+                <button className="btn btn-sm btn-accent" onClick={() => {
+                  setActiveHabit(habit);
+                  (document?.getElementById('my_modal_1') as HTMLDialogElement)?.showModal()
+                }}>
                   Log
                 </button>
               </td>

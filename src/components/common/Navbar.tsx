@@ -3,7 +3,8 @@ import React from 'react';
 const menuItems = [
   { label: "Habits", href: "/habit" },
   { label: "Todo", href: "/todo" },
-  { label: "Journal", href: "/journal" }
+  { label: "Journal", href: "/journal" },
+  { label: "Profile", href: "/profile" }
 ];
 
 const Navbar = () => {
