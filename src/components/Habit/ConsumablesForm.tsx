@@ -1,8 +1,8 @@
 import React from 'react';
 import CustomForm, { FORM_FIELD, TitleDescriptionFormStructure } from '../common/CustomForm';
-import { Consumable } from '@/types';
+import { Consumable, Habit } from '@/types';
 
-const ConsumableForm: React.FC<ConsumablesFormProps> = ({ addNewConsumable }) => {
+const ConsumableForm: React.FC<ConsumablesFormProps> = ({ addNewConsumable, habits }) => {
   return (
     <CustomForm formStructure={{
       heading: "Add New Consumable",
@@ -13,13 +13,17 @@ const ConsumableForm: React.FC<ConsumablesFormProps> = ({ addNewConsumable }) =>
       fields: [
         ...TitleDescriptionFormStructure,
         {
-          kind: FORM_FIELD.INPUT,
+          kind: FORM_FIELD.DROPDOWN,
           componentProps: {
             placeholder: "Habit ID",
             type: "number",
             required: true,
             key: "habit_id",
           },
+          additionalProps: {
+            optionList: habits.map((habit) => ({ label: habit.title, value: habit.ID })),
+            defaultOption: { label: "Select Habit", value: 0 },
+          }
         },
         {
           kind: FORM_FIELD.INPUT,
@@ -75,6 +79,7 @@ const ConsumableForm: React.FC<ConsumablesFormProps> = ({ addNewConsumable }) =>
 
 type ConsumablesFormProps = {
   addNewConsumable: (consumable: Consumable) => void,
+  habits: Habit[],
 }
 
 export default ConsumableForm;

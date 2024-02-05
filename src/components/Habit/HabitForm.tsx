@@ -1,40 +1,19 @@
-import { Habit, NumORStr } from '@/types';
-import { callApi } from '@/utils/api';
-import { HABIT_DROPDOWN_MODE, HABIT_DROPDOWN_MODE_VALUES } from '@/utils/constants';
+import { Habit } from '@/types';
+import { HABIT_DROPDOWN_MODE, HABIT_DROPDOWN_MODE_VALUES, HABIT_FREQUENCY_TYPE, HABIT_MODE, HABIT_STATUS } from '@/utils/constants';
 import React from 'react';
 import CustomForm, { FORM_FIELD, TitleDescriptionFormStructure } from '../common/CustomForm';
-
-type HabitInput = {
-  title: string,
-  desc: string,
-  status?: number,
-  anti?: boolean,
-  target?: number,
-  frequency_type?: number,
-  mode?: number,
-  approx_time_needed?: number,
-}
 
 const defaultHabitInput = {
   title: "",
   desc: "",
+  // target: 0,
+  frequency_type: HABIT_FREQUENCY_TYPE.WEEKLY,
+  status: HABIT_STATUS.ACTIVE,
+  mode: HABIT_MODE.COUNT,
+  // approx_time_needed: 20,
 }
 
 const HabitForm: React.FC<HabitFormProps> = ({ addNewHabit }) => {
-  const [habit, setHabit] = React.useState<HabitInput>(defaultHabitInput);
-
-  const handleHabitFieldChange = (key: string, newValue: NumORStr) => {
-    setHabit({ ...habit, [key]: newValue });
-  }
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    callApi("/api/habit", habit).then(({ data }) => {
-      addNewHabit(data.data);
-    })
-    setHabit({ ...habit, ...defaultHabitInput });
-  }
-
   return (
     <>
       <CustomForm
@@ -67,7 +46,7 @@ const HabitForm: React.FC<HabitFormProps> = ({ addNewHabit }) => {
             {
               kind: FORM_FIELD.INPUT,
               componentProps: {
-                placeholder: "Approx Time Needed",
+                placeholder: "Approx Time Needed per unit",
                 type: "number",
                 required: true,
                 key: "approx_time_needed",

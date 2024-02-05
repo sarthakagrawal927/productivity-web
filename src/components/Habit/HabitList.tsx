@@ -26,6 +26,11 @@ const HabitList = ({ habits }: { habits: Habit[] }) => {
               <td>{getHabitFrequencyString(habit)}</td>
               <td>{HABIT_STATUS_TO_LABEL[habit.status]}</td>
               <td>{formatDateString(habit.CreatedAt)}</td>
+              <td>
+                <button className="btn btn-sm btn-accent">
+                  Log
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>

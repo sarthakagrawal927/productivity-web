@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import useOptimisticResult from '@/hooks/useOptimisticResult';
 import cn from 'classnames';
 import { DropdownOption } from '@/types';
@@ -21,11 +21,15 @@ const SelectDropdown: FC<SelectDropdownProps> = ({
   defaultOption = { label: 'Select', value: 0 },
 }) => {
 
-  const [dropdownValue, setDropdownValue] = useOptimisticResult(initialValue || 0, handleValueChange);
+  const [dropdownValue, setDropdownValue] = useOptimisticResult(initialValue || defaultOption.value, handleValueChange);
 
   const handleFilterChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     setDropdownValue(parseInt(e.target.value));
   }
+
+  useEffect(() => {
+    setDropdownValue(initialValue || defaultOption.value);
+  }, [initialValue, defaultOption.value, setDropdownValue])
 
   return (
     <>

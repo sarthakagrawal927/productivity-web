@@ -26,7 +26,7 @@ const HabitClient = ({ habits, consumables }: { habits: Habit[], consumables: Co
           <HabitList habits={habitList} />
         </div>
         <div className='flex-1 lg:w-5/12 px-10'>
-          <ConsumablesForm addNewConsumable={addNewConsumable} />
+          <ConsumablesForm addNewConsumable={addNewConsumable} habits={habitList} />
           <ConsumablesList consumables={consumablesList} />
         </div>
       </div>
