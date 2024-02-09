@@ -1,0 +1,121 @@
+$outer-circle: 800px;
+$num-bands: 3;
+$num-electrons-in-band: 18;
+
+$electron-size: 50px;
+$outer-animation-duration: 240s;
+
+.container {
+  position: relative;
+  width: $outer-circle;
+  height: $outer-circle;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin circle($color) {
+  width: $electron-size;
+  height: $electron-size;
+  border-radius: 50%;
+  background-color: $color;
+}
+
+@mixin stableImage {
+  @include circle(white);
+  background-image: url(https://qph.cf2.quoracdn.net/main-qimg-21c731848e61881004fd8f53e1734cdd-lq);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: absolute;
+}
+
+@mixin path($size, $color) {
+  position: absolute;
+  width: $size;
+  height: $size;
+  border-radius: 50%;
+  border: 2px solid $color;
+  z-index: 1;
+}
+
+.nucleus {
+  @include circle(red);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin electron(
+  $color,
+  $radius,
+  $animation-duration: $outer-animation-duration
+) {
+  @include circle($color);
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: ($outer-circle - $radius - $electron-size) / ($outer-circle * 2) * 100%;
+  transform-origin: ($radius + $electron-size) / 2 50%;
+  animation: revolvingCircle $animation-duration linear infinite;
+  z-index: 10;
+}
+
+@mixin band-electrons {
+  @for $i from 1 through $num-bands {
+    $animation-duration: $outer-animation-duration;
+    .electron-#{$i} {
+      @include electron(
+        #0096c7,
+        $outer-circle - ($num-bands - $i) * $outer-circle / $num-bands,
+        $animation-duration
+      );
+      &:before {
+        content: "";
+        @include stableImage;
+        animation: rotatingCircle $animation-duration linear infinite;
+      }
+    }
+  }
+}
+
+@mixin band-paths {
+  @for $i from 1 through $num-bands {
+    .path-#{$i} {
+      z-index: $num-bands + 1- $i;
+      @include path($outer-circle * $i / $num-bands, green);
+    }
+  }
+}
+
+@mixin animation-delays {
+  @for $i from 1 through $num-electrons-in-band {
+    $animation-delay-dur: $i *
+      -1 *
+      $outer-animation-duration /
+      $num-electrons-in-band;
+    .electron-delayed-#{$i} {
+      animation-delay: $animation-delay-dur;
+      &:before {
+        animation-delay: $animation-delay-dur;
+      }
+    }
+  }
+}
+
+@include band-electrons;
+@include band-paths;
+@include animation-delays;
+
+@keyframes revolvingCircle {
+  to {
+    transform: translateY(-50%) rotate(360deg);
+  }
+}
+
+@keyframes rotatingCircle {
+  to {
+    transform: rotate(-360deg);
+  }
+}
