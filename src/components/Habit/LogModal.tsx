@@ -4,11 +4,10 @@ import CustomForm, { FORM_FIELD } from '../common/CustomForm';
 import { HABIT_MODE_TO_LABEL } from '@/utils/constants';
 
 const LogModal = ({ habit }: { habit?: Habit }) => {
-  if (!habit) return null;
   return (
     <dialog id="my_modal_1" className="modal">
       <div className="modal-box">
-        <CustomForm
+        {habit ? <CustomForm
           key={habit.ID}
           formStructure={{
             fields: [
@@ -31,7 +30,7 @@ const LogModal = ({ habit }: { habit?: Habit }) => {
             submitLabel: 'Log',
             postApiPath: `/api/habit/log`,
           }}
-        />
+        /> : null}
         <div className="modal-action">
           <form method="dialog">
             <button className="btn">Close</button>

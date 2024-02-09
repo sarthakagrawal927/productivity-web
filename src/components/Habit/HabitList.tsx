@@ -33,7 +33,7 @@ const HabitList = ({ habits }: { habits: Habit[] }) => {
               <td>
                 <button className="btn btn-sm btn-accent" onClick={() => {
                   setActiveHabit(habit);
-                  (document?.getElementById('my_modal_1') as HTMLDialogElement)?.showModal()
+                  (document.getElementById('my_modal_1') as HTMLDialogElement).showModal()
                 }}>
                   Log
                 </button>
