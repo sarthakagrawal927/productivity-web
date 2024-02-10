@@ -21,6 +21,7 @@ export type Habit = BaseType & {
 }
 
 export type HabitLog = {
+  ID: number;
   habit_id: number;
   result_time: string;
   result_count: number;

@@ -2,6 +2,7 @@ import React from 'react';
 import { DropdownOption, NumORStr } from '@/types';
 import SelectDropdown from '../common/SelectDropdown';
 import { callApi } from '@/utils/api';
+import { LargeHeading } from './Typography';
 
 export enum FORM_FIELD {
   DROPDOWN = "DROPDOWN",
@@ -90,7 +91,7 @@ const CustomForm: React.FC<{ formStructure: FormStructureType<any> }> = ({ formS
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2 className="text-2xl font-bold mb-4">{formStructure.heading}</h2>
+      <LargeHeading text={formStructure.heading} />
       {formStructure.fields.map((field) => {
         switch (field.kind) {
           case FORM_FIELD.INPUT:

@@ -1,7 +1,7 @@
 import { Habit } from "@/types";
 import { HABIT_FREQUENCY_TYPE_TO_LABEL, HABIT_MODE } from "./constants";
 
-const HABIT_MODE_TYPE_TO_DESC = {
+export const HABIT_MODE_TYPE_TO_DESC = {
   [HABIT_MODE.COUNT]: 'times',
   [HABIT_MODE.TIME]: 'minutes',
 }
