@@ -34,6 +34,7 @@ type Cell<T extends CELL_TYPE> = {
 }
 
 export type Row = {
+  onClick?: () => void,
   cells: Cell<CELL_TYPE>[],
 }
 
@@ -54,7 +55,7 @@ const CustomTable: React.FC<CustomTableProps> = (tableProps) => {
       </thead>}
       <tbody>
         {tableProps.rows.map((row, index) => (
-          <tr key={index}>
+          <tr key={index} onClick={row.onClick} className={row.onClick ? 'cursor-pointer' : ''}>
             {row.cells.map((cell, index) => (
               <td key={index} style={{ width: `${cell.widthPercent}%` }}>
                 {cell.kind === CELL_TYPE.TEXT && <span>{cell.text}</span>}
@@ -66,7 +67,10 @@ const CustomTable: React.FC<CustomTableProps> = (tableProps) => {
                 </span>}
                 {cell.kind === CELL_TYPE.BUTTON && <button
                   className="btn btn-sm btn-accent"
-                  onClick={(cell as Cell<CELL_TYPE.BUTTON>).additionalProps.onClick}>
+                  onClick={(e) => {
+                    (cell as Cell<CELL_TYPE.BUTTON>).additionalProps.onClick()
+                    e.stopPropagation();
+                  }}>
                   {cell.text}
                 </button>}
               </td>

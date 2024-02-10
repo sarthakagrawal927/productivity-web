@@ -20,6 +20,17 @@ export type Habit = BaseType & {
   status: number;
 }
 
+export type HabitLog = {
+  habit_id: number;
+  result_time: string;
+  result_count: number;
+}
+
+export type HabitWithLogs = {
+  habit: Habit;
+  logs: HabitLog[];
+}
+
 export type Consumable = BaseType & {
   habit_id: number;
   smallest_unit_label: string;

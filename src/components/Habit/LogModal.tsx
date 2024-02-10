@@ -1,9 +1,9 @@
-import { Habit } from '@/types';
+import { Habit, HabitLog } from '@/types';
 import React from 'react';
 import CustomForm, { FORM_FIELD } from '../common/CustomForm';
 import { HABIT_MODE_TO_LABEL } from '@/utils/constants';
 
-const LogModal = ({ habit }: { habit?: Habit }) => {
+const LogModal = ({ habit, onLog }: { habit?: Habit, onLog?: (log: HabitLog) => void }) => {
   return (
     <dialog id="my_modal_1" className="modal">
       <div className="modal-box">
@@ -26,7 +26,9 @@ const LogModal = ({ habit }: { habit?: Habit }) => {
               result_date: new Date().toISOString(),
             },
             heading: `Log Habit: ${habit.title}`,
-            onSubmit: () => { },
+            onSubmit: (e: HabitLog) => {
+              if (onLog) onLog(e);
+            },
             submitLabel: 'Log',
             postApiPath: `/api/habit/log`,
           }}

@@ -4,17 +4,12 @@ import { formatDateString } from '@/utils/helpers';
 import LogModal from './LogModal';
 import { Dispatch, useState } from 'react';
 import CustomTable, { CELL_TYPE } from '../common/CustomTable';
-
-const HABIT_MODE_TYPE_TO_DESC = {
-  [HABIT_MODE.COUNT]: 'times',
-  [HABIT_MODE.TIME]: 'minutes',
-}
-
-function getHabitFrequencyString(habit: Habit) {
-  return `${habit.target} ${HABIT_MODE_TYPE_TO_DESC[habit.mode]} ${HABIT_FREQUENCY_TYPE_TO_LABEL[habit.frequency_type]}`;
-}
+import { useRouter } from 'next/navigation'
+import { getHabitFrequencyString } from '@/utils/entityHelpers';
 
 function HabitTableBody({ habits, setActiveHabit }: { habits: Habit[], setActiveHabit: Dispatch<Habit> }) {
+  const router = useRouter();
+
   return <>
     <CustomTable
       rows={habits.map(habit => ({
@@ -24,8 +19,18 @@ function HabitTableBody({ habits, setActiveHabit }: { habits: Habit[], setActive
           { kind: CELL_TYPE.TEXT, widthPercent: 10, text: getHabitFrequencyString(habit), additionalProps: {} },
           { kind: CELL_TYPE.TEXT, widthPercent: 10, text: HABIT_STATUS_TO_LABEL[habit.status], additionalProps: {} },
           { kind: CELL_TYPE.TEXT, widthPercent: 10, text: formatDateString(habit.CreatedAt), additionalProps: {} },
-          { kind: CELL_TYPE.BUTTON, widthPercent: 8, text: 'Log', additionalProps: { onClick: () => setActiveHabit(habit) } },
-        ]
+          {
+            kind: CELL_TYPE.BUTTON, widthPercent: 8, text: 'Log', additionalProps: {
+              onClick: () => {
+                (document.getElementById('my_modal_1') as HTMLDialogElement).showModal();
+                setActiveHabit(habit);
+              }
+            }
+          },
+        ],
+        onClick: () => {
+          router.push(`/habit/logs/${habit.ID}`)
+        },
       }))}
     />
   </>
