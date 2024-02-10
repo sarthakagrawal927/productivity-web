@@ -21,7 +21,7 @@ const ConsumableForm: React.FC<ConsumablesFormProps> = ({ addNewConsumable, habi
             key: "habit_id",
           },
           additionalProps: {
-            optionList: habits.map((habit) => ({ label: habit.title, value: habit.ID })),
+            optionList: habits.filter(habit => !habit.anti).map((habit) => ({ label: habit.title, value: habit.ID })),
             defaultOption: { label: "Select Habit", value: 0 },
           }
         },
