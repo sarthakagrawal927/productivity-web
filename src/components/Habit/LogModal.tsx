@@ -23,7 +23,7 @@ const LogModal = ({ habit }: { habit?: Habit }) => {
             ],
             defaultInput: {
               habit_id: habit.ID,
-              date: new Date().toISOString(),
+              result_date: new Date().toISOString(),
             },
             heading: `Log Habit: ${habit.title}`,
             onSubmit: () => { },

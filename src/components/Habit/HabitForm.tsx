@@ -10,6 +10,7 @@ const defaultHabitInput = {
   frequency_type: HABIT_FREQUENCY_TYPE.WEEKLY,
   status: HABIT_STATUS.ACTIVE,
   mode: HABIT_MODE.COUNT,
+  anti: 0,
   // approx_time_needed: 20,
 }
 
@@ -52,6 +53,13 @@ const HabitForm: React.FC<HabitFormProps> = ({ addNewHabit }) => {
                 key: "approx_time_needed",
               },
             },
+            {
+              kind: FORM_FIELD.CHECKBOX,
+              componentProps: {
+                placeholder: "Anti",
+                key: "anti",
+              },
+            }
           ],
         }}
       />

@@ -126,16 +126,28 @@ const CustomForm: React.FC<{ formStructure: FormStructureType<any> }> = ({ formS
                 value={entity[field.componentProps.key]}
               />
             )
+          case FORM_FIELD.CHECKBOX:
+            return (
+              <div className="form-control w-20" key={field.componentProps.key}>
+                <label className="label cursor-pointer">
+                  <span className="label-text">{field.componentProps.placeholder}</span>
+                  <input type="checkbox" onChange={(e) => handleEntityFieldChange(field.componentProps.key, e.target.checked ? 1 : 0)}
+                    checked={!!entity[field.componentProps.key]} className="checkbox checkbox-primary" />
+                </label>
+              </div>
+            )
           default:
             return null;
         }
       })}
-      <button
-        type="submit"
-        className="btn btn-primary"
-      >
-        {formStructure.submitLabel}
-      </button>
+      <div className='flex justify-end pt-4 pb-8'>
+        <button
+          type="submit"
+          className="btn btn-primary"
+        >
+          {formStructure.submitLabel}
+        </button>
+      </div>
     </form>
   );
 };
