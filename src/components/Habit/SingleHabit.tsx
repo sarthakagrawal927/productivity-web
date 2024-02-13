@@ -1,12 +1,13 @@
 "use client"
 import { HabitLog, HabitWithLogs } from '@/types';
-import { HABIT_MODE_TO_LABEL, HABIT_STATUS, HABIT_STATUS_TO_LABEL } from '@/utils/constants';
+import { HABIT_STATUS, HABIT_STATUS_TO_LABEL } from '@/utils/constants';
 import { HABIT_MODE_TYPE_TO_DESC, getHabitFrequencyString } from '@/utils/entityHelpers';
 import { formatDateString } from '@/utils/helpers';
 import React from 'react';
 import LogModal from './LogModal';
 import { DescriptionText, LargeHeading, RegularText, StrongText } from '../common/Typography';
 import Badge, { BadgeMode } from '../common/Badge';
+import LogsBarGraph from '../common/Graphs/LogsBarGraph';
 
 const SingleHabit = ({ habit, logs }: HabitWithLogs) => {
   const [allLogs, setAllLogs] = React.useState<HabitLog[]>(logs);
@@ -24,6 +25,7 @@ const SingleHabit = ({ habit, logs }: HabitWithLogs) => {
         text={HABIT_STATUS_TO_LABEL[habit.status]}
       />
       <StrongText text={`Target: ${getHabitFrequencyString(habit)}`} />
+      <DescriptionText text={`Started Since: ${formatDateString(habit.CreatedAt)}`} />
       <LargeHeading text='Logs' />
       <ul role='list' className='divide-y divide-slate-800'>
         {allLogs.map((log) => <li key={log.ID} className="flex justify-between gap-x-6 py-2">
@@ -32,6 +34,7 @@ const SingleHabit = ({ habit, logs }: HabitWithLogs) => {
         </li>)}
       </ul>
       <LogModal habit={habit} onLog={onLog} />
+      {habit.status === HABIT_STATUS.ACTIVE && allLogs.length > 0 && <LogsBarGraph height={300} width={400} logs={allLogs} habit={habit} />}
       <button
         className='btn btn-accent'
         onClick={() => (document.getElementById('my_modal_1') as HTMLDialogElement)?.showModal()}
