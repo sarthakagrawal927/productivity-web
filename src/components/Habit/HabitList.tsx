@@ -1,11 +1,11 @@
 import { Habit } from '@/types';
-import { HABIT_FREQUENCY_TYPE_TO_LABEL, HABIT_MODE, HABIT_STATUS_TO_LABEL } from '@/utils/constants';
+import { HABIT_STATUS_TO_LABEL } from '@/utils/constants';
+import { getHabitFrequencyString } from '@/utils/entityHelpers';
 import { formatDateString } from '@/utils/helpers';
-import LogModal from './LogModal';
+import { useRouter } from 'next/navigation';
 import { Dispatch, useState } from 'react';
 import CustomTable, { CELL_TYPE } from '../common/CustomTable';
-import { useRouter } from 'next/navigation'
-import { getHabitFrequencyString } from '@/utils/entityHelpers';
+import LogModal from './LogModal';
 
 function HabitTableBody({ habits, setActiveHabit }: { habits: Habit[], setActiveHabit: Dispatch<Habit> }) {
   const router = useRouter();
@@ -15,12 +15,12 @@ function HabitTableBody({ habits, setActiveHabit }: { habits: Habit[], setActive
       rows={habits.map(habit => ({
         cells: [
           { kind: CELL_TYPE.TEXT, widthPercent: 2, text: habit.ID.toString(), additionalProps: {} },
-          { kind: CELL_TYPE.TEXT_WITH_SUBTEXT, widthPercent: 60, text: habit.title, additionalProps: { subText: habit.desc } },
-          { kind: CELL_TYPE.TEXT, widthPercent: 10, text: getHabitFrequencyString(habit), additionalProps: {} },
-          { kind: CELL_TYPE.TEXT, widthPercent: 10, text: HABIT_STATUS_TO_LABEL[habit.status], additionalProps: {} },
-          { kind: CELL_TYPE.TEXT, widthPercent: 10, text: formatDateString(habit.CreatedAt), additionalProps: {} },
+          { kind: CELL_TYPE.TEXT_WITH_SUBTEXT, widthPercent: 58, text: habit.title, additionalProps: { subText: habit.desc } },
+          { kind: CELL_TYPE.TEXT, widthPercent: 12, text: getHabitFrequencyString(habit), additionalProps: {} },
+          { kind: CELL_TYPE.TEXT, widthPercent: 8, text: HABIT_STATUS_TO_LABEL[habit.status], additionalProps: {} },
+          { kind: CELL_TYPE.TEXT, widthPercent: 14, text: formatDateString(habit.CreatedAt), additionalProps: {} },
           {
-            kind: CELL_TYPE.BUTTON, widthPercent: 8, text: 'Log', additionalProps: {
+            kind: CELL_TYPE.BUTTON, widthPercent: 6, text: 'Log', additionalProps: {
               onClick: () => {
                 (document.getElementById('my_modal_1') as HTMLDialogElement).showModal();
                 setActiveHabit(habit);

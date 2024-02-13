@@ -3,7 +3,17 @@ import React from 'react';
 import CustomForm, { FORM_FIELD } from '../common/CustomForm';
 import { HABIT_MODE_TO_LABEL } from '@/utils/constants';
 
+const LogFields = {
+  RESULT_DATE: 'result_date',
+  COUNT: 'count',
+  HABIT_ID: 'habit_id',
+}
+
+const ONE_DAY_MS = 86400000;
+
 const LogModal = ({ habit, onLog }: { habit?: Habit, onLog?: (log: HabitLog) => void }) => {
+  const todayTimeString = new Date().toLocaleDateString('en-US');
+  const yesterdayTimeString = new Date(Date.now() - ONE_DAY_MS).toLocaleDateString('en-US');
   return (
     <dialog id="my_modal_1" className="modal">
       <div className="modal-box">
@@ -17,13 +27,31 @@ const LogModal = ({ habit, onLog }: { habit?: Habit, onLog?: (log: HabitLog) => 
                   placeholder: HABIT_MODE_TO_LABEL[habit.mode],
                   type: "number",
                   required: true,
-                  key: "count",
+                  key: LogFields.COUNT,
                 },
               },
+              {
+                kind: FORM_FIELD.DROPDOWN,
+                componentProps: {
+                  key: LogFields.RESULT_DATE,
+                },
+                additionalProps: {
+                  optionList: [
+                    {
+                      label: 'Today',
+                      value: todayTimeString,
+                    },
+                    {
+                      label: 'Yesterday',
+                      value: yesterdayTimeString,
+                    },
+                  ]
+                }
+              }
             ],
             defaultInput: {
-              habit_id: habit.ID,
-              result_date: new Date().toISOString(),
+              [LogFields.HABIT_ID]: habit.ID,
+              [LogFields.RESULT_DATE]: todayTimeString,
             },
             heading: `Log Habit: ${habit.title}`,
             onSubmit: (e: HabitLog) => {

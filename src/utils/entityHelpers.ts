@@ -7,5 +7,6 @@ export const HABIT_MODE_TYPE_TO_DESC = {
 }
 
 export function getHabitFrequencyString(habit: Habit) {
-  return `${habit.target} ${HABIT_MODE_TYPE_TO_DESC[habit.mode]} ${HABIT_FREQUENCY_TYPE_TO_LABEL[habit.frequency_type]}`;
+  return (habit.anti ? `Upto ` : '') +
+  `${habit.target} ${HABIT_MODE_TYPE_TO_DESC[habit.mode]} ${HABIT_FREQUENCY_TYPE_TO_LABEL[habit.frequency_type]}`;
 }

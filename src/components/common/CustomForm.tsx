@@ -112,7 +112,7 @@ const CustomForm: React.FC<{ formStructure: FormStructureType<any> }> = ({ formS
                 key={field.componentProps.key}
                 containerClassName='w-full mb-4'
                 handleValueChange={(newVal) => handleEntityFieldChange(field.componentProps.key, newVal)}
-                initialValue={entity[field.componentProps.key] as number}
+                initialValue={entity[field.componentProps.key]}
                 {...field.additionalProps as AdditionalPropsMap[FORM_FIELD.DROPDOWN]}
               />
             )
