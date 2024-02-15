@@ -22,12 +22,12 @@ const HabitClient = ({ habits, consumables }: { habits: Habit[], consumables: Co
     <>
       <div className='lg:flex lg:flex-row'>
         <div className='flex-1 lg:w-5/12 px-10'>
+          {habitList.length > 0 && <HabitList habits={habitList} />}
           <HabitForm addNewHabit={addNewHabit} />
-          <HabitList habits={habitList} />
         </div>
         <div className='flex-1 lg:w-5/12 px-10'>
+          {consumablesList.length > 0 && <ConsumablesList consumables={consumablesList} />}
           <ConsumablesForm addNewConsumable={addNewConsumable} habits={habitList} />
-          <ConsumablesList consumables={consumablesList} />
         </div>
       </div>
     </>

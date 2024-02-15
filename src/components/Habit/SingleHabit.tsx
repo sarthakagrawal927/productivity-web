@@ -14,12 +14,13 @@ const SingleHabit = ({ habit, logs }: HabitWithLogs) => {
   const onLog = (log: HabitLog) => {
     setAllLogs([...allLogs, log]);
   }
+  // TODO: Beautify more, add option edit habit (& archive as well)
   return (
     <div>
       <LargeHeading text={habit.title} />
       <DescriptionText text={habit.desc} />
       <Badge mode={
-        habit.status === HABIT_STATUS.PAUSED
+        habit.status === HABIT_STATUS.ARCHIVED
           ? BadgeMode.DANGER
           : BadgeMode.SUCCESS}
         text={HABIT_STATUS_TO_LABEL[habit.status]}

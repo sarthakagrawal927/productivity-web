@@ -33,12 +33,13 @@ export const JOURNAL_TYPE = {
 
 export const HABIT_FREQUENCY_TYPE = {
   DAILY: 1,
-  WEEKLY: 2
+  WEEKLY: 2,
+  MONTHLY: 3,
 }
 
 export const HABIT_STATUS = {
   ACTIVE: 1,
-  PAUSED: 2,
+  ARCHIVED: 2,
 }
 
 export const HABIT_MODE = {
@@ -96,11 +97,12 @@ export const JOURNAL_TYPE_TO_LABEL: { [type: number]: string } = {
 export const HABIT_FREQUENCY_TYPE_TO_LABEL: { [type: number]: string } = {
   [HABIT_FREQUENCY_TYPE.DAILY]: 'Daily',
   [HABIT_FREQUENCY_TYPE.WEEKLY]: 'Weekly',
+  [HABIT_FREQUENCY_TYPE.MONTHLY]: 'Monthly',
 }
 
 export const HABIT_STATUS_TO_LABEL: { [status: number]: string } = {
   [HABIT_STATUS.ACTIVE]: 'Active',
-  [HABIT_STATUS.PAUSED]: 'Paused',
+  [HABIT_STATUS.ARCHIVED]: 'Archived',
 }
 
 export const HABIT_MODE_TO_LABEL: { [mode: number]: string } = {
