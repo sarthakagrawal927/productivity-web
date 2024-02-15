@@ -47,35 +47,32 @@ $outer-animation-duration: 240s;
   transform: translate(-50%, -50%);
 }
 
-@mixin electron(
-  $color,
-  $radius,
-  $animation-duration: $outer-animation-duration
-) {
+@mixin electron($color, $radius) {
   @include circle($color);
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   left: ($outer-circle - $radius - $electron-size) / ($outer-circle * 2) * 100%;
   transform-origin: ($radius + $electron-size) / 2 50%;
-  animation: revolvingCircle $animation-duration linear infinite;
   z-index: 10;
+}
+
+.electron-animation {
+  animation: revolvingCircle $outer-animation-duration linear infinite;
+  &:before {
+    content: "";
+    @include stableImage;
+    animation: rotatingCircle $outer-animation-duration linear infinite;
+  }
 }
 
 @mixin band-electrons {
   @for $i from 1 through $num-bands {
-    $animation-duration: $outer-animation-duration;
     .electron-#{$i} {
       @include electron(
         #0096c7,
-        $outer-circle - ($num-bands - $i) * $outer-circle / $num-bands,
-        $animation-duration
+        $outer-circle - ($num-bands - $i) * $outer-circle / $num-bands
       );
-      &:before {
-        content: "";
-        @include stableImage;
-        animation: rotatingCircle $animation-duration linear infinite;
-      }
     }
   }
 }
@@ -117,5 +114,12 @@ $outer-animation-duration: 240s;
 @keyframes rotatingCircle {
   to {
     transform: rotate(-360deg);
+  }
+}
+
+.animation-paused {
+  animation-play-state: paused;
+  &:before {
+    animation-play-state: paused;
   }
 }

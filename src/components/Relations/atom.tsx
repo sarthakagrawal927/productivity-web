@@ -1,6 +1,7 @@
 "use client";
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import "./atom.scss";
+import useActivityDetector from '@/hooks/useActorActive';
 
 const SingleAtom = () => {
   const electronBands = [
@@ -8,9 +9,20 @@ const SingleAtom = () => {
     { path: 2, electrons: 8 },
     { path: 3, electrons: 18 }, // out of 18
   ];
-  const [activeElectron, setActiveElectron] = React.useState<{ path: number, index: number } | undefined>();
+
+  const [activeElectron, setActiveElectron] = useState<{ path: number, index: number } | undefined>();
+  const isActive = useActivityDetector(3000); // TODO: Consider adding this in layout and passing in global context
+
+  useEffect(() => {
+    const animationElements = document.querySelectorAll('.electron-animation');
+    animationElements.forEach((element) => {
+      element.classList.toggle('animation-paused', !isActive);
+    })
+  }, [isActive])
+
   return (
     <>
+      {isActive ? "Active" : "Inactive"}
       <div className="container">
         <div className="nucleus" />
         {electronBands.map(({ path, electrons }) => {
@@ -20,7 +32,7 @@ const SingleAtom = () => {
               return <div
                 key={`path=${path}_index=${index}`}
                 onClick={() => setActiveElectron({ path, index })}
-                className={`cursor-pointer electron-${path} electron-delayed-${Math.round((index + 1) * 18 / electrons)}`}
+                className={`cursor-pointer electron-animation electron-${path} electron-delayed-${Math.round((index + 1) * 18 / electrons)}`}
               />
             })}
           </React.Fragment>
