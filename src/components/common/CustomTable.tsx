@@ -25,7 +25,7 @@ type AdditionalPropsMap = {
   };
 }
 
-type Cell<T extends CELL_TYPE> = {
+export type Cell<T extends CELL_TYPE> = {
   kind: T,
   widthPercent: number, // will be repeated for each cell in a row
 

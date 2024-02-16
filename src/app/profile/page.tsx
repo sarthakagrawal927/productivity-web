@@ -1,9 +1,12 @@
-import React from 'react';
+import HabitLogs from '@/components/Habit/HabitLogs';
+import { LogWithHabit } from '@/types';
+import { baseServerSideFetch } from '@/utils/api';
 
-const Profile = () => {
+const Profile = async () => {
+  const dailyLogs: LogWithHabit[] = await baseServerSideFetch(`/api/user/today/logs`);
   return (
     <div>
-      Profile info upcoming here
+      <HabitLogs logs={dailyLogs} />
     </div>
   );
 };

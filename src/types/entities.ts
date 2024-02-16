@@ -20,11 +20,12 @@ export type Habit = BaseType & {
   status: number;
 }
 
-export type HabitLog = {
+export type HabitLog =BaseType & {
   ID: number;
   habit_id: number;
   result_time: string;
   result_count: number;
+  comment: string;
 }
 
 export type HabitWithLogs = {
@@ -39,3 +40,5 @@ export type Consumable = BaseType & {
   num_total_unit: number;
   num_remaining_unit: number;
 }
+
+export type LogWithHabit = Partial<Habit> & HabitLog

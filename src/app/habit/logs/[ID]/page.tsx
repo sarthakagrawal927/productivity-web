@@ -5,8 +5,5 @@ import { baseServerSideFetch } from "@/utils/api";
 export default async function Page({ params }: { params: { ID: string } }) {
   const habitWithLogs: HabitWithLogs = await baseServerSideFetch(`/api/habit/logs/${params.ID}`);
   const { habit, logs } = habitWithLogs;
-  return <SingleHabit
-    habit={habit}
-    logs={logs}
-  />
+  return <SingleHabit habit={habit} logs={logs} />
 }
