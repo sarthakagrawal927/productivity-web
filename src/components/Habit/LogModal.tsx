@@ -1,12 +1,14 @@
 import { Habit, HabitLog } from '@/types';
 import React from 'react';
 import CustomForm, { FORM_FIELD } from '../common/CustomForm';
-import { HABIT_MODE_TO_LABEL } from '@/utils/constants';
+import { HABIT_MODE_TO_LABEL, MODAL_IDS } from '@/utils/constants';
+import { closeHtmlDialog } from '@/utils/helpers';
 
 const LogFields = {
   RESULT_DATE: 'result_date',
   COUNT: 'count',
   HABIT_ID: 'habit_id',
+  COMMENT: 'comment',
 }
 
 const ONE_DAY_MS = 86400000;
@@ -15,8 +17,11 @@ const LogModal = ({ habit, onLog }: { habit?: Habit, onLog?: (log: HabitLog) => 
   const todayTimeString = new Date().toLocaleDateString('en-US');
   const yesterdayTimeString = new Date(Date.now() - ONE_DAY_MS).toLocaleDateString('en-US');
   return (
-    <dialog id="my_modal_1" className="modal">
+    <dialog id={MODAL_IDS.LOG_MODAL} className="modal">
       <div className="modal-box">
+        <form method="dialog">
+          <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+        </form>
         {habit ? <CustomForm
           key={habit.ID}
           formStructure={{
@@ -28,6 +33,14 @@ const LogModal = ({ habit, onLog }: { habit?: Habit, onLog?: (log: HabitLog) => 
                   type: "number",
                   required: true,
                   key: LogFields.COUNT,
+                },
+              },
+              {
+                kind: FORM_FIELD.TEXTAREA,
+                componentProps: {
+                  placeholder: habit.anti ? 'What triggered this? What did you do?' : 'What did you do? How did it go?',
+                  required: true,
+                  key: LogFields.COMMENT,
                 },
               },
               {
@@ -56,17 +69,16 @@ const LogModal = ({ habit, onLog }: { habit?: Habit, onLog?: (log: HabitLog) => 
             heading: `Log Habit: ${habit.title}`,
             onSubmit: (e: HabitLog) => {
               if (onLog) onLog(e);
+              closeHtmlDialog(MODAL_IDS.LOG_MODAL);
             },
             submitLabel: 'Log',
             postApiPath: `/api/habit/log`,
           }}
         /> : null}
-        <div className="modal-action">
-          <form method="dialog">
-            <button className="btn">Close</button>
-          </form>
-        </div>
       </div>
+      <form method="dialog" className="modal-backdrop">
+        <button>close</button>
+      </form>
     </dialog>
   );
 };

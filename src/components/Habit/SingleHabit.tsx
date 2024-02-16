@@ -1,8 +1,8 @@
 "use client"
 import { HabitLog, HabitWithLogs } from '@/types';
-import { HABIT_STATUS, HABIT_STATUS_TO_LABEL } from '@/utils/constants';
+import { HABIT_STATUS, HABIT_STATUS_TO_LABEL, MODAL_IDS } from '@/utils/constants';
 import { HABIT_MODE_TYPE_TO_DESC, getHabitFrequencyString } from '@/utils/entityHelpers';
-import { formatDateString } from '@/utils/helpers';
+import { formatDateString, openHtmlDialog } from '@/utils/helpers';
 import React from 'react';
 import LogModal from './LogModal';
 import { DescriptionText, LargeHeading, RegularText, StrongText } from '../common/Typography';
@@ -38,7 +38,7 @@ const SingleHabit = ({ habit, logs }: HabitWithLogs) => {
       {habit.status === HABIT_STATUS.ACTIVE && allLogs.length > 0 && <LogsBarGraph height={300} width={400} logs={allLogs} habit={habit} />}
       <button
         className='btn btn-accent'
-        onClick={() => (document.getElementById('my_modal_1') as HTMLDialogElement)?.showModal()}
+        onClick={() => openHtmlDialog(MODAL_IDS.LOG_MODAL)}
       >
         Log {habit.title}
       </button>

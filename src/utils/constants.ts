@@ -164,3 +164,7 @@ export const HABIT_DROPDOWN_MODE_VALUES = {
     optionList: getOptionsListFromValueLabelMap(HABIT_MODE_TO_LABEL)
   }
 }
+
+export enum MODAL_IDS  {
+  LOG_MODAL = 'habit_log_modal'
+}

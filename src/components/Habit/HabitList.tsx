@@ -1,11 +1,12 @@
 import { Habit } from '@/types';
 import { getHabitFrequencyString } from '@/utils/entityHelpers';
-import { formatDateString } from '@/utils/helpers';
+import { formatDateString, openHtmlDialog } from '@/utils/helpers';
 import { useRouter } from 'next/navigation';
 import { Dispatch, useState } from 'react';
 import CustomTable, { CELL_TYPE } from '../common/CustomTable';
 import LogModal from './LogModal';
 import { LargeHeading } from '../common/Typography';
+import { MODAL_IDS } from '@/utils/constants';
 
 function HabitTableBody({ habits, setActiveHabit }: { habits: Habit[], setActiveHabit: Dispatch<Habit> }) {
   const router = useRouter();
@@ -21,7 +22,7 @@ function HabitTableBody({ habits, setActiveHabit }: { habits: Habit[], setActive
           {
             kind: CELL_TYPE.BUTTON, widthPercent: 6, text: 'Log', additionalProps: {
               onClick: () => {
-                (document.getElementById('my_modal_1') as HTMLDialogElement).showModal();
+                openHtmlDialog(MODAL_IDS.LOG_MODAL);
                 setActiveHabit(habit);
               }
             }
