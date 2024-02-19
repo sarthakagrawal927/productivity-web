@@ -31,7 +31,7 @@ const SingleHabit = ({ habit, logs }: HabitWithLogs) => {
       <LargeHeading text='Logs' />
       <HabitLogs logs={allLogs.map(log => ({ ...log, mode: habit.mode }))} />
       <LogModal habit={habit} onLog={onLog} />
-      {habit.status === HABIT_STATUS.ACTIVE && allLogs.length > 0 && <LogsBarGraph height={300} width={400} logs={allLogs} habit={habit} />}
+      {habit.status === HABIT_STATUS.ACTIVE && <LogsBarGraph height={300} width={400} logs={allLogs} habit={habit} />}
       <button
         className='btn btn-accent'
         onClick={() => openHtmlDialog(MODAL_IDS.LOG_MODAL)}

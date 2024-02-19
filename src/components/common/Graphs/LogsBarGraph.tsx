@@ -15,53 +15,43 @@ export type BarsProps = {
 };
 
 // logs will be of 21 days, each day can have multiple entries, can definitely improve this, but will probably start sending this cleaned data from backend itself
-const mergeLogsByDate = (logs: HabitLog[]) => {
-  const mergedLogs = [];
+const mergeLogsByDate = (logs: HabitLog[], habit: Habit) => {
+  const lastTwentyOneDays = getTwentyOneDays(habit.CreatedAt);
   for (let i = 0; i < logs.length; i++) {
-    const log = logs[i];
-    log.result_time = log.result_time.split('T')[0];
-    const date = log.result_time;
-    const index = mergedLogs.findIndex((l) => l.result_time === date);
-    if (index === -1) {
-      mergedLogs.push({ ...log, result_time: log.result_time });
-    } else {
-      mergedLogs[index].result_count += log.result_count;
-    }
+    const result_time = logs[i].result_time.split('T')[0];
+    lastTwentyOneDays[result_time] = lastTwentyOneDays[result_time] + logs[i].result_count;
   }
-  return mergedLogs;
+  const dailyTarget = habit.target / HabitFreqDivider[habit.frequency_type];
+  return Object.keys(lastTwentyOneDays).map((date) => ({
+    date,
+    result_count: lastTwentyOneDays[date],
+    color: (dailyTarget >= lastTwentyOneDays[date]) !== habit.anti ? "red" : 'rgba(23, 233, 217, .5)'
+  }));
 }
 
-const handleAntiHabit = (mergedLogs: HabitLog[]) => {
-  return mergedLogs.map((log) => {
-    log.result_count = -log.result_count;
-    return log;
-  })
-}
-
-const getTwentyOnedays = (habitStartDate: string) => {
-  const twentyOneDays = [];
+const getTwentyOneDays = (habitStartDate: string) => {
+  const twentyOneDays: { [date: string]: number } = {};
   const startDate = new Date(habitStartDate);
   const endDate = new Date();
   for (let i = 0; i < 21; i++) {
     const date = new Date(endDate);
     date.setDate(date.getDate() - i);
-    // do not take dates higher than today
-    if (date < startDate) {
-      break;
-    }
-    twentyOneDays.push(date.toISOString().split('T')[0]);
+    if (date < startDate) break;
+    twentyOneDays[date.toISOString().split('T')[0]] = 0;
   }
-  return twentyOneDays.reverse();
+  return twentyOneDays;
 }
 
+const HabitFreqDivider: { [freq: number]: number } = {
+  [HABIT_FREQUENCY_TYPE.DAILY]: 1,
+  [HABIT_FREQUENCY_TYPE.WEEKLY]: 7,
+  [HABIT_FREQUENCY_TYPE.MONTHLY]: 30,
+}
 
 export default function LogsBarGraph({ width, height, habit, logs }: BarsProps) {
   const xMax = width;
   const yMax = height - verticalMargin;
-  const habitStartDate = habit.CreatedAt;
-  let mergedLogs = mergeLogsByDate(logs);
-  if (habit.anti) mergedLogs = handleAntiHabit(mergedLogs)
-  const twentyOneDays = getTwentyOnedays(habitStartDate);
+  const mergedLogs = mergeLogsByDate(logs, habit);
 
   // scales, memoize for performance
   const xScale = useMemo(
@@ -69,10 +59,10 @@ export default function LogsBarGraph({ width, height, habit, logs }: BarsProps) 
       scaleBand<string>({
         range: [0, xMax],
         round: true,
-        domain: twentyOneDays,
+        domain: mergedLogs.map(d => d.date),
         padding: 0.4,
       }),
-    [xMax, twentyOneDays],
+    [xMax, mergedLogs],
   );
 
   const yScale = useMemo(
@@ -90,7 +80,7 @@ export default function LogsBarGraph({ width, height, habit, logs }: BarsProps) 
       <rect width={width} height={height} fill="url(#teal)" rx={14} />
       <Group top={verticalMargin / 2}>
         {mergedLogs.map((d) => {
-          const logDate = d.result_time;
+          const logDate = d.date;
           const barWidth = xScale.bandwidth();
           const barHeight = yMax - (yScale(d.result_count) ?? 0);
           const barX = xScale(logDate);
@@ -102,7 +92,7 @@ export default function LogsBarGraph({ width, height, habit, logs }: BarsProps) 
               y={barY}
               width={barWidth}
               height={barHeight}
-              fill={d.result_count > (habit.target / (habit.frequency_type === HABIT_FREQUENCY_TYPE.DAILY ? 1 : 7)) ? "rgba(23, 233, 217, .5)" : "red"}
+              fill={d.color}
               onClick={() => { }}
               onMouseEnter={() => { }}
             />

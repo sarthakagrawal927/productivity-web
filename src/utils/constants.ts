@@ -55,7 +55,7 @@ export enum TODO_DROPDOWN_MODE {
 
 export enum HABIT_DROPDOWN_MODE {
   FREQUENCY_TYPE = 'FREQUENCY_TYPE',
-  STATUS = 'STATUS',
+  // STATUS = 'STATUS',
   MODE = 'MODE'
 }
 
@@ -149,13 +149,13 @@ export const HABIT_DROPDOWN_MODE_VALUES = {
     },
     optionList: getOptionsListFromValueLabelMap(HABIT_FREQUENCY_TYPE_TO_LABEL)
   },
-  [HABIT_DROPDOWN_MODE.STATUS]: {
-    defaultOption: {
-      value: 0,
-      label: "Select Status"
-    },
-    optionList: getOptionsListFromValueLabelMap(HABIT_STATUS_TO_LABEL)
-  },
+  // [HABIT_DROPDOWN_MODE.STATUS]: {
+  //   defaultOption: {
+  //     value: 0,
+  //     label: "Select Status"
+  //   },
+  //   optionList: getOptionsListFromValueLabelMap(HABIT_STATUS_TO_LABEL)
+  // },
   [HABIT_DROPDOWN_MODE.MODE]: {
     defaultOption: {
       value: 0,
