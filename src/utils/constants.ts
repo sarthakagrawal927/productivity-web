@@ -166,5 +166,6 @@ export const HABIT_DROPDOWN_MODE_VALUES = {
 }
 
 export enum MODAL_IDS  {
-  LOG_MODAL = 'habit_log_modal'
+  LOG_MODAL = 'habit_log_modal',
+  HABIT_FORM_MODAL = 'habit_form_modal'
 }

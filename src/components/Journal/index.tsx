@@ -20,7 +20,7 @@ const HabitClient = ({ journalEntries }: { journalEntries: Journal[] }) => {
         return <div key={entry.ID} className='py-4'>
           <p className='text-xl pb-1'>{entry.title}</p>
           <p>{entry.desc}</p>
-          <div className='flex flex-row justify-between pt1'>
+          <div className='flex flex-row justify-between pt-1'>
             <p className='text-slate-400'>Created at: {formatDateString(entry.CreatedAt)}</p>
             <div className="badge badge-primary badge-outline">{JOURNAL_TYPE_TO_LABEL[entry.type]}</div>
           </div>

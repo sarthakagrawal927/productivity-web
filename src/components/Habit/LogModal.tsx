@@ -3,6 +3,7 @@ import React from 'react';
 import CustomForm, { FORM_FIELD } from '../common/CustomForm';
 import { HABIT_MODE_TO_LABEL, MODAL_IDS } from '@/utils/constants';
 import { closeHtmlDialog } from '@/utils/helpers';
+import CustomModal from '../common/CustomModal';
 
 const LogFields = {
   RESULT_DATE: 'result_date',
@@ -17,69 +18,61 @@ const LogModal = ({ habit, onLog }: { habit?: Habit, onLog?: (log: HabitLog) => 
   const todayTimeString = new Date().toLocaleDateString('en-US');
   const yesterdayTimeString = new Date(Date.now() - ONE_DAY_MS).toLocaleDateString('en-US');
   return (
-    <dialog id={MODAL_IDS.LOG_MODAL} className="modal">
-      <div className="modal-box">
-        <form method="dialog">
-          <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-        </form>
-        {habit ? <CustomForm
-          key={habit.ID}
-          formStructure={{
-            fields: [
-              {
-                kind: FORM_FIELD.INPUT,
-                componentProps: {
-                  placeholder: HABIT_MODE_TO_LABEL[habit.mode],
-                  type: "number",
-                  required: true,
-                  key: LogFields.COUNT,
-                },
+    <CustomModal modalId={MODAL_IDS.LOG_MODAL} >
+      {habit ? <CustomForm
+        key={habit.ID}
+        formStructure={{
+          fields: [
+            {
+              kind: FORM_FIELD.INPUT,
+              componentProps: {
+                placeholder: HABIT_MODE_TO_LABEL[habit.mode],
+                type: "number",
+                required: true,
+                key: LogFields.COUNT,
               },
-              {
-                kind: FORM_FIELD.TEXTAREA,
-                componentProps: {
-                  placeholder: habit.anti ? 'What triggered this? What did you do?' : 'What did you do? How did it go?',
-                  required: true,
-                  key: LogFields.COMMENT,
-                },
+            },
+            {
+              kind: FORM_FIELD.TEXTAREA,
+              componentProps: {
+                placeholder: habit.anti ? 'What triggered this? What did you do?' : 'What did you do? How did it go?',
+                required: true,
+                key: LogFields.COMMENT,
               },
-              {
-                kind: FORM_FIELD.DROPDOWN,
-                componentProps: {
-                  key: LogFields.RESULT_DATE,
-                },
-                additionalProps: {
-                  optionList: [
-                    {
-                      label: 'Today',
-                      value: todayTimeString,
-                    },
-                    {
-                      label: 'Yesterday',
-                      value: yesterdayTimeString,
-                    },
-                  ]
-                }
+            },
+            {
+              kind: FORM_FIELD.DROPDOWN,
+              componentProps: {
+                key: LogFields.RESULT_DATE,
+              },
+              additionalProps: {
+                optionList: [
+                  {
+                    label: 'Today',
+                    value: todayTimeString,
+                  },
+                  {
+                    label: 'Yesterday',
+                    value: yesterdayTimeString,
+                  },
+                ]
               }
-            ],
-            defaultInput: {
-              [LogFields.HABIT_ID]: habit.ID,
-              [LogFields.RESULT_DATE]: todayTimeString,
-            },
-            heading: `Log Habit: ${habit.title}`,
-            onSubmit: (e: HabitLog) => {
-              if (onLog) onLog(e);
-              closeHtmlDialog(MODAL_IDS.LOG_MODAL);
-            },
-            submitLabel: 'Log',
-            postApiPath: `/api/habit/log`,
-          }}
-        /> : null}
-      </div>
-      <form method="dialog" className="modal-backdrop">
-        <button>close</button>
-      </form>
-    </dialog>
+            }
+          ],
+          defaultInput: {
+            [LogFields.HABIT_ID]: habit.ID,
+            [LogFields.RESULT_DATE]: todayTimeString,
+          },
+          heading: `Log Habit: ${habit.title}`,
+          onSubmit: (e: HabitLog) => {
+            if (onLog) onLog(e);
+            closeHtmlDialog(MODAL_IDS.LOG_MODAL);
+          },
+          submitLabel: 'Log',
+          postApiPath: `/api/habit/log`,
+        }}
+      /> : null}
+    </CustomModal>
   );
 };
 
