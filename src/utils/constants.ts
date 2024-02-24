@@ -22,6 +22,7 @@ export const JOURNAL_TYPE = {
   DAY_WRAP: 5,
   EVENT: 6,
   FOOD_LOG: 7,
+  HIGHLIGHT_OF_THE_DAY: 8,
 }
 
 export const HABIT_FREQUENCY_TYPE = {
@@ -76,7 +77,8 @@ export const JOURNAL_TYPE_TO_LABEL: { [type: number]: string } = {
   [JOURNAL_TYPE.DAY_PLANNING]: 'Day Planning',
   [JOURNAL_TYPE.DAY_WRAP]: 'Day Wrap',
   [JOURNAL_TYPE.EVENT]: 'Event',
-  [JOURNAL_TYPE.FOOD_LOG]: 'Food Log'
+  [JOURNAL_TYPE.FOOD_LOG]: 'Food Log',
+  [JOURNAL_TYPE.HIGHLIGHT_OF_THE_DAY]: 'Highlight of the Day',
 }
 
 export const HABIT_FREQUENCY_TYPE_TO_LABEL: { [type: number]: string } = {
