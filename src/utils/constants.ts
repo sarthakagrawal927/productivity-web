@@ -14,13 +14,6 @@ export const PRIORITY = {
   HIGH: 4
 }
 
-export const COMPLEXITY = {
-  NO: 1,
-  LOW: 2,
-  MEDIUM: 3,
-  HIGH: 4
-}
-
 export const JOURNAL_TYPE = {
   IDEA: 1,
   GRATITUDE: 2,
@@ -49,7 +42,6 @@ export const HABIT_MODE = {
 
 export enum TODO_DROPDOWN_MODE {
   PRIORITY = 'PRIORITY',
-  COMPLEXITY = 'COMPLEXITY',
   STATUS = 'STATUS',
 }
 
@@ -76,13 +68,6 @@ export const PRIORITY_TO_LABEL: { [priority: number]: string } = {
   [PRIORITY.MEDIUM]: 'Medium',
   [PRIORITY.HIGH]: 'High'
 }
-
-export const COMPLEXITY_TO_LABEL: { [complexity: number]: string } = {
-  [COMPLEXITY.NO]: 'Complexity not set',
-  [COMPLEXITY.LOW]: 'Low',
-  [COMPLEXITY.MEDIUM]: 'Medium',
-  [COMPLEXITY.HIGH]: 'High'
-};
 
 export const JOURNAL_TYPE_TO_LABEL: { [type: number]: string } = {
   [JOURNAL_TYPE.IDEA]: 'Idea',
@@ -125,13 +110,6 @@ export const DROPDOWN_MODE_VALUES = {
     },
     optionList: getOptionsListFromValueLabelMap(PRIORITY_TO_LABEL),
   },
-  [TODO_DROPDOWN_MODE.COMPLEXITY]: {
-    defaultOption: {
-      value: 0,
-      label: "Select complexity"
-    },
-    optionList: getOptionsListFromValueLabelMap(COMPLEXITY_TO_LABEL),
-  },
   [JOURNAL_DROPDOWN_MODE.TYPE]: {
     defaultOption: {
       value: 0,
@@ -167,5 +145,6 @@ export const HABIT_DROPDOWN_MODE_VALUES = {
 
 export enum MODAL_IDS  {
   LOG_MODAL = 'habit_log_modal',
-  HABIT_FORM_MODAL = 'habit_form_modal'
+  HABIT_FORM_MODAL = 'habit_form_modal',
+  TODO_FORM_MODAL = 'todo_form_modal'
 }

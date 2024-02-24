@@ -25,7 +25,7 @@ const HabitForm: React.FC<HabitFormProps> = ({ addNewHabit }) => {
             defaultInput: defaultHabitInput,
             submitLabel: "Add Habit",
             heading: "Add New Habit",
-            postApiPath: "/api/habit",
+            apiPath: "/api/habit",
             onSubmit: (e) => {
               addNewHabit(e);
               closeHtmlDialog(MODAL_IDS.HABIT_FORM_MODAL);

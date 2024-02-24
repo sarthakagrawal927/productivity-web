@@ -3,18 +3,20 @@ import React, { Dispatch, SetStateAction, useEffect } from 'react';
 import SelectDropdown from '../common/SelectDropdown';
 import SingleTaskComponent from './SingleTaskComponent';
 import { HTTP_METHOD, callApi } from '@/utils/api';
-import { DROPDOWN_MODE_VALUES, TODO_DROPDOWN_MODE } from '@/utils/constants';
+import { DROPDOWN_MODE_VALUES, MODAL_IDS, TODO_DROPDOWN_MODE } from '@/utils/constants';
+import { LargeHeading } from '../common/Typography';
+import { openHtmlDialog } from '@/utils/helpers';
+import TodoForm from './TodoForm';
 
 type TaskListComponentProps = {
-  taskList: Task[];
-  setTaskList: Dispatch<SetStateAction<Task[]>>;
+  tasks: Task[];
 }
 
-const TaskListComponent: React.FC<TaskListComponentProps> = ({ taskList, setTaskList }) => {
+const TaskListComponent: React.FC<TaskListComponentProps> = ({ tasks }) => {
+  const [taskList, setTaskList] = React.useState<Task[]>(tasks);
   const [filteredTaskList, setFilteredTaskList] = React.useState<Task[]>(taskList);
   const filterStatusRef = React.useRef<{ [mode: string]: number }>({
     'STATUS': 0,
-    "COMPLEXITY": 0,
     "PRIORITY": 0,
   });
 
@@ -30,7 +32,6 @@ const TaskListComponent: React.FC<TaskListComponentProps> = ({ taskList, setTask
   const setFilteredValueList = () => {
     setFilteredTaskList(taskList.filter((task) =>
       (filterStatusRef.current.STATUS === 0 || filterStatusRef.current.STATUS === task.status) &&
-      (filterStatusRef.current.COMPLEXITY === 0 || filterStatusRef.current.COMPLEXITY === task.complexity) &&
       (filterStatusRef.current.PRIORITY === 0 || filterStatusRef.current.PRIORITY === task.priority)
     ));
   }
@@ -55,15 +56,23 @@ const TaskListComponent: React.FC<TaskListComponentProps> = ({ taskList, setTask
     }
   }
 
+  const addNewTask = (task: Task) => {
+    setTaskList([...taskList, task]);
+  }
+
   return (
     <>
-      <h1 className='text-3xl py-6'>Tasks</h1>
+      <TodoForm addNewTask={addNewTask} />
+      <div className='flex flex-row justify-between'>
+        <LargeHeading>Tasks</LargeHeading>
+        <button className="btn btn-circle text-xl font-bold" onClick={() => openHtmlDialog(MODAL_IDS.TODO_FORM_MODAL)}>+</button>
+      </div>
       <div className='flex pb-6'>
         {Object.values(TODO_DROPDOWN_MODE).map((mode) =>
           <div key={mode} className='px-3'>
             <SelectDropdown
               key={mode}
-              handleValueChange={(status: number) => handleFilterSelectChange(status, mode)}
+              handleValueChange={(status) => handleFilterSelectChange(status as number, mode)}
               enableDefault
               {...DROPDOWN_MODE_VALUES[mode]}
             />

@@ -7,8 +7,8 @@ import ConsumablesList from './ConsumablesList';
 import ConsumablesForm from './ConsumablesForm';
 
 const HabitClient = ({ habits, consumables }: { habits: Habit[], consumables: Consumable[] }) => {
-  const [habitList, setHabitList] = React.useState<Habit[]>(habits);
   const [consumablesList, setConsumablesList] = React.useState<Consumable[]>(consumables);
+  const [habitList, setHabitList] = React.useState<Habit[]>(habits);
 
   const addNewHabit = (habit: Habit) => {
     setHabitList([...habitList, habit]);
@@ -21,11 +21,11 @@ const HabitClient = ({ habits, consumables }: { habits: Habit[], consumables: Co
   return (
     <>
       <div className='lg:flex lg:flex-row'>
-        <div className='flex-1 lg:w-5/12 px-10'>
+        <div className='flex-1 lg:w-5/12'>
           {habitList.length > 0 && <HabitList habits={habitList} />}
           <HabitForm addNewHabit={addNewHabit} />
         </div>
-        <div className='flex-1 lg:w-5/12 px-10'>
+        <div className='flex-1 lg:w-5/12 pl-20'>
           {consumablesList.length > 0 && <ConsumablesList consumables={consumablesList} />}
           <ConsumablesForm addNewConsumable={addNewConsumable} habits={habitList} />
         </div>

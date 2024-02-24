@@ -27,10 +27,6 @@ const SelectDropdown: FC<SelectDropdownProps> = ({
     setDropdownValue(!Number.isNaN(Number(e.target.value)) ? Number(e.target.value) : e.target.value);
   }
 
-  useEffect(() => {
-    setDropdownValue(initialValue || defaultOption.value);
-  }, [initialValue, defaultOption.value])
-
   return (
     <>
       <select

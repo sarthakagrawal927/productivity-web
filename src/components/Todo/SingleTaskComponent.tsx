@@ -10,11 +10,10 @@ type SingleTaskComponentProps = {
 }
 
 const SingleTaskComponent: React.FC<SingleTaskComponentProps> = ({ task, handleDeleteClick, handleSelectValueChange }) => {
-  const { status, priority, complexity } = task;
+  const { status, priority } = task;
   const INITIAL_VALUE_MAP: { [key in TODO_DROPDOWN_MODE]: number } = {
     STATUS: status,
     PRIORITY: priority,
-    COMPLEXITY: complexity,
   }
 
   return (
@@ -28,15 +27,15 @@ const SingleTaskComponent: React.FC<SingleTaskComponentProps> = ({ task, handleD
           {Object.values(TODO_DROPDOWN_MODE).map((mode) =>
             <span key={mode} className='px-2'>
               <SelectDropdown
-                handleValueChange={async (status: number) =>
-                  await handleSelectValueChange(status, task.ID, mode)
+                handleValueChange={async (status) =>
+                  await handleSelectValueChange(status as number, task.ID, mode)
                 }
                 initialValue={INITIAL_VALUE_MAP[mode]}
                 {...DROPDOWN_MODE_VALUES[mode]}
               />
             </span>
           )}
-          <button className='px-4' onClick={() => handleDeleteClick(task.ID)}>Delete</button>
+          <button className='px-4' onClick={() => handleDeleteClick(task.ID)}>X</button>
         </div>
       </div>
       <hr />

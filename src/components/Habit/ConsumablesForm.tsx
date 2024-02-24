@@ -6,7 +6,7 @@ const ConsumableForm: React.FC<ConsumablesFormProps> = ({ addNewConsumable, habi
   return (
     <CustomForm formStructure={{
       heading: "Add New Consumable",
-      postApiPath: "/api/consumable",
+      apiPath: "/api/consumable",
       onSubmit: (e) => {
         addNewConsumable(e);
       },

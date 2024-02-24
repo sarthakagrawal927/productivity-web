@@ -2,9 +2,9 @@ import { BaseType } from "./helpers";
 
 export type Task = BaseType & {
   status: number;
-  due_date: string;
   priority: number;
-  complexity: number;
+  deadline: string;
+  time_to_spend: number;
 }
 
 export type Journal = BaseType & {

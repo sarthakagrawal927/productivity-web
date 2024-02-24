@@ -18,17 +18,17 @@ const SingleHabit = ({ habit, logs }: HabitWithLogs) => {
   // TODO: Beautify more, add option edit habit (& archive as well)
   return (
     <div>
-      <LargeHeading text={habit.title} />
-      <DescriptionText text={habit.desc} />
+      <LargeHeading>{habit.title}</LargeHeading>
+      <DescriptionText>{habit.desc}</DescriptionText>
       <Badge mode={
         habit.status === HABIT_STATUS.ARCHIVED
           ? BadgeMode.DANGER
           : BadgeMode.SUCCESS}
         text={HABIT_STATUS_TO_LABEL[habit.status]}
       />
-      <StrongText text={`Target: ${getHabitFrequencyString(habit)}`} />
-      <DescriptionText text={`Started Since: ${formatDateString(habit.CreatedAt)}`} />
-      <LargeHeading text='Logs' />
+      <StrongText>{`Target: ${getHabitFrequencyString(habit)}`}</StrongText>
+      <DescriptionText>Started Since: ${formatDateString(habit.CreatedAt)}</DescriptionText>
+      <LargeHeading>Logs</LargeHeading>
       <HabitLogs logs={allLogs.map(log => ({ ...log, mode: habit.mode }))} />
       <LogModal habit={habit} onLog={onLog} />
       {habit.status === HABIT_STATUS.ACTIVE && <LogsBarGraph height={300} width={400} logs={allLogs} habit={habit} />}

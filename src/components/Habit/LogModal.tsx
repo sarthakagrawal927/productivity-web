@@ -69,7 +69,7 @@ const LogModal = ({ habit, onLog }: { habit?: Habit, onLog?: (log: HabitLog) => 
             closeHtmlDialog(MODAL_IDS.LOG_MODAL);
           },
           submitLabel: 'Log',
-          postApiPath: `/api/habit/log`,
+          apiPath: `/api/habit/log`,
         }}
       /> : null}
     </CustomModal>

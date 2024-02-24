@@ -43,7 +43,7 @@ const HabitList = ({ habits }: { habits: Habit[] }) => {
   return (
     <div className="overflow-x-auto">
       <div className='flex flex-row justify-between'>
-        <LargeHeading text='Active Habits' /> {/* TODO: Add icon to create form at right of here OR to show archived habits */}
+        <LargeHeading>Active Habits</LargeHeading> {/* TODO: to show archived habits */}
         <button className="btn btn-circle text-xl font-bold" onClick={() => openHtmlDialog(MODAL_IDS.HABIT_FORM_MODAL)}>+</button>
       </div>
       <LogModal habit={activeHabit} />
