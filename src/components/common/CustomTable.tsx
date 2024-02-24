@@ -6,13 +6,14 @@ export enum CELL_TYPE {
   BUTTON = 'BUTTON',
   LINK = 'LINK',
   AVATAR = 'AVATAR',
+  CUSTOM = 'CUSTOM',
 }
 
 // need to define all for this to work
 type AdditionalPropsMap = {
   [CELL_TYPE.TEXT]: {}
   [CELL_TYPE.BUTTON]: {
-    onClick: () => void,
+    onClick: () => void | Promise<void>,
   };
   [CELL_TYPE.TEXT_WITH_SUBTEXT]: {
     subText: string,
@@ -22,6 +23,9 @@ type AdditionalPropsMap = {
   };
   [CELL_TYPE.AVATAR]: {
     src: string,
+  };
+  [CELL_TYPE.CUSTOM]: {
+    element: React.ReactNode,
   };
 }
 
@@ -36,6 +40,7 @@ export type Cell<T extends CELL_TYPE> = {
 export type Row = {
   onClick?: () => void,
   cells: Cell<CELL_TYPE>[],
+  id?: string,
 }
 
 export type CustomTableProps = {
@@ -55,7 +60,7 @@ const CustomTable: React.FC<CustomTableProps> = (tableProps) => {
       </thead>}
       <tbody>
         {tableProps.rows.map((row, index) => (
-          <tr key={index} onClick={row.onClick} className={row.onClick ? 'cursor-pointer' : ''}>
+          <tr key={`${index}_${row.id}`} onClick={row.onClick} className={row.onClick ? 'cursor-pointer' : ''}>
             {row.cells.map((cell, index) => (
               <td key={index} style={{ width: `${cell.widthPercent}%` }}>
                 {cell.kind === CELL_TYPE.TEXT && <span>{cell.text}</span>}
@@ -73,6 +78,7 @@ const CustomTable: React.FC<CustomTableProps> = (tableProps) => {
                   }}>
                   {cell.text}
                 </button>}
+                {cell.kind === CELL_TYPE.CUSTOM && (cell as Cell<CELL_TYPE.CUSTOM>).additionalProps.element}
               </td>
             ))}
           </tr>
