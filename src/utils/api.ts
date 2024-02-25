@@ -25,7 +25,7 @@ export const callApi = async (url: string, body: any, method = HTTP_METHOD.POST)
   }
 };
 
-export const baseServerSideFetch = async (endpoint: string, queryParams?: {[key : string]: string}) => {
+export const baseServerSideFetch = async<T> (endpoint: string, queryParams?: {[key : string]: string}) => {
   if (endpoint.length === 0) {
     throw new Error("Endpoint is required");
   }
@@ -35,10 +35,9 @@ export const baseServerSideFetch = async (endpoint: string, queryParams?: {[key 
   try {
     const data = await fetch(`${baseUrl}${endpoint}`, { cache: 'no-store' })
     const json = await data.json()
-    return json.data
+    return {data: json.data as T, err: null}
   } catch (err) {
-    // console.log({err})
-   return []
+   return {data: null, err: err as Error}
   }
 }
 
