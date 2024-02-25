@@ -1,9 +1,7 @@
-import { callApi } from '@/utils/api';
-import React, { useCallback, useState } from 'react';
-import TitleDescriptionInput, { SetEntityDispatch } from '../common/TitleDescriptionInput';
-import SelectDropdown from '../common/SelectDropdown';
+import { Journal } from '@/types';
 import { DROPDOWN_MODE_VALUES, JOURNAL_DROPDOWN_MODE } from '@/utils/constants';
-import { Journal, NumORStr } from '@/types';
+import React from 'react';
+import CustomForm, { FORM_FIELD, TitleDescriptionFormStructure } from '../common/CustomForm';
 
 type JournalInput = {
   title: string;
@@ -17,40 +15,26 @@ const defaultJournalInput: JournalInput = {
 }
 
 const JournalForm: React.FC<JournalFormProps> = ({ addNewEntry }) => {
-  const [journalInput, setJournalInput] = useState(defaultJournalInput);
-
-  const handleJournalFieldChange = useCallback((key: string, newValue: NumORStr) => {
-    setJournalInput({ ...journalInput, [key]: newValue });
-  }, [journalInput])
-
-
-  const handleSubmit = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    callApi("/api/journal", journalInput).then(({ data }) => {
-      addNewEntry(data.data);
-    })
-    setJournalInput({ ...journalInput, ...defaultJournalInput });
-  }, [journalInput, addNewEntry])
-
   return (
-    <form onSubmit={handleSubmit} className='w-full'>
-      <TitleDescriptionInput
-        title={journalInput.title}
-        desc={journalInput.desc}
-        setEntity={setJournalInput as SetEntityDispatch}
-      />
-      <SelectDropdown
-        key={"journal"}
-        handleValueChange={(newVal: number) => handleJournalFieldChange("type", newVal)}
-        {...DROPDOWN_MODE_VALUES[JOURNAL_DROPDOWN_MODE.TYPE]}
-      />
-      <button
-        type="submit"
-        className="btn btn-primary ml-4"
-      >
-        Add Journal Entry
-      </button>
-    </form>
+    <CustomForm
+      formStructure={{
+        apiPath: "/api/journal",
+        onSubmit: (e) => addNewEntry(e),
+        defaultInput: defaultJournalInput,
+        submitLabel: "Add Journal Entry",
+        heading: "Add New Journal Entry",
+        fields: [
+          ...TitleDescriptionFormStructure,
+          {
+            kind: FORM_FIELD.DROPDOWN,
+            componentProps: {
+              key: "type",
+            },
+            additionalProps: DROPDOWN_MODE_VALUES[JOURNAL_DROPDOWN_MODE.TYPE],
+          }
+        ]
+      }}
+    />
   );
 };
 

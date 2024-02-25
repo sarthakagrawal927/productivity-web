@@ -27,7 +27,7 @@ const SingleHabit = ({ habit, logs }: HabitWithLogs) => {
         text={HABIT_STATUS_TO_LABEL[habit.status]}
       />
       <StrongText>{`Target: ${getHabitFrequencyString(habit)}`}</StrongText>
-      <DescriptionText>Started Since: ${formatDateString(habit.CreatedAt)}</DescriptionText>
+      <DescriptionText>Started Since: {formatDateString(habit.CreatedAt)}</DescriptionText>
       <LargeHeading>Logs</LargeHeading>
       <HabitLogs logs={allLogs.map(log => ({ ...log, mode: habit.mode }))} />
       <LogModal habit={habit} onLog={onLog} />
