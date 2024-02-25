@@ -18,6 +18,8 @@ export type Habit = BaseType & {
   target: number;
   mode: number;
   status: number;
+  existing_usage: number;
+  current_streak: number;
 }
 
 export type HabitLog =BaseType & {

@@ -1,7 +1,7 @@
 "use client"
 import { HabitLog, HabitWithLogs } from '@/types';
 import { HABIT_STATUS, HABIT_STATUS_TO_LABEL, MODAL_IDS } from '@/utils/constants';
-import { getHabitFrequencyString } from '@/utils/entityHelpers';
+import { getHabitFrequencyString, getHabitUsageString } from '@/utils/entityHelpers';
 import { formatDateString, openHtmlDialog } from '@/utils/helpers';
 import React from 'react';
 import LogModal from './LogModal';
@@ -27,6 +27,8 @@ const SingleHabit = ({ habit, logs }: HabitWithLogs) => {
         text={HABIT_STATUS_TO_LABEL[habit.status]}
       />
       <StrongText>{`Target: ${getHabitFrequencyString(habit)}`}</StrongText>
+      <DescriptionText>Streak: {habit.current_streak}</DescriptionText>
+      <StrongText>{`Done: ${getHabitUsageString(habit)}`}</StrongText>
       <DescriptionText>Started Since: {formatDateString(habit.CreatedAt)}</DescriptionText>
       <LargeHeading>Logs</LargeHeading>
       <HabitLogs logs={allLogs.map(log => ({ ...log, mode: habit.mode }))} />
