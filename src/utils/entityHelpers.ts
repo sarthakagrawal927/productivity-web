@@ -1,4 +1,4 @@
-import { Habit } from "@/types";
+import { Habit, HabitLog } from "@/types";
 import { HABIT_FREQUENCY_TYPE, HABIT_FREQUENCY_TYPE_TO_LABEL, HABIT_MODE } from "./constants";
 
 export const HABIT_MODE_TYPE_TO_DESC = {
@@ -20,4 +20,12 @@ export function getHabitFrequencyString(habit: Habit) {
 export function getHabitUsageString(habit: Habit) {
   return (habit.anti ? `Already ` : '') +
   `${habit.existing_usage} ${HABIT_MODE_TYPE_TO_DESC[habit.mode]} ${HABIT_FREQ_COUNTER_LABEL[habit.frequency_type]}`;
+}
+
+export function handleHabitUpdateOnLog(habit: Habit, log: HabitLog): Habit {
+  return {
+    ...habit,
+    existing_usage: habit.existing_usage + log.result_count,
+    current_streak: habit.current_streak + (((habit.existing_usage + log.result_count) >= habit.target && !habit.anti) ? 1 : 0)
+  }
 }

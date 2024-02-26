@@ -1,7 +1,7 @@
 "use client"
-import { HabitLog, HabitWithLogs } from '@/types';
+import { Habit, HabitLog, HabitWithLogs } from '@/types';
 import { HABIT_STATUS, HABIT_STATUS_TO_LABEL, MODAL_IDS } from '@/utils/constants';
-import { getHabitFrequencyString, getHabitUsageString } from '@/utils/entityHelpers';
+import { getHabitFrequencyString, getHabitUsageString, handleHabitUpdateOnLog } from '@/utils/entityHelpers';
 import { formatDateString, openHtmlDialog } from '@/utils/helpers';
 import React from 'react';
 import LogModal from './LogModal';
@@ -10,10 +10,12 @@ import Badge, { BadgeMode } from '../common/Badge';
 import LogsBarGraph from '../common/Graphs/LogsBarGraph';
 import HabitLogs from './HabitLogs';
 
-const SingleHabit = ({ habit, logs }: HabitWithLogs) => {
+const SingleHabit = ({ habit: currentHabit, logs }: HabitWithLogs) => {
+  const [habit, setHabit] = React.useState<Habit>(currentHabit);
   const [allLogs, setAllLogs] = React.useState<HabitLog[]>(logs);
   const onLog = (log: HabitLog) => {
     setAllLogs([...allLogs, log]);
+    setHabit(handleHabitUpdateOnLog(habit, log))
   }
   // TODO: Beautify more, add option edit habit (& archive as well)
   return (
