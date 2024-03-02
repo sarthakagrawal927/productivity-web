@@ -21,7 +21,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <NextAuthProvider>
           <Navbar />
-          <main className="lg:flex min-h-screen flex-col items-center py-24">
+          <main className="lg:flex min-h-screen flex-col py-24 px-20">
             {children}
           </main>
         </NextAuthProvider>

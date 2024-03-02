@@ -50,7 +50,7 @@ type FormStructureType<T> = {
   fields: FormField<FORM_FIELD>[],
   defaultInput: { [key: string]: NumORStr }
   submitLabel: string,
-  postApiPath: string,
+  apiPath: string,
 }
 
 export const TitleDescriptionFormStructure: FormField<FORM_FIELD>[] = [{
@@ -81,7 +81,7 @@ const CustomForm: React.FC<{ formStructure: FormStructureType<any> }> = ({ formS
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    callApi(formStructure.postApiPath, entity).then(({ data }) =>
+    callApi(formStructure.apiPath, entity).then(({ data }) =>
       formStructure.onSubmit(data.data)
     );
     setEntity((entity) => ({ ...entity, ...formStructure.defaultInput }));
@@ -91,7 +91,7 @@ const CustomForm: React.FC<{ formStructure: FormStructureType<any> }> = ({ formS
 
   return (
     <form onSubmit={handleSubmit}>
-      <LargeHeading text={formStructure.heading} />
+      <LargeHeading>{formStructure.heading}</LargeHeading>
       {formStructure.fields.map((field) => {
         switch (field.kind) {
           case FORM_FIELD.INPUT:
@@ -112,7 +112,7 @@ const CustomForm: React.FC<{ formStructure: FormStructureType<any> }> = ({ formS
                 key={field.componentProps.key}
                 containerClassName='w-full mb-4'
                 handleValueChange={(newVal) => handleEntityFieldChange(field.componentProps.key, newVal)}
-                initialValue={entity[field.componentProps.key] as number}
+                initialValue={entity[field.componentProps.key]}
                 {...field.additionalProps as AdditionalPropsMap[FORM_FIELD.DROPDOWN]}
               />
             )

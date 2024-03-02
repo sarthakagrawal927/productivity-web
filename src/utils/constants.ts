@@ -14,13 +14,6 @@ export const PRIORITY = {
   HIGH: 4
 }
 
-export const COMPLEXITY = {
-  NO: 1,
-  LOW: 2,
-  MEDIUM: 3,
-  HIGH: 4
-}
-
 export const JOURNAL_TYPE = {
   IDEA: 1,
   GRATITUDE: 2,
@@ -29,16 +22,18 @@ export const JOURNAL_TYPE = {
   DAY_WRAP: 5,
   EVENT: 6,
   FOOD_LOG: 7,
+  HIGHLIGHT_OF_THE_DAY: 8,
 }
 
 export const HABIT_FREQUENCY_TYPE = {
   DAILY: 1,
-  WEEKLY: 2
+  WEEKLY: 2,
+  MONTHLY: 3,
 }
 
 export const HABIT_STATUS = {
   ACTIVE: 1,
-  PAUSED: 2,
+  ARCHIVED: 2,
 }
 
 export const HABIT_MODE = {
@@ -48,13 +43,12 @@ export const HABIT_MODE = {
 
 export enum TODO_DROPDOWN_MODE {
   PRIORITY = 'PRIORITY',
-  COMPLEXITY = 'COMPLEXITY',
   STATUS = 'STATUS',
 }
 
 export enum HABIT_DROPDOWN_MODE {
   FREQUENCY_TYPE = 'FREQUENCY_TYPE',
-  STATUS = 'STATUS',
+  // STATUS = 'STATUS',
   MODE = 'MODE'
 }
 
@@ -76,13 +70,6 @@ export const PRIORITY_TO_LABEL: { [priority: number]: string } = {
   [PRIORITY.HIGH]: 'High'
 }
 
-export const COMPLEXITY_TO_LABEL: { [complexity: number]: string } = {
-  [COMPLEXITY.NO]: 'Complexity not set',
-  [COMPLEXITY.LOW]: 'Low',
-  [COMPLEXITY.MEDIUM]: 'Medium',
-  [COMPLEXITY.HIGH]: 'High'
-};
-
 export const JOURNAL_TYPE_TO_LABEL: { [type: number]: string } = {
   [JOURNAL_TYPE.IDEA]: 'Idea',
   [JOURNAL_TYPE.GRATITUDE]: 'Gratitude',
@@ -90,17 +77,19 @@ export const JOURNAL_TYPE_TO_LABEL: { [type: number]: string } = {
   [JOURNAL_TYPE.DAY_PLANNING]: 'Day Planning',
   [JOURNAL_TYPE.DAY_WRAP]: 'Day Wrap',
   [JOURNAL_TYPE.EVENT]: 'Event',
-  [JOURNAL_TYPE.FOOD_LOG]: 'Food Log'
+  [JOURNAL_TYPE.FOOD_LOG]: 'Food Log',
+  [JOURNAL_TYPE.HIGHLIGHT_OF_THE_DAY]: 'Highlight of the Day',
 }
 
 export const HABIT_FREQUENCY_TYPE_TO_LABEL: { [type: number]: string } = {
   [HABIT_FREQUENCY_TYPE.DAILY]: 'Daily',
   [HABIT_FREQUENCY_TYPE.WEEKLY]: 'Weekly',
+  [HABIT_FREQUENCY_TYPE.MONTHLY]: 'Monthly',
 }
 
 export const HABIT_STATUS_TO_LABEL: { [status: number]: string } = {
   [HABIT_STATUS.ACTIVE]: 'Active',
-  [HABIT_STATUS.PAUSED]: 'Paused',
+  [HABIT_STATUS.ARCHIVED]: 'Archived',
 }
 
 export const HABIT_MODE_TO_LABEL: { [mode: number]: string } = {
@@ -123,13 +112,6 @@ export const DROPDOWN_MODE_VALUES = {
     },
     optionList: getOptionsListFromValueLabelMap(PRIORITY_TO_LABEL),
   },
-  [TODO_DROPDOWN_MODE.COMPLEXITY]: {
-    defaultOption: {
-      value: 0,
-      label: "Select complexity"
-    },
-    optionList: getOptionsListFromValueLabelMap(COMPLEXITY_TO_LABEL),
-  },
   [JOURNAL_DROPDOWN_MODE.TYPE]: {
     defaultOption: {
       value: 0,
@@ -147,13 +129,13 @@ export const HABIT_DROPDOWN_MODE_VALUES = {
     },
     optionList: getOptionsListFromValueLabelMap(HABIT_FREQUENCY_TYPE_TO_LABEL)
   },
-  [HABIT_DROPDOWN_MODE.STATUS]: {
-    defaultOption: {
-      value: 0,
-      label: "Select Status"
-    },
-    optionList: getOptionsListFromValueLabelMap(HABIT_STATUS_TO_LABEL)
-  },
+  // [HABIT_DROPDOWN_MODE.STATUS]: {
+  //   defaultOption: {
+  //     value: 0,
+  //     label: "Select Status"
+  //   },
+  //   optionList: getOptionsListFromValueLabelMap(HABIT_STATUS_TO_LABEL)
+  // },
   [HABIT_DROPDOWN_MODE.MODE]: {
     defaultOption: {
       value: 0,
@@ -161,4 +143,10 @@ export const HABIT_DROPDOWN_MODE_VALUES = {
     },
     optionList: getOptionsListFromValueLabelMap(HABIT_MODE_TO_LABEL)
   }
+}
+
+export enum MODAL_IDS  {
+  LOG_MODAL = 'habit_log_modal',
+  HABIT_FORM_MODAL = 'habit_form_modal',
+  TODO_FORM_MODAL = 'todo_form_modal'
 }

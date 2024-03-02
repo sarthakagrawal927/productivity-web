@@ -1,20 +1,22 @@
 import { Task } from '@/types';
-import React, { Dispatch, SetStateAction, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import SelectDropdown from '../common/SelectDropdown';
-import SingleTaskComponent from './SingleTaskComponent';
 import { HTTP_METHOD, callApi } from '@/utils/api';
-import { DROPDOWN_MODE_VALUES, TODO_DROPDOWN_MODE } from '@/utils/constants';
+import { DROPDOWN_MODE_VALUES, MODAL_IDS, TODO_DROPDOWN_MODE } from '@/utils/constants';
+import { LargeHeading } from '../common/Typography';
+import { formatDateString, openHtmlDialog } from '@/utils/helpers';
+import TodoForm from './TodoForm';
+import CustomTable, { CELL_TYPE } from '../common/CustomTable';
 
 type TaskListComponentProps = {
-  taskList: Task[];
-  setTaskList: Dispatch<SetStateAction<Task[]>>;
+  tasks: Task[];
 }
 
-const TaskListComponent: React.FC<TaskListComponentProps> = ({ taskList, setTaskList }) => {
+const TaskListComponent: React.FC<TaskListComponentProps> = ({ tasks }) => {
+  const [taskList, setTaskList] = React.useState<Task[]>(tasks);
   const [filteredTaskList, setFilteredTaskList] = React.useState<Task[]>(taskList);
   const filterStatusRef = React.useRef<{ [mode: string]: number }>({
     'STATUS': 0,
-    "COMPLEXITY": 0,
     "PRIORITY": 0,
   });
 
@@ -30,7 +32,6 @@ const TaskListComponent: React.FC<TaskListComponentProps> = ({ taskList, setTask
   const setFilteredValueList = () => {
     setFilteredTaskList(taskList.filter((task) =>
       (filterStatusRef.current.STATUS === 0 || filterStatusRef.current.STATUS === task.status) &&
-      (filterStatusRef.current.COMPLEXITY === 0 || filterStatusRef.current.COMPLEXITY === task.complexity) &&
       (filterStatusRef.current.PRIORITY === 0 || filterStatusRef.current.PRIORITY === task.priority)
     ));
   }
@@ -55,28 +56,68 @@ const TaskListComponent: React.FC<TaskListComponentProps> = ({ taskList, setTask
     }
   }
 
+  const addNewTask = (task: Task) => {
+    setTaskList([...taskList, task]);
+  }
+
   return (
     <>
-      <h1 className='text-3xl py-6'>Tasks</h1>
+      <TodoForm addNewTask={addNewTask} />
+      <div className='flex flex-row justify-between'>
+        <LargeHeading>Tasks</LargeHeading>
+        <button className="btn btn-circle text-xl font-bold" onClick={() => openHtmlDialog(MODAL_IDS.TODO_FORM_MODAL)}>+</button>
+      </div>
       <div className='flex pb-6'>
         {Object.values(TODO_DROPDOWN_MODE).map((mode) =>
-          <div key={mode} className='px-3'>
+          <div key={mode} className='pr-3'>
             <SelectDropdown
               key={mode}
-              handleValueChange={(status: number) => handleFilterSelectChange(status, mode)}
+              handleValueChange={(status) => handleFilterSelectChange(status as number, mode)}
               enableDefault
               {...DROPDOWN_MODE_VALUES[mode]}
             />
           </div>
         )}
-      </div>
-      {filteredTaskList.map((task, idx) => (
-        <SingleTaskComponent
-          task={task}
-          key={`${task.ID}_${task.title}_${idx}`}
-          handleSelectValueChange={handleSelectValueChange}
-          handleDeleteClick={handleDeleteClick} />
-      ))}
+      </div >
+
+      <CustomTable
+        rows={filteredTaskList.map((task, idx) => ({
+          id: task.ID.toString(),
+          cells: [
+            { kind: CELL_TYPE.TEXT, widthPercent: 2, text: (idx + 1).toString(), additionalProps: {} },
+            {
+              kind: CELL_TYPE.TEXT_WITH_SUBTEXT, widthPercent: 66, text: task.title, additionalProps: {
+                subText: task.desc
+              }
+            },
+            { kind: CELL_TYPE.TEXT, widthPercent: 8, text: `Spend ${task.time_to_spend} mins`, additionalProps: {} },
+
+            { kind: CELL_TYPE.TEXT, widthPercent: 8, text: task.deadline ? `Due ${formatDateString(task.deadline)}` : "No due date", additionalProps: {} },
+            {
+              kind: CELL_TYPE.CUSTOM, widthPercent: 14, text: '', additionalProps: {
+                element: <div className='flex flex-row'>
+                  {Object.values(TODO_DROPDOWN_MODE).map((mode) =>
+                    <span key={mode} className='px-2'>
+                      <SelectDropdown
+                        handleValueChange={async (status) =>
+                          await handleSelectValueChange(status as number, task.ID, mode)
+                        }
+                        initialValue={{ STATUS: task.status, PRIORITY: task.priority }[mode]}
+                        {...DROPDOWN_MODE_VALUES[mode]}
+                      />
+                    </span>
+                  )}
+                </div>
+              },
+            },
+            {
+              kind: CELL_TYPE.BUTTON, widthPercent: 2, text: 'X', additionalProps: {
+                onClick: async () => handleDeleteClick(task.ID)
+              }
+            },
+          ],
+        }))}
+      />
     </>
   );
 };

@@ -1,12 +1,12 @@
 import React, { FC, useEffect } from 'react';
 import useOptimisticResult from '@/hooks/useOptimisticResult';
 import cn from 'classnames';
-import { DropdownOption } from '@/types';
+import { DropdownOption, NumORStr } from '@/types';
 
 type SelectDropdownProps = {
-  handleValueChange: ((value: number) => Promise<{ err?: Error }> | void);
+  handleValueChange: ((value: NumORStr) => Promise<{ err?: Error }> | void);
   containerClassName?: string;
-  initialValue?: number;
+  initialValue?: NumORStr;
   enableDefault?: boolean;
   optionList: DropdownOption[];
   defaultOption: DropdownOption;
@@ -21,15 +21,11 @@ const SelectDropdown: FC<SelectDropdownProps> = ({
   defaultOption = { label: 'Select', value: 0 },
 }) => {
 
-  const [dropdownValue, setDropdownValue] = useOptimisticResult(initialValue || defaultOption.value, handleValueChange);
+  const [dropdownValue, setDropdownValue] = useOptimisticResult<NumORStr>(initialValue || defaultOption.value, handleValueChange);
 
   const handleFilterChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setDropdownValue(parseInt(e.target.value));
+    setDropdownValue(!Number.isNaN(Number(e.target.value)) ? Number(e.target.value) : e.target.value);
   }
-
-  useEffect(() => {
-    setDropdownValue(initialValue || defaultOption.value);
-  }, [initialValue, defaultOption.value])
 
   return (
     <>
@@ -43,7 +39,7 @@ const SelectDropdown: FC<SelectDropdownProps> = ({
           {defaultOption.label}
         </option>
         {
-          optionList.filter(({ value, label }) => value !== defaultOption.value).map(({ value, label }) => (
+          optionList.filter(({ value }) => value !== defaultOption.value).map(({ value, label }) => (
             <option key={value} value={value}>
               {label}
             </option>

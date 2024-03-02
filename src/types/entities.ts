@@ -2,9 +2,9 @@ import { BaseType } from "./helpers";
 
 export type Task = BaseType & {
   status: number;
-  due_date: string;
   priority: number;
-  complexity: number;
+  deadline: string;
+  time_to_spend: number;
 }
 
 export type Journal = BaseType & {
@@ -18,13 +18,16 @@ export type Habit = BaseType & {
   target: number;
   mode: number;
   status: number;
+  existing_usage: number;
+  current_streak: number;
 }
 
-export type HabitLog = {
+export type HabitLog =BaseType & {
   ID: number;
   habit_id: number;
   result_time: string;
   result_count: number;
+  comment: string;
 }
 
 export type HabitWithLogs = {
@@ -39,3 +42,5 @@ export type Consumable = BaseType & {
   num_total_unit: number;
   num_remaining_unit: number;
 }
+
+export type LogWithHabit = Partial<Habit> & HabitLog

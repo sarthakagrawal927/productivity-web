@@ -1,17 +1,9 @@
-import { NumORStr, Task } from "@/types";
-import { callApi } from "@/utils/api";
-import { DROPDOWN_MODE_VALUES, TODO_DROPDOWN_MODE } from "@/utils/constants";
-import React, { useState } from "react";
-import SelectDropdown from "../common/SelectDropdown";
-import TitleDescriptionInput, { SetEntityDispatch } from "../common/TitleDescriptionInput";
-
-type TaskInput = {
-  title: string,
-  desc: string,
-  status?: number,
-  complexity?: number,
-  priority?: number,
-}
+import { Task } from "@/types";
+import { DROPDOWN_MODE_VALUES, MODAL_IDS, TODO_DROPDOWN_MODE } from "@/utils/constants";
+import React from "react";
+import CustomForm, { FORM_FIELD, TitleDescriptionFormStructure } from "../common/CustomForm";
+import CustomModal from "../common/CustomModal";
+import { closeHtmlDialog } from "@/utils/helpers";
 
 const defaultTaskInput = {
   title: "",
@@ -19,48 +11,61 @@ const defaultTaskInput = {
 }
 
 const TodoForm: React.FC<TodoFormProps> = ({ addNewTask }) => {
-  const [task, setTask] = useState<TaskInput>(defaultTaskInput);
-
-  const handleTaskFieldChange = (key: string, newValue: NumORStr) => {
-    setTask({ ...task, [key]: newValue });
-  }
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    callApi("/api/todo", task).then(({ data }) => {
-      addNewTask(data.data);
-    })
-    setTask({ ...task, ...defaultTaskInput });
-  }
-
   return (
-    <div className="w-full max-w-md mx-auto p-6 bg-gray-900 text-white rounded-lg shadow-lg">
-      <form onSubmit={handleSubmit}>
-        <TitleDescriptionInput
-          title={task.title}
-          desc={task.desc}
-          setEntity={setTask as SetEntityDispatch}
-        />
-        <div className="mb-4">
-          {Object.values(TODO_DROPDOWN_MODE).map((mode) =>
-            <div key={mode} className="my-4">
-              <SelectDropdown
-                enableDefault
-                containerClassName="w-full"
-                handleValueChange={(newVal: number) => handleTaskFieldChange(mode.toLocaleLowerCase(), newVal)}
-                {...DROPDOWN_MODE_VALUES[mode]}
-              />
-            </div>
-          )}
-        </div>
-        <button
-          type="submit"
-          className="btn btn-primary flex-end"
-        >
-          Add To-Do
-        </button>
-      </form>
-    </div>
+    <CustomModal modalId={MODAL_IDS.TODO_FORM_MODAL}>
+      <CustomForm
+        formStructure={{
+          defaultInput: defaultTaskInput,
+          submitLabel: "Add To-Do",
+          heading: "Add New To-Do",
+          apiPath: "/api/todo",
+          onSubmit: (e) => {
+            addNewTask(e);
+            closeHtmlDialog(MODAL_IDS.TODO_FORM_MODAL);
+          },
+          fields: [
+            ...TitleDescriptionFormStructure,
+            {
+              kind: FORM_FIELD.INPUT,
+              componentProps: {
+                placeholder: "Time To Spend",
+                type: "number",
+                required: true,
+                key: "time_to_spend",
+              },
+            },
+            ...Object.values(TODO_DROPDOWN_MODE).map((mode) => ({
+              kind: FORM_FIELD.DROPDOWN,
+              componentProps: {
+                key: mode.toLocaleLowerCase(),
+              },
+              additionalProps: DROPDOWN_MODE_VALUES[mode],
+            })),
+            {
+              kind: FORM_FIELD.DROPDOWN,
+              componentProps: {
+                key: "deadline",
+              },
+              additionalProps: {
+                defaultOption: {
+                  label: "No Deadline",
+                  value: "",
+                },
+                // one week of options
+                optionList: Array.from({ length: 7 }, (_, i) => {
+                  const date = new Date();
+                  date.setDate(date.getDate() + i);
+                  return {
+                    label: date.toDateString(),
+                    value: date.toLocaleDateString('en-US'),
+                  };
+                })
+              }
+            }
+          ]
+        }}
+      />
+    </CustomModal>
   );
 };
 

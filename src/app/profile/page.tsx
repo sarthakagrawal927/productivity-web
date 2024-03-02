@@ -1,8 +1,13 @@
 "use client";
 import { useSession } from 'next-auth/react';
-import React from 'react';
+import HabitLogs from '@/components/Habit/HabitLogs';
+import ErrorComponent from '@/components/common/ErrorComponent';
+import { LogWithHabit } from '@/types';
+import { baseServerSideFetch } from '@/utils/api';
 
-const Profile = () => {
+const Profile = async () => {
+  const { data: dailyLogs, err } = await baseServerSideFetch<LogWithHabit[]>(`/api/user/today/logs`);
+  if (err) return <ErrorComponent message={err.message} />
   const { data: session } = useSession();
   return (
     <div>
