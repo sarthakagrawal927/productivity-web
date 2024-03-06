@@ -14,8 +14,8 @@ export const authOptions = {
     //   clientSecret: process.env.GITHUB_SECRET,
     // }),
     Google({
-      clientId: "",//process.env.NEXT_GOOGLE_CLIENT_ID,
-      clientSecret: ""//process.env.NEXT_GOOGLE_CLIENT_SECRET,
+      clientId: process.env.NEXT_GOOGLE_CLIENT_ID || "my-default-client-id",
+      clientSecret: process.env.NEXT_GOOGLE_CLIENT_SECRET || "my-default-client-secret",
     }),
   ],
   callbacks: {
@@ -29,9 +29,9 @@ export const authOptions = {
       // Generate the JWT token
       token.accessToken = sign(token, secret, { algorithm });
       console.log('JWT token:', token.accessToken);
-      // Uncomment and implement sendTokenToServer function with appropriate types
+
+      // Call function to send token to golang backend
       await sendTokenToServer(token.accessToken);
-      // await sendTokenToServer("")
 
       return token;
     },
