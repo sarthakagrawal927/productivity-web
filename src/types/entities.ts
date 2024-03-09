@@ -44,3 +44,15 @@ export type Consumable = BaseType & {
 }
 
 export type LogWithHabit = Partial<Habit> & HabitLog
+
+export type ScheduleEntry = {
+  label: string;
+  start_time: {
+    hour: number;
+    minute: number;
+  };
+  end_time: {
+    hour: number;
+    minute: number;
+  };
+}
