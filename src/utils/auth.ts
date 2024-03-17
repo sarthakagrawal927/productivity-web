@@ -6,7 +6,7 @@ export async function sendTokenToServer(token: string | undefined): Promise<void
       return;
     }
   
-    const response = await fetch("http://localhost:8080/validate-jwt", {
+    const response = await fetch("http://localhost:1323/api/auth/jwt_validate", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
