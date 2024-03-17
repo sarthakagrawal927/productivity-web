@@ -1,8 +1,7 @@
+import { sign } from 'jsonwebtoken';
 import NextAuth from 'next-auth';
 import Google from 'next-auth/providers/google';
-import CredentialsProvider from "next-auth/providers/credentials";
 import { sendTokenToServer } from '../../../src/utils/auth';
-import { sign } from 'jsonwebtoken';
 
 
 export const authOptions = {
@@ -19,26 +18,26 @@ export const authOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token/*, user*/ }) {
-      // token.email = "duttaaniruddha31@gmail.com"; // Adjust email assignment as needed
-      console.log('JWT payload:', token);
+    async jwt({ token, user}: {token:any, user: any}) {
+      // user.email = "duttaaniruddha31@gmail.com"; // Adjust email assignment as needed
+      console.log('JWT payload:', { token, user });
+      if (!token) return;
 
       const algorithm = 'HS256'; // Choose the desired algorithm
       const secret = "simple"; // Replace with your secret key
 
       // Generate the JWT token
-      token.accessToken = sign(token, secret, { algorithm });
-      console.log('JWT token:', token.accessToken);
+      const accessToken = sign(token, secret, { algorithm });
+      console.log('JWT token:', accessToken);
 
       // Call function to send token to golang backend
-      await sendTokenToServer(token.accessToken);
-
+      await sendTokenToServer(accessToken);
       return token;
     },
   },
   cookies: {
     sessionToken: {
-      name: 'next-auth.session-token',
+      name: 'auth-cookie',
       options: {
         // httpOnly: true,
         sameSite: 'lax',
@@ -48,7 +47,6 @@ export const authOptions = {
     },
   },
   checks: ['none'],
-  // database: process.env.DATABASE_URL,
 };
 
 export default NextAuth(authOptions);
