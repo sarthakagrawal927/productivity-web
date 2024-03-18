@@ -1,4 +1,6 @@
 import React from 'react';
+import { signOut } from 'next-auth/react'; // Import signOut function
+import { useSession } from 'next-auth/react';
 
 const menuItems = [
   { label: "Habits", href: "/habit" },
@@ -8,7 +10,12 @@ const menuItems = [
   { label: "Relations", href: "/relations" },
 ];
 
+
+
 const Navbar = () => {
+
+  const { data: session } = useSession(); // Destructure session data
+  const isAuthenticated = !!session; // Check if a session exists
 
   const NavItems = () => {
     return <>
@@ -37,8 +44,21 @@ const Navbar = () => {
           <NavItems />
         </ul>
       </div>
-      <div className="navbar-end">
+      {/* <div className="navbar-end">
         <a className="btn">Logout</a>
+        <a className="btn" href="http://localhost:3000/api/auth/callback/google">
+            Sign In using Google
+        </a>
+      </div> */}
+      <div className="navbar-end">
+        {/* Replace "Logout" with the SignOut component for conditional rendering */}
+        {isAuthenticated ? (
+          <button className="btn" onClick={() => signOut()}>Sign Out</button>
+        ) : (
+          <a className="btn" href="http://localhost:3000/api/auth/callback/google">
+            Sign In with Google
+          </a>
+        )}
       </div>
     </div>
   );

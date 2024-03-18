@@ -2,6 +2,7 @@ import { sign } from 'jsonwebtoken';
 import NextAuth from 'next-auth';
 import Google from 'next-auth/providers/google';
 import { sendTokenToServer } from '../../../src/utils/auth';
+import { getSession } from 'next-auth/react';
 
 
 export const authOptions = {
@@ -65,3 +66,8 @@ export const authOptions = {
 };
 
 export default NextAuth(authOptions);
+
+export async function getServerSession(context : any) {
+  const session = await getSession(context);
+  return session;
+}
