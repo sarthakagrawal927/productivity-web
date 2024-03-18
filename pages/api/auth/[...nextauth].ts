@@ -19,30 +19,45 @@ export const authOptions = {
   ],
   callbacks: {
     async jwt({ token, user}: {token:any, user: any}) {
-      // user.email = "duttaaniruddha31@gmail.com"; // Adjust email assignment as needed
-      console.log('JWT payload:', { token, user });
-      if (!token) return;
+      if (user) 
+      {
+        console.log('JWT payload:', { token, user });
+        if (!token) return;
 
-      const algorithm = 'HS256'; // Choose the desired algorithm
-      const secret = "simple"; // Replace with your secret key
+        const algorithm = 'HS256'; // Choose the desired algorithm
+        const secret = "simple"; // Replace with your secret key
 
-      // Generate the JWT token
-      const accessToken = sign(token, secret, { algorithm });
-      console.log('JWT token:', accessToken);
+        // Generate the JWT token
+        const accessToken = sign(token, secret, { algorithm });
+        console.log('JWT token:', accessToken);
 
-      // Call function to send token to golang backend
-      await sendTokenToServer(accessToken);
-      return token;
+        // Call function to send token to golang backend
+        await sendTokenToServer(accessToken);
+        return token;
+      }
+      else
+      {
+        console.log('No user information received from Google OAuth');
+        return token; // Return unmodified token if no user data
+      }
+      
+    },
+    async session({ session, token }:{session:any, token: any}): Promise<any> {
+      // Customize session object with user data (optional)
+      if (token?.user) {
+        session.user = token.user; // Add user data to session if available
+      }
+      return session;
     },
   },
   cookies: {
     sessionToken: {
       name: 'auth-cookie',
       options: {
-        // httpOnly: true,
+        httpOnly: true,
         sameSite: 'lax',
         path: '/',
-        // secure: process.env.NODE_ENV === 'production',
+        secure: process.env.NODE_ENV === 'production',
       },
     },
   },
