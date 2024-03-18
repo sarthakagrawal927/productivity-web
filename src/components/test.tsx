@@ -1,11 +1,19 @@
-async function getTestData() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/test`)
-  if (!res.ok) {
-    // This will activate the closest `error.js` Error Boundary
-    throw new Error('Failed to fetch data')
-  }
+import { cookies } from "next/headers";
 
-  return res.json()
+async function getTestData() {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/test`, {
+      headers: {
+        Cookie: cookies().toString()
+      }
+    })
+    if (!res.ok) throw new Error(await res.text())
+    const jsonResp = await res.json();
+    return jsonResp.message
+  } catch (err) {
+    console.log('Failed to fetch data', err)
+    return "Something went wrong, try signing in again."
+  }
 }
 
 export default async function TestComponent() {
