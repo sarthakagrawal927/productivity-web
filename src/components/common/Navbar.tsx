@@ -1,3 +1,4 @@
+'use client'; // Make this component a Client Component
 import React from 'react';
 import { signOut } from 'next-auth/react'; // Import signOut function
 import { useSession } from 'next-auth/react';
@@ -14,8 +15,11 @@ const menuItems = [
 
 const Navbar = () => {
 
+  
   const { data: session } = useSession(); // Destructure session data
   const isAuthenticated = !!session; // Check if a session exists
+  
+  // const session = await getServerSession();
 
   const NavItems = () => {
     return <>
