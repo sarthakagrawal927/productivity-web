@@ -63,7 +63,7 @@ const CustomTable: React.FC<CustomTableProps> = (tableProps) => {
           <tr key={`${index}_${row.id}`} onClick={row.onClick} className={row.onClick ? 'cursor-pointer' : ''}>
             {row.cells.map((cell, index) => (
               <td key={index} style={{ width: `${cell.widthPercent}%` }}>
-                {cell.kind === CELL_TYPE.TEXT && <span>{cell.text}</span>}
+                {cell.kind === CELL_TYPE.TEXT && <span className='font-bold	'>{cell.text}</span>}
                 {cell.kind === CELL_TYPE.TEXT_WITH_SUBTEXT && <span>
                   <div className='font-bold'>{cell.text}</div>
                   <div className='text-slate-400'>

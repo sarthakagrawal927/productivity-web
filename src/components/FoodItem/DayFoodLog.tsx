@@ -25,7 +25,7 @@ const CoolProgressBar = ({ ratio, label, positive }: { ratio: number, label: str
       style={{ "--value": ratio } as React.CSSProperties}
       role="progressbar"
     >
-      {ratio}
+      {ratio.toFixed(2)}%
     </div>
     <p className='pt-4'>{label}</p>
   </div>

@@ -42,16 +42,15 @@ export const FoodItemTable = ({ foodItems, logMode = false }: { foodItems: FoodI
 }
 
 const FoodItemList = ({ foodItems }: { foodItems: FoodItem[] }) => {
-  if (!foodItems.length) {
-    return <div>No food items available</div>
-  }
   return (
     <>
       <div className='flex flex-row justify-between'>
         <LargeHeading>Food Items</LargeHeading>
         <button className="btn btn-circle text-xl font-bold" onClick={() => openHtmlDialog(MODAL_IDS.FOOD_ITEM_FORM_MODAL)}>+</button>
       </div>
-      <FoodItemTable foodItems={foodItems} logMode />
+      {foodItems.length > 0 ?
+        <FoodItemTable foodItems={foodItems} logMode /> : <div>No food items available</div>
+      }
     </>
   );
 };

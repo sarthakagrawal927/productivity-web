@@ -33,9 +33,6 @@ const FoodItemForm: React.FC<ConsumablesFormProps> = ({ addNewConsumable }) => {
         ],
         defaultInput: {
           name: "",
-          protein: 0,
-          fiber: 0,
-          kcal: 0,
         },
         submitLabel: "Add Food Item",
       }}
