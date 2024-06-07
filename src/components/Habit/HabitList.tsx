@@ -23,7 +23,6 @@ function HabitTableBody({ habits, setActiveHabit }: { habits: Habit[], setActive
               subText: `Streak: ${habit.current_streak.toString()}`
             }
           },
-          // { kind: CELL_TYPE.TEXT, widthPercent: 16, text: formatDateString(habit.CreatedAt), additionalProps: {} },
           {
             kind: CELL_TYPE.BUTTON, widthPercent: 6, text: 'Log', additionalProps: {
               onClick: () => {

@@ -35,12 +35,12 @@ export type HabitWithLogs = {
   logs: HabitLog[];
 }
 
-export type Consumable = BaseType & {
-  habit_id: number;
-  smallest_unit_label: string;
-  time_per_unit: number;
-  num_total_unit: number;
-  num_remaining_unit: number;
+export type FoodItem = BaseType & {
+  name: string;
+  kcal: number;
+  protein: number;
+  fiber: number;
+  quantity: number;
 }
 
 export type LogWithHabit = Partial<Habit> & HabitLog
@@ -55,4 +55,9 @@ export type ScheduleEntry = {
     hour: number;
     minute: number;
   };
+}
+
+export type DayFoodLogType = {
+  food_consumed: FoodItem[],
+  total_food_consumed: FoodItem,
 }

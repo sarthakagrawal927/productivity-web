@@ -77,7 +77,7 @@ export const JOURNAL_TYPE_TO_LABEL: { [type: number]: string } = {
   [JOURNAL_TYPE.DAY_PLANNING]: 'Day Planning',
   [JOURNAL_TYPE.DAY_WRAP]: 'Day Wrap',
   [JOURNAL_TYPE.EVENT]: 'Event',
-  [JOURNAL_TYPE.FOOD_LOG]: 'Food Log',
+  [JOURNAL_TYPE.FOOD_LOG]: 'FoodItem Log',
   [JOURNAL_TYPE.HIGHLIGHT_OF_THE_DAY]: 'Highlight of the Day',
 }
 
@@ -148,5 +148,6 @@ export const HABIT_DROPDOWN_MODE_VALUES = {
 export enum MODAL_IDS  {
   LOG_MODAL = 'habit_log_modal',
   HABIT_FORM_MODAL = 'habit_form_modal',
-  TODO_FORM_MODAL = 'todo_form_modal'
+  TODO_FORM_MODAL = 'todo_form_modal',
+  FOOD_ITEM_FORM_MODAL = 'food_item_form_modal'
 }
