@@ -18,11 +18,7 @@ function HabitTableBody({ habits, setActiveHabit }: { habits: Habit[], setActive
           { kind: CELL_TYPE.TEXT, widthPercent: 2, text: (idx + 1).toString(), additionalProps: {} },
           { kind: CELL_TYPE.TEXT_WITH_SUBTEXT, widthPercent: 60, text: habit.title, additionalProps: { subText: habit.desc } },
           { kind: CELL_TYPE.TEXT, widthPercent: 16, text: getHabitFrequencyString(habit), additionalProps: {} },
-          {
-            kind: CELL_TYPE.TEXT_WITH_SUBTEXT, widthPercent: 16, text: getHabitUsageString(habit), additionalProps: {
-              subText: `Streak: ${habit.current_streak.toString()}`
-            }
-          },
+          { kind: CELL_TYPE.TEXT, widthPercent: 16, text: getHabitUsageString(habit), additionalProps: {} },
           {
             kind: CELL_TYPE.BUTTON, widthPercent: 6, text: 'Log', additionalProps: {
               onClick: () => {

@@ -26,6 +26,5 @@ export function handleHabitUpdateOnLog(habit: Habit, log: HabitLog): Habit {
   return {
     ...habit,
     existing_usage: habit.existing_usage + log.result_count,
-    current_streak: habit.current_streak + (((habit.existing_usage + log.result_count) >= habit.target && !habit.anti) ? 1 : 0)
   }
 }
