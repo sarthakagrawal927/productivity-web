@@ -9,7 +9,7 @@ import { callApi } from '@/utils/api';
 export const FoodItemTable = ({ foodItems, logMode = false }: { foodItems: FoodItem[], logMode?: boolean }) => {
   const quantityInputRef = useRef<(HTMLInputElement | null)[]>([]);
   return <CustomTable
-    headers={["name", "protein (gms)", "fiber (gms)", "kcal", ...(logMode ? [""] : ["quantity (units)", "created at"])]}
+    headers={["name", "protein (gms)", "fiber (gms)", "kcal", ...(logMode ? [""] : ["quantity (units)"])]}
     rows={foodItems.map((consumable, idx) => ({
       cells: [
         { kind: CELL_TYPE.TEXT, widthPercent: 10, text: `${consumable.name}`, additionalProps: {} },
@@ -34,7 +34,7 @@ export const FoodItemTable = ({ foodItems, logMode = false }: { foodItems: FoodI
           }
         }] : [
           { kind: CELL_TYPE.TEXT, widthPercent: 10, text: `${consumable.quantity}`, additionalProps: {} },
-          { kind: CELL_TYPE.TEXT, widthPercent: 20, text: `${formatDateString(consumable.CreatedAt)}`, additionalProps: {} }
+          // { kind: CELL_TYPE.TEXT, widthPercent: 20, text: `${formatDateString(consumable.CreatedAt)}`, additionalProps: {} }
         ]),
       ]
     }))}
