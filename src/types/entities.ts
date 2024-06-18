@@ -40,6 +40,7 @@ export type FoodItem = BaseType & {
   protein: number;
   fiber: number;
   quantity: number;
+  date: string;
 }
 
 export type LogWithHabit = Partial<Habit> & HabitLog

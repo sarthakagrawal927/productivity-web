@@ -1,11 +1,11 @@
 "use client";
-import { DayFoodLogType, FoodItem } from '@/types';
+import { FoodItem } from '@/types';
 import React from 'react';
 import FoodItemForm from './FoodItemForm';
 import FoodItemList from './FoodItemList';
-import DayFoodLog from './DayFoodLog';
+import HistoricalFoodLogs from './HistoricalFoodLogs';
 
-const FoodClient = ({ foodItems, food_consumed, total_food_consumed }: { foodItems: FoodItem[] } & DayFoodLogType) => {
+const FoodClient = ({ foodItems, historicalFoodLogs }: { foodItems: FoodItem[], historicalFoodLogs: FoodItem[] }) => {
   const [consumablesList, setConsumablesList] = React.useState<FoodItem[]>(foodItems);
 
   const addNewConsumable = (consumable: FoodItem) => {
@@ -14,7 +14,7 @@ const FoodClient = ({ foodItems, food_consumed, total_food_consumed }: { foodIte
 
   return (
     <>
-      <DayFoodLog food_consumed={food_consumed} total_food_consumed={total_food_consumed} />
+      <HistoricalFoodLogs historicalFoodLogs={historicalFoodLogs} />
       <FoodItemList foodItems={consumablesList} />
       <FoodItemForm addNewConsumable={addNewConsumable} />
     </>
