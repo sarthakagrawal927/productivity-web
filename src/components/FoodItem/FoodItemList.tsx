@@ -9,12 +9,13 @@ import { callApi } from '@/utils/api';
 export const FoodItemTable = ({ foodItems, logMode = false }: { foodItems: FoodItem[], logMode?: boolean }) => {
   const quantityInputRef = useRef<(HTMLInputElement | null)[]>([]);
   return <CustomTable
-    headers={["name", "protein (gms)", "fiber (gms)", "kcal", ...(logMode ? [""] : ["quantity (units)"])]}
+    headers={["name", "protein (gms)", "fiber (gms)", "carbs", "kcal", ...(logMode ? [""] : ["quantity (units)"])]}
     rows={foodItems.map((consumable, idx) => ({
       cells: [
         { kind: CELL_TYPE.TEXT, widthPercent: 10, text: `${consumable.name}`, additionalProps: {} },
         { kind: CELL_TYPE.TEXT, widthPercent: 10, text: `${consumable.protein}`, additionalProps: {} },
         { kind: CELL_TYPE.TEXT, widthPercent: 10, text: `${consumable.fiber}`, additionalProps: {} },
+        { kind: CELL_TYPE.TEXT, widthPercent: 10, text: `${consumable.carbs}`, additionalProps: {} },
         { kind: CELL_TYPE.TEXT, widthPercent: 10, text: `${consumable.kcal}`, additionalProps: {} },
         ...(logMode ? [{
           kind: CELL_TYPE.CUSTOM, widthPercent: 10, text: '', additionalProps: {

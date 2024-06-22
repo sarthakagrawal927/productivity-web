@@ -6,9 +6,11 @@ import { FoodItemTable } from './FoodItemList';
 import { formatDateString } from '@/utils/helpers';
 
 const FOOD_REQUIREMENTS = {
-  kcal: 1500,
-  fiber: 30,
-  protein: 120
+  kcal: 1650,
+  fiber: 33,
+  protein: 135,
+  carbs: 200,
+  fats: 50
 }
 
 const getProgressBarColor = (ratio: number, positive: boolean) => {
@@ -68,6 +70,11 @@ export const DayFoodSummary = ({ total_food_consumed }: { total_food_consumed: F
       <CoolProgressBar
         ratio={total_food_consumed.protein * 100 / FOOD_REQUIREMENTS.protein}
         label={`${total_food_consumed.protein} protein (gms)`}
+        positive
+      />
+      <CoolProgressBar
+        ratio={total_food_consumed.carbs * 100 / FOOD_REQUIREMENTS.carbs}
+        label={`${total_food_consumed.carbs} carbs (gms)`}
         positive
       />
     </div>

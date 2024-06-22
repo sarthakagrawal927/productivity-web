@@ -28,6 +28,14 @@ const FoodItemForm: React.FC<ConsumablesFormProps> = ({ addNewConsumable }) => {
           },
           {
             kind: FORM_FIELD.INPUT,
+            componentProps: { placeholder: "Carbs (g)", type: "number", required: true, key: "carbs" },
+          },
+          {
+            kind: FORM_FIELD.INPUT,
+            componentProps: { placeholder: "Fat (g)", type: "number", required: true, key: "fat" },
+          },
+          {
+            kind: FORM_FIELD.INPUT,
             componentProps: { placeholder: "Kcal", type: "number", required: true, key: "kcal" },
           },
         ],

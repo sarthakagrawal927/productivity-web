@@ -39,6 +39,8 @@ export type FoodItem = BaseType & {
   kcal: number;
   protein: number;
   fiber: number;
+  carbs: number;
+  fat: number;
   quantity: number;
   date: string;
 }
