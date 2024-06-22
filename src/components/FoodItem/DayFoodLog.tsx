@@ -17,7 +17,7 @@ const getProgressBarColor = (ratio: number, positive: boolean) => {
   if (positive) {
     return ratio > 80 ? 'text-success' : (ratio > 60 ? 'text-warning' : 'text-error');
   } else {
-    return ratio > 80 ? 'text-error' : (ratio > 60 ? 'text-warning' : 'text-success');
+    return ratio > 120 ? 'text-error' : (ratio > 100 ? 'text-warning' : 'text-success');
   }
 }
 
