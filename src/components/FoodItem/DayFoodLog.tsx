@@ -10,7 +10,7 @@ const FOOD_REQUIREMENTS = {
   fiber: 33,
   protein: 135,
   carbs: 200,
-  fats: 50
+  fat: 50
 }
 
 const getProgressBarColor = (ratio: number, positive: boolean) => {
@@ -43,7 +43,7 @@ const getDateForBackend = (dateString: string) => {
   return formattedDate;
 }
 
-export const DayFoodSummary = ({ total_food_consumed }: { total_food_consumed: FoodItem }) => {
+export const DayFoodSummary = ({ total_food_consumed, headingLabel, showList }: { total_food_consumed: FoodItem, headingLabel: string, showList: boolean }) => {
   const [foodConsumed, setFoodConsumed] = React.useState<FoodItem[]>([]);
 
   const handleViewConsumedFood = async () => {
@@ -56,7 +56,7 @@ export const DayFoodSummary = ({ total_food_consumed }: { total_food_consumed: F
   }
 
   return <div>
-    <StrongText>{formatDateString(total_food_consumed.date)}</StrongText>
+    <StrongText>{headingLabel}</StrongText>
     <div className='flex flex-row space-x-12 pt-4'>
       <CoolProgressBar
         ratio={total_food_consumed.kcal * 100 / FOOD_REQUIREMENTS.kcal}
@@ -77,10 +77,17 @@ export const DayFoodSummary = ({ total_food_consumed }: { total_food_consumed: F
         label={`${total_food_consumed.carbs} carbs (gms)`}
         positive
       />
+      <CoolProgressBar
+        ratio={total_food_consumed.fat * 100 / FOOD_REQUIREMENTS.fat}
+        label={`${total_food_consumed.fat} fat (gms)`}
+        positive
+      />
     </div>
-    {foodConsumed.length > 0 ? <div className='pt-4'>
-      <FoodItemTable foodItems={foodConsumed} />
-    </div> : <button className='mt-4 btn btn-sm' onClick={handleViewConsumedFood}
-    >View consumed food</button>}
+    {showList && <>
+      {foodConsumed.length > 0 ? <div className='pt-4'>
+        <FoodItemTable foodItems={foodConsumed} />
+      </div> : <button className='mt-4 btn btn-sm' onClick={handleViewConsumedFood}
+      >View consumed food</button>}
+    </>}
   </div>
 }
