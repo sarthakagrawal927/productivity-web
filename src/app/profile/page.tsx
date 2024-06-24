@@ -1,3 +1,5 @@
+"use client";
+import { useSession } from 'next-auth/react';
 import HabitLogs from '@/components/Habit/HabitLogs';
 import Schedule from '@/components/Profile/Schedule';
 import ErrorComponent from '@/components/common/ErrorComponent';
