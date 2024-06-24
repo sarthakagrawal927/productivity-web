@@ -1,3 +1,4 @@
+'use client';
 import { LogWithHabit } from '@/types';
 import { HABIT_MODE_TYPE_TO_DESC } from '@/utils/entityHelpers';
 import { formatDateString } from '@/utils/helpers';

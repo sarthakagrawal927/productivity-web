@@ -3,13 +3,12 @@ import { HTTP_METHOD, callApi } from '@/utils/api';
 import React from 'react';
 import { StrongText } from '../common/Typography';
 import { FoodItemTable } from './FoodItemList';
-import { formatDateString } from '@/utils/helpers';
 
 const FOOD_REQUIREMENTS = {
   kcal: 1650,
   fiber: 33,
   protein: 135,
-  carbs: 200,
+  carbs: 165,
   fat: 50
 }
 

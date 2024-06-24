@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 export enum CELL_TYPE {
   TEXT = 'TEXT',
@@ -49,17 +49,42 @@ export type CustomTableProps = {
 }
 
 const CustomTable: React.FC<CustomTableProps> = (tableProps) => {
+
+  const [sortedData, setSortedData] = React.useState(tableProps.rows);
+  const activeSortIdx = useRef<number | null>(null);
+
+  const sortByColumn = (columnIndex: number) => {
+    if (activeSortIdx.current === columnIndex) {
+      sortedData.reverse();
+    } else {
+      sortedData.sort((a, b) => { // handle numbers as well
+        const aText = a.cells[columnIndex].text;
+        const bText = b.cells[columnIndex].text;
+
+        const aNumber = parseFloat(aText);
+        const bNumber = parseFloat(bText);
+
+        if (!isNaN(aNumber) && !isNaN(bNumber)) {
+          return aNumber - bNumber;
+        }
+        return aText.localeCompare(bText);
+      });
+    }
+    activeSortIdx.current = columnIndex;
+    setSortedData([...sortedData]);
+  };
+
   return (
     <table className='table table-zebra'>
       {tableProps.headers && <thead>
         <tr>
           {tableProps.headers.map((header, index) => (
-            <th key={index}>{header}</th>
+            <th className='cursor-pointer' key={index} onClick={() => sortByColumn(index)} >{header}</th>
           ))}
         </tr>
       </thead>}
       <tbody>
-        {tableProps.rows.map((row, index) => (
+        {sortedData.map((row, index) => (
           <tr key={`${index}_${row.id}`} onClick={row.onClick} className={row.onClick ? 'cursor-pointer' : ''}>
             {row.cells.map((cell, index) => (
               <td key={index} style={{ width: `${cell.widthPercent}%` }}>
