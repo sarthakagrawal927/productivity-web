@@ -5,19 +5,19 @@ export async function sendTokenToServer(token: string | undefined): Promise<void
       console.error("Missing access token");
       return;
     }
-  
-    const response = await fetch("http://localhost:1323/api/auth/jwt_validate", {
+    const response = await fetch(`http://localhost:1323/api/auth/jwt_validate`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ token }), // Include token in request body (optional)
     });
-  
     if (!response.ok) {
       console.error("Error sending token:", await response.text());
     } else {
-      console.log("Token successfully sent and validated!");
+      const data = await response.json();
+      const token = data.token;
+      // set cookie
+     return token;
     }
   }

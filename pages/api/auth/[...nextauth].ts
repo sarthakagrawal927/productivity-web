@@ -3,7 +3,6 @@ import NextAuth from 'next-auth';
 import Google from 'next-auth/providers/google';
 import { sendTokenToServer } from '../../../src/utils/auth';
 
-
 export const authOptions = {
   secret: "simple",
   providers: [
@@ -19,8 +18,7 @@ export const authOptions = {
   ],
   callbacks: {
     async jwt({ token, user}: {token:any, user: any}) {
-      if (user) 
-      {
+      if (user) {
         console.log('JWT payload:', { token, user });
         if (!token) return;
 
@@ -29,18 +27,13 @@ export const authOptions = {
 
         // Generate the JWT token
         const accessToken = sign(token, secret, { algorithm });
-        console.log('JWT token:', accessToken);
 
         // Call function to send token to golang backend
-        await sendTokenToServer(accessToken);
+        const authToken = await sendTokenToServer(accessToken);
+        token.backendToken = authToken;
         return token;
       }
-      else
-      {
-        console.log('No user information received from Google OAuth');
-        return token; // Return unmodified token if no user data
-      }
-      
+      return token;
     },
     async session({ session, token }:{session:any, token: any}): Promise<any> {
       // Customize session object with user data (optional)
@@ -50,17 +43,7 @@ export const authOptions = {
       return session;
     },
   },
-  cookies: {
-    sessionToken: {
-      name: 'auth-cookie',
-      options: {
-        httpOnly: true,
-        sameSite: 'lax',
-        path: '/',
-        secure: process.env.NODE_ENV === 'production',
-      },
-    },
-  },
+  cookies: {},
   checks: ['none'],
 };
 
