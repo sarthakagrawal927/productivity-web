@@ -22,3 +22,7 @@ export function closeHtmlDialog(dialogId: MODAL_IDS) {
   if (!inWindow()) return;
   (document.getElementById(dialogId) as HTMLDialogElement)?.close();
 }
+
+export function roundToTwoDecimals(num: number) {
+  return Math.round((num + Number.EPSILON) * 100) / 100;
+}
