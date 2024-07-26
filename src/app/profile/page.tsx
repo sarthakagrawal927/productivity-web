@@ -2,7 +2,7 @@ import HabitLogs from '@/components/Habit/HabitLogs';
 import Schedule from '@/components/Profile/Schedule';
 import ErrorComponent from '@/components/common/ErrorComponent';
 import { LogWithHabit, ScheduleEntry } from '@/types';
-import { baseServerSideFetch } from '@/utils/api';
+import { baseServerSideFetch } from '@/utils/ssr';
 
 const Profile = async () => {
   const [{ data: dailyLogs, err }, { data, err: scheduleErr }] = await Promise.all([
