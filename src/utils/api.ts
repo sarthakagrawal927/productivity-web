@@ -25,20 +25,3 @@ export const callApi = async (url: string, body: any, method = HTTP_METHOD.POST)
   }
 };
 
-export const baseServerSideFetch = async<T> (endpoint: string, queryParams?: {[key : string]: string}) => {
-  if (endpoint.length === 0) {
-    throw new Error("Endpoint is required");
-  }
-  if (Object.keys(queryParams || {}).length > 0) { 
-    // TODO: add query params
-  }
-  try {
-    const data = await fetch(`${baseUrl}${endpoint}`, { cache: 'no-store' })
-    const json = await data.json()
-    return {data: json.data as T, err: null}
-  } catch (err) {
-   return {data: null, err: err as Error}
-  }
-}
-
-// add caching call, when you think of use-case

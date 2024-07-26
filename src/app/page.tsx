@@ -1,7 +1,20 @@
-import TestComponent from '@/components/test'
+"use client"
+import { signIn, signOut, useSession } from "next-auth/react";
 
-export default async function Home() {
+export default function Home() {
+  const { data: session } = useSession()
+  if (session) {
+    return (
+      <>
+        Signed in as {session.user?.email} <br />
+        <button onClick={() => signOut()}>Sign out</button>
+      </>
+    )
+  }
   return (
-    <TestComponent />
+    <>
+      Not signed in <br />
+      <button onClick={() => signIn()}>Sign in</button>
+    </>
   )
 }
