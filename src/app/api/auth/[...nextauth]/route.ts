@@ -20,7 +20,7 @@ declare module 'next-auth' {
 
 
 export const authOptions: NextAuthOptions = {
-  secret: "simple",
+  secret: process.env.JWT_SECRET!,
   providers: [
     GoogleProvider({
       clientId: process.env.NEXT_GOOGLE_CLIENT_ID!,
