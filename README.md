@@ -1,14 +1,3 @@
-
-Integrating NextAuth.js with Google Authentication for Go Backend
-
-https://frontendmasters.com/courses/fullstack-app-next-v3/authentication-with-clerk/?w=authentication
-
-https://github.com/nextauthjs/next-auth/discussions/536
-
-https://github.com/sarthakagrawal927/productivity-web/commit/340aeefc2dee07b8bc72775d1c53e3edc6db560e#diff-486994d46df34c53636a706a1ca6a05bd8261ccde47463ea2c739af56f090b78
-
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
 ## Getting Started
 
 First, run the development server:
