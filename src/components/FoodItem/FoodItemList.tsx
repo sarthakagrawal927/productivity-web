@@ -30,7 +30,7 @@ export const FoodItemTable = ({ foodItems, logMode = false }: { foodItems: FoodI
               kind: CELL_TYPE.CUSTOM, widthPercent: 10, text: '', additionalProps: {
                 // input field for quantity
                 element: <>
-                  <input ref={el => (quantityInputRef.current[idx] = el)} key={consumable.ID} className="input input-primary mr-4" type="number" placeholder="Quantity" />
+                  <input ref={el => { quantityInputRef.current[idx] = el; }} key={consumable.ID} className="input input-primary mr-4" type="number" placeholder="Quantity" />
                   <button className="btn btn-sm btn-accent" onClick={async () => {
                     if (quantityInputRef.current[idx]?.value) {
                       await callApi('/api/consumable/food/log', {

@@ -18,7 +18,9 @@ export const convertToFormData = (body: any) => {
 export const callApi = async (url: string, body: any, method = HTTP_METHOD.POST) => {
   try {
     const { data }: AxiosResponse = await axios(`${baseUrl}${url}`,
-      { headers: { "Content-Type": "multipart/form-data" }, method, data: convertToFormData(body) });
+      { headers: { "Content-Type": "multipart/form-data" }, method, data: convertToFormData(body),
+        withCredentials: true,
+      });
     return {data, err: null};
   } catch (err) {
     return {data: null, err: (err as AxiosError).response}
