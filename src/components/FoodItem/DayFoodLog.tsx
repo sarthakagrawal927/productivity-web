@@ -1,4 +1,4 @@
-import { FoodItem } from '@/types';
+import { FoodItem, FoodItemSmall } from '@/types';
 import { HTTP_METHOD, callApi } from '@/utils/api';
 import React from 'react';
 import { StrongText } from '../common/Typography';
@@ -42,7 +42,7 @@ const getDateForBackend = (dateString: string) => {
   return formattedDate;
 }
 
-export const DayFoodSummary = ({ total_food_consumed, headingLabel, showList }: { total_food_consumed: FoodItem, headingLabel: string, showList: boolean }) => {
+export const DayFoodSummary = ({ total_food_consumed, headingLabel, showList }: { total_food_consumed: FoodItemSmall, headingLabel: string, showList: boolean }) => {
   const [foodConsumed, setFoodConsumed] = React.useState<FoodItem[]>([]);
 
   const handleViewConsumedFood = async () => {

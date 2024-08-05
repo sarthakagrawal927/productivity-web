@@ -1,11 +1,10 @@
-import { FoodItem } from '@/types';
+import { FoodItem, FoodItemSmall } from '@/types';
 import { LargeHeading } from '../common/Typography';
 import { DayFoodSummary } from './DayFoodLog';
 import { formatDateString } from '@/utils/helpers';
 
 const HistoricalFoodLogs = ({ historicalFoodLogs }: { historicalFoodLogs: FoodItem[] }) => {
 
-  // @ts-expect-error
   let summary = historicalFoodLogs.slice(0, 7).reduce((acc, curr) => {
     return {
       kcal: acc.kcal + curr.kcal,
@@ -14,7 +13,7 @@ const HistoricalFoodLogs = ({ historicalFoodLogs }: { historicalFoodLogs: FoodIt
       carbs: acc.carbs + curr.carbs,
       fat: acc.fat + curr.fat,
     };
-  });
+  }, { kcal: 0, fiber: 0, protein: 0, carbs: 0, fat: 0, });
 
   // divide by 7 to get average
   const numDaysOfAvg = Math.min(historicalFoodLogs.length, 7);
@@ -32,9 +31,9 @@ const HistoricalFoodLogs = ({ historicalFoodLogs }: { historicalFoodLogs: FoodIt
           return <DayFoodSummary showList key={index} total_food_consumed={dayFoodSummary} headingLabel={formatDateString(dayFoodSummary.date)} />
         })}
       </div>
-      <div className='flex flex-row space-x-20 pb-20 w-100 overflow-x-scroll'>
-        <DayFoodSummary total_food_consumed={summary} headingLabel="Last 7 days Average" showList={false} />
-      </div>
+      {historicalFoodLogs.length > 0 && <div className='flex flex-row space-x-20 pb-20 w-100 overflow-x-scroll'>
+        <DayFoodSummary total_food_consumed={summary as FoodItemSmall} headingLabel="Last 7 days Average" showList={false} />
+      </div>}
     </>
   );
 };

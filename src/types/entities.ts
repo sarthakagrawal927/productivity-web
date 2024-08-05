@@ -34,16 +34,18 @@ export type HabitWithLogs = {
   logs: HabitLog[];
 }
 
-export type FoodItem = BaseType & {
-  name: string;
+export type FoodItemSmall = {
   kcal: number;
   protein: number;
   fiber: number;
   carbs: number;
   fat: number;
+  name: string;
   quantity: number;
   date: string;
 }
+
+export type FoodItem = BaseType & FoodItemSmall
 
 export type LogWithHabit = Partial<Habit> & HabitLog
 

@@ -13,7 +13,7 @@ const HabitClient = ({ habits }: { habits: Habit[] }) => {
 
   return (
     <>
-      {habitList.length > 0 && <HabitList habits={habitList} />}
+      <HabitList habits={habitList} />
       <HabitForm addNewHabit={addNewHabit} />
     </>
   );
