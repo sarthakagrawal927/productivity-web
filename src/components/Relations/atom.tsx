@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import "./atom.scss";
 import useActivityDetector from '@/hooks/useActorActive';
+import { LargeHeading } from '../common/Typography';
 
 const SingleAtom = () => {
   const electronBands = [
@@ -22,7 +23,7 @@ const SingleAtom = () => {
 
   return (
     <>
-      {isActive ? "Active" : "Inactive"}
+      <LargeHeading>Coming soon</LargeHeading>
       <div className="container">
         <div className="nucleus" />
         {electronBands.map(({ path, electrons }) => {
@@ -38,6 +39,7 @@ const SingleAtom = () => {
           </React.Fragment>
         })}
       </div>
+      {isActive ? "Active" : "Inactive"}
       {activeElectron && <div className='mt-20'>
         Chosen electron: {activeElectron.index + 1} on path {activeElectron.path}
       </div>}

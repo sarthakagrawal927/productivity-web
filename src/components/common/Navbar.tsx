@@ -1,3 +1,5 @@
+"use client"
+import { signIn, signOut, useSession } from "next-auth/react";
 import React from 'react';
 
 const menuItems = [
@@ -10,7 +12,7 @@ const menuItems = [
 ];
 
 const Navbar = () => {
-
+  const { data: session } = useSession()
   const NavItems = () => {
     return <>
       {menuItems.map(({ href, label }, index) => (
@@ -18,7 +20,6 @@ const Navbar = () => {
       ))}
     </>
   }
-
 
   return (
     <div className="navbar bg-primary text-primary-content">
@@ -31,7 +32,7 @@ const Navbar = () => {
             <NavItems />
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl">SignificantHobbies</a>
+        <a className="btn btn-ghost text-xl" href='/'>SignificantHobbies</a>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
@@ -39,7 +40,11 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        <a className="btn">Logout</a>
+        <a className="btn" onClick={() => {
+          document.cookie = 'auth=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+          session ? signOut() : signIn()
+        }
+        }>{session ? "Logout" : "Sign In"}</a>
       </div>
     </div>
   );

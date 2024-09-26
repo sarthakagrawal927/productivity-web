@@ -1,14 +1,15 @@
+import React from 'react';
 import JournalComponent from '@/components/Journal/index';
-import ErrorComponent from '@/components/common/ErrorComponent';
+import FetchDataSSR from '@/components/common/FetchDataSSR';
 import { Journal } from '@/types';
-import { baseServerSideFetch } from '@/utils/ssr';
 
-export default async function JournalPage() {
-  const { data: journalEntries, err } = await baseServerSideFetch<Journal[]>('/api/journal');
-  if (err || !journalEntries) {
-    return <ErrorComponent message={err.message} />
-  }
+export default function JournalPage() {
   return (
-    <JournalComponent journalEntries={journalEntries} />
-  )
+    <FetchDataSSR<[Journal[]]>
+      fetchUrls={['/api/journal']}
+      onSuccess={([journalEntries]) => (
+        <JournalComponent journalEntries={journalEntries} />
+      )}
+    />
+  );
 }

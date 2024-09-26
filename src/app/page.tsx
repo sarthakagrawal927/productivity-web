@@ -1,20 +1,23 @@
-"use client"
-import { signIn, signOut, useSession } from "next-auth/react";
+import React from 'react';
+import HabitLogs from '@/components/Habit/HabitLogs';
+import Schedule from '@/components/Profile/Schedule';
+import FetchDataSSR from '@/components/common/FetchDataSSR';
+import { LogWithHabit, ScheduleEntry } from '@/types';
 
-export default function Home() {
-  const { data: session } = useSession()
-  if (session) {
-    return (
-      <>
-        Signed in as {session.user?.email} <br />
-        <button onClick={() => signOut()}>Sign out</button>
-      </>
-    )
-  }
+const Profile = async () => {
   return (
-    <>
-      Not signed in <br />
-      <button onClick={() => signIn()}>Sign in</button>
-    </>
-  )
-}
+    <div className='px-60'>
+      <FetchDataSSR<[LogWithHabit[], { schedule: ScheduleEntry[] }]>
+        fetchUrls={['/api/user/today/logs', '/api/user/today/schedule']}
+        onSuccess={([dailyLogs, scheduleData]) => (
+          <>
+            <HabitLogs logs={dailyLogs} />
+            <Schedule schedule={scheduleData.schedule} />
+          </>
+        )}
+      />
+    </div>
+  );
+};
+
+export default Profile;

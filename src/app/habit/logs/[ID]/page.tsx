@@ -1,13 +1,17 @@
+import React from 'react';
 import SingleHabit from "@/components/Habit/SingleHabit";
 import ErrorComponent from "@/components/common/ErrorComponent";
+import FetchDataSSR from "@/components/common/FetchDataSSR";
 import { HabitWithLogs } from "@/types";
-import { baseServerSideFetch } from "@/utils/ssr";
 
-export default async function Page({ params }: { params: { ID: string } }) {
-  const { data: habitWithLogs, err } = await baseServerSideFetch<HabitWithLogs>(`/api/habit/logs/${params.ID}`);
-  if (err) {
-    return <ErrorComponent message={err.message} />
-  }
-  const { habit, logs } = habitWithLogs;
-  return <SingleHabit habit={habit} logs={logs} />
+export default function Page({ params }: { params: { ID: string } }) {
+  return (
+    <FetchDataSSR<[HabitWithLogs]>
+      fetchUrls={[`/api/habit/logs/${params.ID}`]}
+      onSuccess={(habitWithLogs) => {
+        const [{ habit, logs }] = habitWithLogs;
+        return <SingleHabit habit={habit} logs={logs} />;
+      }}
+    />
+  );
 }

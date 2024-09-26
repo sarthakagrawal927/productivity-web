@@ -1,16 +1,14 @@
 import HabitComponent from '@/components/Habit/index';
-import ErrorComponent from '@/components/common/ErrorComponent';
+import FetchDataSSR from '@/components/common/FetchDataSSR';
 import { Habit } from '@/types';
-import { baseServerSideFetch } from '@/utils/ssr';
 
-export default async function HabitServerComponent() {
-  const [{ data: habits, err }] = await Promise.all([
-    baseServerSideFetch<Habit[]>('/api/habit'),
-  ]);
-  if (err || !habits) {
-    return <ErrorComponent message={err?.message} />
-  }
+export default function HabitServerComponent() {
   return (
-    <HabitComponent habits={habits} />
-  )
+    <FetchDataSSR<[Habit[]]>
+      fetchUrls={['/api/habit']}
+      onSuccess={([habits]) => (
+        <HabitComponent habits={habits} />
+      )}
+    />
+  );
 }

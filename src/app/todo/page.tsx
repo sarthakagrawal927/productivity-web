@@ -1,12 +1,15 @@
 import TodoListClient from '@/components/Todo/index';
-import ErrorComponent from '@/components/common/ErrorComponent';
+import FetchDataSSR from '@/components/common/FetchDataSSR';
 import { Task } from '@/types';
-import { baseServerSideFetch } from "@/utils/ssr";
 
-export default async function Todo() {
-  const { data: tasks, err } = await baseServerSideFetch<Task[]>('/api/todo')
-  if (err || !tasks) return <ErrorComponent message={err.message} />;
+export default function Todo() {
   return (
-    <TodoListClient tasks={tasks} />
-  )
+    <FetchDataSSR<[Task[]]>
+      fetchUrls={['/api/todo']}
+      onSuccess={([tasks]) => {
+        return <TodoListClient tasks={tasks} />
+      }
+      }
+    />
+  );
 }
