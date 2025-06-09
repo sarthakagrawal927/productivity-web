@@ -39,6 +39,23 @@ export const HABIT_STATUS = {
 export const HABIT_MODE = {
   TIME: 1,
   COUNT: 2,
+  ML: 3,
+}
+
+export const HABIT_CATEGORY = {
+  HEALTH: 1,
+  FINANCE: 2,
+  RELATIONSHIP: 3,
+  BRAIN: 4,
+  PRODUCTIVITY: 5,
+}
+
+export const MOOD_RATING = {
+  VERY_BAD: 1,
+  BAD: 2,
+  NEUTRAL: 3,
+  GOOD: 4,
+  VERY_GOOD: 5,
 }
 
 export enum TODO_DROPDOWN_MODE {
@@ -49,7 +66,9 @@ export enum TODO_DROPDOWN_MODE {
 export enum HABIT_DROPDOWN_MODE {
   FREQUENCY_TYPE = 'FREQUENCY_TYPE',
   // STATUS = 'STATUS',
-  MODE = 'MODE'
+  MODE = 'MODE',
+  CATEGORY = 'CATEGORY',
+  PRIORITY = 'PRIORITY'
 }
 
 export enum JOURNAL_DROPDOWN_MODE {
@@ -95,6 +114,23 @@ export const HABIT_STATUS_TO_LABEL: { [status: number]: string } = {
 export const HABIT_MODE_TO_LABEL: { [mode: number]: string } = {
   [HABIT_MODE.TIME]: 'Time (Minutes)',
   [HABIT_MODE.COUNT]: 'Count',
+  [HABIT_MODE.ML]: 'Volume (ml)',
+}
+
+export const HABIT_CATEGORY_TO_LABEL: { [category: number]: string } = {
+  [HABIT_CATEGORY.HEALTH]: 'Health',
+  [HABIT_CATEGORY.FINANCE]: 'Finance',
+  [HABIT_CATEGORY.RELATIONSHIP]: 'Relationship',
+  [HABIT_CATEGORY.BRAIN]: 'Brain',
+  [HABIT_CATEGORY.PRODUCTIVITY]: 'Productivity',
+}
+
+export const MOOD_RATING_TO_LABEL: { [rating: number]: string } = {
+  [MOOD_RATING.VERY_BAD]: 'Very Bad',
+  [MOOD_RATING.BAD]: 'Bad',
+  [MOOD_RATING.NEUTRAL]: 'Neutral',
+  [MOOD_RATING.GOOD]: 'Good',
+  [MOOD_RATING.VERY_GOOD]: 'Very Good',
 }
 
 export const DROPDOWN_MODE_VALUES = {
@@ -142,6 +178,20 @@ export const HABIT_DROPDOWN_MODE_VALUES = {
       label: "Select mode"
     },
     optionList: getOptionsListFromValueLabelMap(HABIT_MODE_TO_LABEL)
+  },
+  [HABIT_DROPDOWN_MODE.CATEGORY]: {
+    defaultOption: {
+      value: 0,
+      label: "Select category"
+    },
+    optionList: getOptionsListFromValueLabelMap(HABIT_CATEGORY_TO_LABEL)
+  },
+  [HABIT_DROPDOWN_MODE.PRIORITY]: {
+    defaultOption: {
+      value: 0,
+      label: "Select priority"
+    },
+    optionList: getOptionsListFromValueLabelMap(PRIORITY_TO_LABEL)
   }
 }
 

@@ -4,6 +4,7 @@ import { HABIT_FREQUENCY_TYPE, HABIT_FREQUENCY_TYPE_TO_LABEL, HABIT_MODE } from 
 export const HABIT_MODE_TYPE_TO_DESC = {
   [HABIT_MODE.COUNT]: 'times',
   [HABIT_MODE.TIME]: 'minutes',
+  [HABIT_MODE.ML]: 'ml',
 }
 
 const HABIT_FREQ_COUNTER_LABEL: { [type: number]: string } = {
@@ -13,18 +14,16 @@ const HABIT_FREQ_COUNTER_LABEL: { [type: number]: string } = {
 }
 
 export function getHabitFrequencyString(habit: Habit) {
-  return (habit.anti ? `Upto ` : '') +
-  `${habit.target} ${HABIT_MODE_TYPE_TO_DESC[habit.mode]} ${HABIT_FREQUENCY_TYPE_TO_LABEL[habit.frequency_type]}`;
+  return `${habit.lower_limit}-${habit.upper_limit} ${HABIT_MODE_TYPE_TO_DESC[habit.mode]} ${HABIT_FREQUENCY_TYPE_TO_LABEL[habit.frequency_type]}`;
 }
 
 export function getHabitUsageString(habit: Habit) {
-  return (habit.anti ? `Already ` : '') +
-  `${habit.existing_usage} ${HABIT_MODE_TYPE_TO_DESC[habit.mode]} ${HABIT_FREQ_COUNTER_LABEL[habit.frequency_type]}`;
+  return `${habit.existing_usage} ${HABIT_MODE_TYPE_TO_DESC[habit.mode]} ${HABIT_FREQ_COUNTER_LABEL[habit.frequency_type]}`;
 }
 
 export function handleHabitUpdateOnLog(habit: Habit, log: HabitLog): Habit {
   return {
     ...habit,
-    existing_usage: habit.existing_usage + log.result_count,
+    existing_usage: habit.existing_usage + log.count,
   }
 }

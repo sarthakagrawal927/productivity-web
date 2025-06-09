@@ -8,11 +8,10 @@ const Profile = async () => {
   return (
     <div className='px-60'>
       <FetchDataSSR<[LogWithHabit[], { schedule: ScheduleEntry[] }]>
-        fetchUrls={['/api/user/today/logs', '/api/user/today/schedule']}
-        onSuccess={([dailyLogs, scheduleData]) => (
+        fetchUrls={['/api/user/today/logs']}
+        onSuccess={([dailyLogs]) => (
           <>
             <HabitLogs logs={dailyLogs} />
-            <Schedule schedule={scheduleData.schedule} />
           </>
         )}
       />

@@ -13,20 +13,32 @@ export type Journal = BaseType & {
 
 export type Habit = BaseType & {
   user_id: number;
-  anti: boolean;
   frequency_type: number;
-  target: number;
+  upper_limit: number;
+  lower_limit: number;
+  priority: number;
   mode: number;
+  approx_time_needed?: number;
   status: number;
+  category: number;
+  upgrade_status?: number;
+  latest_habit_id?: number;
+  score: number;
   existing_usage: number;
+  preferred_start_time?: string;
+  preferred_weekdays_mask: number;
+  preferred_month_date?: number;
 }
 
-export type HabitLog =BaseType & {
+export type HabitLog = BaseType & {
   ID: number;
+  user_id: number;
   habit_id: number;
-  result_time: string;
-  result_count: number;
-  comment: string;
+  count: number;
+  comment?: string;
+  start_time?: string;
+  logged_for_date: string;
+  mood_rating: number;
 }
 
 export type HabitWithLogs = {

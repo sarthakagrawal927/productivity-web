@@ -1,5 +1,5 @@
 import { Habit } from '@/types';
-import { HABIT_DROPDOWN_MODE, HABIT_DROPDOWN_MODE_VALUES, HABIT_FREQUENCY_TYPE, HABIT_MODE, HABIT_STATUS, MODAL_IDS } from '@/utils/constants';
+import { HABIT_CATEGORY, HABIT_DROPDOWN_MODE, HABIT_DROPDOWN_MODE_VALUES, HABIT_FREQUENCY_TYPE, HABIT_MODE, HABIT_STATUS, MODAL_IDS, PRIORITY } from '@/utils/constants';
 import React from 'react';
 import CustomForm, { FORM_FIELD, TitleDescriptionFormStructure } from '../common/CustomForm';
 import CustomModal from '../common/CustomModal';
@@ -8,12 +8,16 @@ import { closeHtmlDialog } from '@/utils/helpers';
 const defaultHabitInput = {
   title: "",
   desc: "",
-  // target: 0,
+  upper_limit: 0,
+  lower_limit: 0,
   frequency_type: HABIT_FREQUENCY_TYPE.WEEKLY,
   status: HABIT_STATUS.ACTIVE,
   mode: HABIT_MODE.COUNT,
-  anti: 0,
-  // approx_time_needed: 20,
+  category: HABIT_CATEGORY.PRODUCTIVITY,
+  priority: PRIORITY.MEDIUM,
+  approx_time_needed: 20,
+  preferred_weekdays_mask: 0,
+  score: 0
 }
 
 const HabitForm: React.FC<HabitFormProps> = ({ addNewHabit }) => {
@@ -35,10 +39,19 @@ const HabitForm: React.FC<HabitFormProps> = ({ addNewHabit }) => {
               {
                 kind: FORM_FIELD.INPUT,
                 componentProps: {
-                  placeholder: "Target",
+                  placeholder: "Upper Limit",
                   type: "number",
                   required: true,
-                  key: "target",
+                  key: "upper_limit",
+                },
+              },
+              {
+                kind: FORM_FIELD.INPUT,
+                componentProps: {
+                  placeholder: "Lower Limit",
+                  type: "number",
+                  required: true,
+                  key: "lower_limit",
                 },
               },
               ...Object.values(HABIT_DROPDOWN_MODE).map((mode) => ({
@@ -58,10 +71,26 @@ const HabitForm: React.FC<HabitFormProps> = ({ addNewHabit }) => {
                 },
               },
               {
-                kind: FORM_FIELD.CHECKBOX,
+                kind: FORM_FIELD.TIME,
                 componentProps: {
-                  placeholder: "Anti",
-                  key: "anti",
+                  placeholder: "Preferred Start Time",
+                  key: "preferred_start_time",
+                },
+              },
+              {
+                kind: FORM_FIELD.INPUT,
+                componentProps: {
+                  placeholder: "Preferred Weekdays Mask (0-127)",
+                  type: "number",
+                  key: "preferred_weekdays_mask",
+                },
+              },
+              {
+                kind: FORM_FIELD.INPUT,
+                componentProps: {
+                  placeholder: "Preferred Month Date (1-31)",
+                  type: "number",
+                  key: "preferred_month_date",
                 },
               }
             ],

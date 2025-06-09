@@ -10,6 +10,7 @@ export enum FORM_FIELD {
   TEXTAREA = "TEXTAREA",
   POWERED_TEXTAREA = "POWERED_TEXTAREA", // markdown
   CHECKBOX = "CHECKBOX",
+  TIME = "TIME",
 }
 
 type ComponentProps = {
@@ -35,6 +36,9 @@ type AdditionalPropsMap = {
   };
   [FORM_FIELD.CHECKBOX]: {
     // label: string;
+  };
+  [FORM_FIELD.TIME]: {
+    // Any time-specific options
   };
 };
 
@@ -135,6 +139,21 @@ const CustomForm: React.FC<{ formStructure: FormStructureType<any> }> = ({ formS
                   <input type="checkbox" onChange={(e) => handleEntityFieldChange(field.componentProps.key, e.target.checked ? 1 : 0)}
                     checked={!!entity[field.componentProps.key]} className="checkbox checkbox-primary" />
                 </label>
+              </div>
+            )
+          case FORM_FIELD.TIME:
+            return (
+              <div className="form-control w-full mb-4" key={field.componentProps.key}>
+                <label className="label">
+                  <span className="label-text">{field.componentProps.placeholder || "Select time"}</span>
+                </label>
+                <input
+                  type="time"
+                  className="input input-bordered input-primary w-full"
+                  required={field.componentProps.required || false}
+                  onChange={(e) => handleEntityFieldChange(field.componentProps.key, e.target.value)}
+                  value={entity[field.componentProps.key] || ""}
+                />
               </div>
             )
           default:
