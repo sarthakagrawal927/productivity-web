@@ -17,15 +17,10 @@ export type BarsProps = {
 // logs will be of 21 days, each day can have multiple entries, can definitely improve this, but will probably start sending this cleaned data from backend itself
 const mergeLogsByDate = (logs: HabitLog[], habit: Habit) => {
   const lastTwentyOneDays = getTwentyOneDays(habit.CreatedAt);
-  for (let i = 0; i < logs.length; i++) {
-    const result_time = logs[i].result_time.split('T')[0];
-    lastTwentyOneDays[result_time] = lastTwentyOneDays[result_time] + logs[i].result_count;
-  }
-  const dailyTarget = habit.target / HabitFreqDivider[habit.frequency_type];
   return Object.keys(lastTwentyOneDays).map((date) => ({
     date,
     result_count: lastTwentyOneDays[date],
-    color: (dailyTarget >= lastTwentyOneDays[date]) !== habit.anti ? "red" : 'rgba(23, 233, 217, .5)'
+    color: 'rgba(23, 233, 217, .5)'
   }));
 }
 

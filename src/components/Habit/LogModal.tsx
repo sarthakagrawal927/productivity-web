@@ -10,7 +10,6 @@ const LogFields = {
   COUNT: 'count',
   HABIT_ID: 'habit_id',
   COMMENT: 'comment',
-  START_TIME: 'start_time',
   MOOD_RATING: 'mood_rating',
 }
 
@@ -59,13 +58,6 @@ const LogModal = ({ habit, onLog }: { habit?: Habit, onLog?: (log: HabitLog) => 
                   },
                 ]
               }
-            },
-            {
-              kind: FORM_FIELD.TIME,
-              componentProps: {
-                placeholder: "Start Time",
-                key: LogFields.START_TIME,
-              },
             },
             {
               kind: FORM_FIELD.DROPDOWN,

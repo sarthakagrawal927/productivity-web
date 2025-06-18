@@ -16,7 +16,6 @@ const HabitLogs = ({ logs }: { logs: LogWithHabit[] }) => {
             kind: CELL_TYPE.TEXT, widthPercent: 15, text: `${log.count} ${HABIT_MODE_TYPE_TO_DESC[log.mode || HABIT_MODE.COUNT]}`, additionalProps: {}
           },
           { kind: CELL_TYPE.TEXT, widthPercent: 15, text: formatDateString(log.logged_for_date), additionalProps: {} },
-          { kind: CELL_TYPE.TEXT, widthPercent: 15, text: log.start_time ? formatDateString(log.start_time) : '-', additionalProps: {} },
           { kind: CELL_TYPE.TEXT, widthPercent: 15, text: log.mood_rating ? MOOD_RATING_TO_LABEL[log.mood_rating] : '-', additionalProps: {} },
           { kind: CELL_TYPE.TEXT, widthPercent: 20, text: log.comment || '-', additionalProps: {} },
         ].filter(v => v !== undefined) as Cell<CELL_TYPE>[],

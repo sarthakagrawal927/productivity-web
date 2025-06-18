@@ -9,16 +9,15 @@ type SelectDropdownProps = {
   initialValue?: NumORStr;
   enableDefault?: boolean;
   optionList: DropdownOption[];
-  defaultOption: DropdownOption;
+  defaultOption: DropdownOption & { enabled?: boolean };
 }
 
 const SelectDropdown: FC<SelectDropdownProps> = ({
   handleValueChange,
   initialValue,
   containerClassName = '',
-  enableDefault = false,
   optionList,
-  defaultOption = { label: 'Select', value: 0 },
+  defaultOption = { label: 'Select', value: 0, enabled: false },
 }) => {
 
   const [dropdownValue, setDropdownValue] = useOptimisticResult<NumORStr>(initialValue || defaultOption.value, handleValueChange);
@@ -35,7 +34,7 @@ const SelectDropdown: FC<SelectDropdownProps> = ({
         value={dropdownValue}
         onChange={handleFilterChange}
       >
-        <option value={defaultOption.value} disabled={!enableDefault}>
+        <option value={defaultOption.value} disabled={defaultOption.enabled}>
           {defaultOption.label}
         </option>
         {

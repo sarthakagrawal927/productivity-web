@@ -18,16 +18,9 @@ export type Habit = BaseType & {
   lower_limit: number;
   priority: number;
   mode: number;
-  approx_time_needed?: number;
   status: number;
-  category: number;
-  upgrade_status?: number;
-  latest_habit_id?: number;
   score: number;
   existing_usage: number;
-  preferred_start_time?: string;
-  preferred_weekdays_mask: number;
-  preferred_month_date?: number;
 }
 
 export type HabitLog = BaseType & {
@@ -36,7 +29,6 @@ export type HabitLog = BaseType & {
   habit_id: number;
   count: number;
   comment?: string;
-  start_time?: string;
   logged_for_date: string;
   mood_rating: number;
 }

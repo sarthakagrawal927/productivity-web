@@ -52,7 +52,7 @@ type FormStructureType<T> = {
   heading: string,
   onSubmit: (entity: T) => void,
   fields: FormField<FORM_FIELD>[],
-  defaultInput: { [key: string]: NumORStr }
+  defaultInput: { [key: string]: NumORStr | undefined }
   submitLabel: string,
   apiPath: string,
 }
@@ -72,7 +72,7 @@ export const TitleDescriptionFormStructure: FormField<FORM_FIELD>[] = [{
     placeholder: "Description",
     type: "text",
     required: true,
-    key: "desc",
+    key: "description",
   },
 },]
 
@@ -88,7 +88,7 @@ const CustomForm: React.FC<{ formStructure: FormStructureType<any> }> = ({ formS
     callApi(formStructure.apiPath, entity).then(({ data }) =>
       formStructure.onSubmit(data.data)
     );
-    setEntity((entity) => ({ ...entity, ...formStructure.defaultInput }));
+    setEntity(formStructure.defaultInput);
   }
 
   const [entity, setEntity] = React.useState(formStructure.defaultInput);
@@ -106,7 +106,7 @@ const CustomForm: React.FC<{ formStructure: FormStructureType<any> }> = ({ formS
                 type={field.componentProps.type || "text"}
                 required={field.componentProps.required || false}
                 onChange={(e) => handleEntityFieldChange(field.componentProps.key, e.target.value)}
-                value={entity[field.componentProps.key]}
+                value={entity[field.componentProps.key] ?? ""}
                 className="input input-bordered input-primary w-full mb-4"
               />
             )
@@ -128,7 +128,7 @@ const CustomForm: React.FC<{ formStructure: FormStructureType<any> }> = ({ formS
                 placeholder={field.componentProps.placeholder || "Enter"}
                 required={field.componentProps.required || false}
                 onChange={(e) => handleEntityFieldChange(field.componentProps.key, e.target.value)}
-                value={entity[field.componentProps.key]}
+                value={entity[field.componentProps.key] ?? ""}
               />
             )
           case FORM_FIELD.CHECKBOX:

@@ -1,5 +1,5 @@
 import { Habit } from '@/types';
-import { HABIT_CATEGORY, HABIT_DROPDOWN_MODE, HABIT_DROPDOWN_MODE_VALUES, HABIT_FREQUENCY_TYPE, HABIT_MODE, HABIT_STATUS, MODAL_IDS, PRIORITY } from '@/utils/constants';
+import { HABIT_DROPDOWN_MODE, HABIT_DROPDOWN_MODE_VALUES, HABIT_FREQUENCY_TYPE, HABIT_MODE, HABIT_STATUS, MODAL_IDS, PRIORITY } from '@/utils/constants';
 import React from 'react';
 import CustomForm, { FORM_FIELD, TitleDescriptionFormStructure } from '../common/CustomForm';
 import CustomModal from '../common/CustomModal';
@@ -7,17 +7,12 @@ import { closeHtmlDialog } from '@/utils/helpers';
 
 const defaultHabitInput = {
   title: "",
-  desc: "",
-  upper_limit: 0,
-  lower_limit: 0,
-  frequency_type: HABIT_FREQUENCY_TYPE.WEEKLY,
-  status: HABIT_STATUS.ACTIVE,
-  mode: HABIT_MODE.COUNT,
-  category: HABIT_CATEGORY.PRODUCTIVITY,
+  description: "",
+  frequency_type: HABIT_FREQUENCY_TYPE.DAILY,
+  upper_limit: undefined,
+  lower_limit: undefined,
   priority: PRIORITY.MEDIUM,
-  approx_time_needed: 20,
-  preferred_weekdays_mask: 0,
-  score: 0
+  mode: HABIT_MODE.TIME,
 }
 
 const HabitForm: React.FC<HabitFormProps> = ({ addNewHabit }) => {
@@ -41,7 +36,7 @@ const HabitForm: React.FC<HabitFormProps> = ({ addNewHabit }) => {
                 componentProps: {
                   placeholder: "Upper Limit",
                   type: "number",
-                  required: true,
+                  required: false,
                   key: "upper_limit",
                 },
               },
@@ -50,7 +45,7 @@ const HabitForm: React.FC<HabitFormProps> = ({ addNewHabit }) => {
                 componentProps: {
                   placeholder: "Lower Limit",
                   type: "number",
-                  required: true,
+                  required: false,
                   key: "lower_limit",
                 },
               },
@@ -61,38 +56,6 @@ const HabitForm: React.FC<HabitFormProps> = ({ addNewHabit }) => {
                 },
                 additionalProps: HABIT_DROPDOWN_MODE_VALUES[mode],
               })),
-              {
-                kind: FORM_FIELD.INPUT,
-                componentProps: {
-                  placeholder: "Approx Time Needed per unit",
-                  type: "number",
-                  required: true,
-                  key: "approx_time_needed",
-                },
-              },
-              {
-                kind: FORM_FIELD.TIME,
-                componentProps: {
-                  placeholder: "Preferred Start Time",
-                  key: "preferred_start_time",
-                },
-              },
-              {
-                kind: FORM_FIELD.INPUT,
-                componentProps: {
-                  placeholder: "Preferred Weekdays Mask (0-127)",
-                  type: "number",
-                  key: "preferred_weekdays_mask",
-                },
-              },
-              {
-                kind: FORM_FIELD.INPUT,
-                componentProps: {
-                  placeholder: "Preferred Month Date (1-31)",
-                  type: "number",
-                  key: "preferred_month_date",
-                },
-              }
             ],
           }}
         />

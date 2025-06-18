@@ -1,5 +1,5 @@
 import { Habit, HabitLog } from '@/types';
-import { MODAL_IDS } from '@/utils/constants';
+import { MODAL_IDS, HABIT_CATEGORY_TO_LABEL, PRIORITY_TO_LABEL } from '@/utils/constants';
 import { getHabitFrequencyString, getHabitUsageString, handleHabitUpdateOnLog } from '@/utils/entityHelpers';
 import { openHtmlDialog } from '@/utils/helpers';
 import { useRouter } from 'next/navigation';
@@ -16,9 +16,11 @@ function HabitTableBody({ habits, setActiveHabit }: { habits: Habit[], setActive
       rows={habits.map((habit, idx) => ({
         cells: [
           { kind: CELL_TYPE.TEXT, widthPercent: 2, text: (idx + 1).toString(), additionalProps: {} },
-          { kind: CELL_TYPE.TEXT_WITH_SUBTEXT, widthPercent: 60, text: habit.title, additionalProps: { subText: habit.desc } },
-          { kind: CELL_TYPE.TEXT, widthPercent: 16, text: getHabitFrequencyString(habit), additionalProps: {} },
-          { kind: CELL_TYPE.TEXT, widthPercent: 16, text: getHabitUsageString(habit), additionalProps: {} },
+          { kind: CELL_TYPE.TEXT_WITH_SUBTEXT, widthPercent: 30, text: habit.title, additionalProps: { subText: habit.desc } },
+          { kind: CELL_TYPE.TEXT, widthPercent: 12, text: getHabitFrequencyString(habit), additionalProps: {} },
+          { kind: CELL_TYPE.TEXT, widthPercent: 12, text: getHabitUsageString(habit), additionalProps: {} },
+          { kind: CELL_TYPE.TEXT, widthPercent: 8, text: habit.priority === 0 ? 'Not Set' : (PRIORITY_TO_LABEL[habit.priority] || 'Unknown'), additionalProps: {} },
+          { kind: CELL_TYPE.TEXT, widthPercent: 8, text: `Score: ${habit.score}`, additionalProps: {} },
           {
             kind: CELL_TYPE.BUTTON, widthPercent: 6, text: 'Log', additionalProps: {
               onClick: () => {
@@ -39,8 +41,6 @@ function HabitTableBody({ habits, setActiveHabit }: { habits: Habit[], setActive
 const HabitList = ({ habits }: { habits: Habit[] }) => {
   const [habitList, setHabitList] = useState<Habit[]>(habits);
   const [activeHabit, setActiveHabit] = useState<Habit>();
-  const [showAntiHabits, setShowAntiHabits] = useState(false); // TODO: initialize based on local storage
-  // TODO: add option to show archived habits
 
   const onLog = (log: HabitLog) => {
     const habit = habits.find(habit => habit.ID === log.habit_id);
@@ -56,13 +56,7 @@ const HabitList = ({ habits }: { habits: Habit[] }) => {
         <button className="btn btn-circle text-xl font-bold" onClick={() => openHtmlDialog(MODAL_IDS.HABIT_FORM_MODAL)}>+</button>
       </div>
       <LogModal habit={activeHabit} onLog={onLog} />
-      <HabitTableBody habits={habitList.filter(habit => !habit.anti)} setActiveHabit={setActiveHabit} />
-      <div className="text-center mt-4">
-        <button className="btn" onClick={() => setShowAntiHabits(!showAntiHabits)}>
-          {showAntiHabits ? 'Hide' : 'Show'} Anti-Habits
-        </button>
-      </div>
-      {showAntiHabits && <HabitTableBody habits={habitList.filter(habit => habit.anti)} setActiveHabit={setActiveHabit} />}
+      <HabitTableBody habits={habitList} setActiveHabit={setActiveHabit} />
     </div>
   );
 };

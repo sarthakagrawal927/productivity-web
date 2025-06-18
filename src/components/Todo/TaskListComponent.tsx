@@ -73,7 +73,6 @@ const TaskListComponent: React.FC<TaskListComponentProps> = ({ tasks }) => {
             <SelectDropdown
               key={mode}
               handleValueChange={(status) => handleFilterSelectChange(status as number, mode)}
-              enableDefault
               {...DROPDOWN_MODE_VALUES[mode]}
             />
           </div>
