@@ -6,7 +6,7 @@ export type DropdownOption = {
 export type BaseType = {
   ID: number;
   title: string;
-  desc: string;
+  description: string;
   CreatedAt: string;
   UpdatedAt: string;
   DeletedAt: string;

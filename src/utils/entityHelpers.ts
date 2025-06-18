@@ -4,7 +4,6 @@ import { HABIT_FREQUENCY_TYPE, HABIT_FREQUENCY_TYPE_TO_LABEL, HABIT_MODE } from 
 export const HABIT_MODE_TYPE_TO_DESC = {
   [HABIT_MODE.COUNT]: 'times',
   [HABIT_MODE.TIME]: 'minutes',
-  [HABIT_MODE.ML]: 'ml',
 }
 
 const HABIT_FREQ_COUNTER_LABEL: { [type: number]: string } = {
@@ -14,6 +13,9 @@ const HABIT_FREQ_COUNTER_LABEL: { [type: number]: string } = {
 }
 
 export function getHabitFrequencyString(habit: Habit) {
+  if (habit.upper_limit === habit.lower_limit) {
+    return `${habit.lower_limit} ${HABIT_MODE_TYPE_TO_DESC[habit.mode]} ${HABIT_FREQUENCY_TYPE_TO_LABEL[habit.frequency_type]}`;
+  }
   return `${habit.lower_limit}-${habit.upper_limit} ${HABIT_MODE_TYPE_TO_DESC[habit.mode]} ${HABIT_FREQUENCY_TYPE_TO_LABEL[habit.frequency_type]}`;
 }
 

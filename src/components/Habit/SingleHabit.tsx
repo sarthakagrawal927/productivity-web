@@ -21,7 +21,7 @@ const SingleHabit = ({ habit: currentHabit, logs }: HabitWithLogs) => {
   return (
     <div>
       <LargeHeading>{habit.title}</LargeHeading>
-      <DescriptionText>{habit.desc}</DescriptionText>
+      <DescriptionText>{habit.description}</DescriptionText>
       <Badge mode={
         habit.status === HABIT_STATUS.ARCHIVED
           ? BadgeMode.DANGER

@@ -16,7 +16,7 @@ function HabitTableBody({ habits, setActiveHabit }: { habits: Habit[], setActive
       rows={habits.map((habit, idx) => ({
         cells: [
           { kind: CELL_TYPE.TEXT, widthPercent: 2, text: (idx + 1).toString(), additionalProps: {} },
-          { kind: CELL_TYPE.TEXT_WITH_SUBTEXT, widthPercent: 30, text: habit.title, additionalProps: { subText: habit.desc } },
+          { kind: CELL_TYPE.TEXT_WITH_SUBTEXT, widthPercent: 30, text: habit.title, additionalProps: { subText: habit.description } },
           { kind: CELL_TYPE.TEXT, widthPercent: 12, text: getHabitFrequencyString(habit), additionalProps: {} },
           { kind: CELL_TYPE.TEXT, widthPercent: 12, text: getHabitUsageString(habit), additionalProps: {} },
           { kind: CELL_TYPE.TEXT, widthPercent: 8, text: habit.priority === 0 ? 'Not Set' : (PRIORITY_TO_LABEL[habit.priority] || 'Unknown'), additionalProps: {} },

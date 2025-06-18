@@ -39,7 +39,6 @@ export const HABIT_STATUS = {
 export const HABIT_MODE = {
   TIME: 1,
   COUNT: 2,
-  ML: 3,
 };
 
 export const HABIT_CATEGORY = {

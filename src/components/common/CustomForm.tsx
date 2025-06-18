@@ -71,7 +71,7 @@ export const TitleDescriptionFormStructure: FormField<FORM_FIELD>[] = [{
   componentProps: {
     placeholder: "Description",
     type: "text",
-    required: true,
+    required: false,
     key: "description",
   },
 },]

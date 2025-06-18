@@ -7,7 +7,7 @@ import { closeHtmlDialog } from "@/utils/helpers";
 
 const defaultTaskInput = {
   title: "",
-  desc: "",
+  description: "",
 }
 
 const TodoForm: React.FC<TodoFormProps> = ({ addNewTask }) => {

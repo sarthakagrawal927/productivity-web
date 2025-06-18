@@ -86,7 +86,7 @@ const TaskListComponent: React.FC<TaskListComponentProps> = ({ tasks }) => {
             { kind: CELL_TYPE.TEXT, widthPercent: 2, text: (idx + 1).toString(), additionalProps: {} },
             {
               kind: CELL_TYPE.TEXT_WITH_SUBTEXT, widthPercent: 66, text: task.title, additionalProps: {
-                subText: task.desc
+                subText: task.description
               }
             },
             { kind: CELL_TYPE.TEXT, widthPercent: 8, text: `Spend ${task.time_to_spend} mins`, additionalProps: {} },

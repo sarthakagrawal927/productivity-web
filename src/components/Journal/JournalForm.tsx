@@ -5,13 +5,13 @@ import CustomForm, { FORM_FIELD, TitleDescriptionFormStructure } from '../common
 
 type JournalInput = {
   title: string;
-  desc: string;
+  description: string;
   type?: number;
 }
 
 const defaultJournalInput: JournalInput = {
   title: '',
-  desc: '',
+  description: '',
 }
 
 const JournalForm: React.FC<JournalFormProps> = ({ addNewEntry }) => {
