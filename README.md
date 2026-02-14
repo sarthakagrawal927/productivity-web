@@ -1,5 +1,8 @@
 ## Getting Started
 
+![AI Generated](https://ai-percentage-pin.vercel.app/api/ai-percentage?value=10)
+![AI PRs Welcome](https://ai-percentage-pin.vercel.app/api/ai-prs?welcome=yes)
+
 First, run the development server:
 
 ```bash
